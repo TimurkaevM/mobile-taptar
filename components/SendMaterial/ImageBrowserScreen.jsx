@@ -10,8 +10,13 @@ import {
 } from 'react-native';
 import * as ImageManipulator from 'expo-image-manipulator';
 import { ImageBrowser } from 'expo-image-picker-multiple';
+import { postFail } from '../../redux/ducks/files';
+import { useDispatch } from 'react-redux';
  
- const ImageBrowserScreen = () => {
+ const ImageBrowserScreen = (props) => {
+  const { navigate } = props.navigation;
+
+  const dispatch = useDispatch();
   // demo app use props.navigation to set the "Done" button in the header
   // this is sloppy, but we need to somehow store a way to call onSubmit
   // so store some JSX here
@@ -42,7 +47,9 @@ import { ImageBrowser } from 'expo-image-picker-multiple';
             type: 'image/jpg',
           });
         }
-        // onComplete(cPhotos);
+        dispatch(postFail(cPhotos, 'photo'));
+        navigate('ModalAddFile')
+        console.log(cPhotos);
       })
       .catch((e) => console.log(e));
   };

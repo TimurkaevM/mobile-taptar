@@ -3,10 +3,11 @@ import { ScrollView, Text, TextInput, View, Image, FlatList } from 'react-native
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeText, changeTitle } from '../../redux/ducks/files';
-import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
 import AddFileButton from './AddFileButton';
 import ModalAddFile from './ModalAddFile';
 import { Video } from 'expo-av';
+
+import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
 
 function SendMaterialMain(props) {
   const { navigate } = props.navigation;
@@ -25,6 +26,8 @@ function SendMaterialMain(props) {
   const text = useSelector((state) => state.files.materials.text);
   const photo = useSelector((state) => state.files.materials.photo.one);
   const video = useSelector((state) => state.files.materials.video.one);
+
+  console.log(photo)
 
   const handleChangeTitle = (event) => {
     dispatch(changeTitle(event.nativeEvent.text));
@@ -61,7 +64,7 @@ function SendMaterialMain(props) {
 
 
   return (
-    <SafeAreaView style={{ justifyContent: 'flex-start' }}>
+    // <SafeAreaView style={{ justifyContent: 'flex-start' }}>
       <ScrollView>
         {/* <View style={{ marginBottom: 40, marginTop: 10, alignItems: "center",  textTransform: "uppercase" }}>
           <Text style={{ textTransform: "uppercase", fontWeight: "700" }}>Форма отправки материала</Text>
@@ -114,12 +117,6 @@ function SendMaterialMain(props) {
         </View>
 
         <AddFileButton navigate={navigate} openModalAddFile={openModalAddFile} />
-        {files.length === 0 ? null : (
-          <ModalAddFile
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-          />
-        )}
 
         {photo.length ? (
           <View style={sendMaterialStyles.inputTitleContainer}>
@@ -170,7 +167,7 @@ function SendMaterialMain(props) {
         ) : null}
 
       </ScrollView>
-    </SafeAreaView>
+    // </SafeAreaView>
   );
 }
 

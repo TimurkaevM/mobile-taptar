@@ -543,11 +543,11 @@ export default function files(state = initialState, action) {
           ...state.materials,
           photo: {
             one: action.payload.message.photo.filter(
-              (item) => item.group_hash === null,
+              (item) => item.group_uid === null,
             ),
             group: getGroupFiles(
               action.payload.message.photo.filter(
-                (item) => item.group_hash !== null,
+                (item) => item.group_uid !== null,
               ),
             ),
           },
@@ -926,7 +926,7 @@ export const clearFiles = (files, info) => {
 
 export const postFail = (file, format) => {
   const form = new FormData();
-  form.append('file', file);
+  form.append('file', file[0]);
   form.append('type', format);
 
   return async (dispatch) => {
@@ -1021,25 +1021,26 @@ export const postFilesGroup = (files, format, causes) => {
 };
 
 export const getDraftFiles = () => {
-  return (dispatch) => {
-    dispatch({
-      type: 'draft/load/start',
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get('user/drafts', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({
+        type: 'draft/load/start',
+      });
+
+      if (value !== null) {
+        const response = await api.get('user/drafts', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: 'draft/load/success',
-          payload: data,
+          payload: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 
