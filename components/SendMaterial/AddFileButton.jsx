@@ -121,7 +121,7 @@ const AddFileButton = (props) => {
           <TouchableOpacity
             style={sendMaterialStyles.btnAddAudio}
             title="Pick an image from camera roll"
-            onPress={pickDocument}
+            onPress={pickImage}
           >
             <Icon name="photo" color="#000" size={24} />
           </TouchableOpacity>
