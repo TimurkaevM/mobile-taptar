@@ -48,20 +48,21 @@ const AddFileButton = (props) => {
     }
   };
 
-  const pickDocument = () => {
-    DocumentPicker.getDocumentAsync({
-      type: "audio/*",
-      copyToCacheDirectory: false,
-    }).then(({uri}) => {
-      FileSystem.downloadAsync(
-          uri, 
-           FileSystem.documentDirectory + '<file name>')
-      .then(({uri}) => {
-           FileSystem.readAsStringAsync(uri)
-      }).then(result => {
-       console.log(result)
-   });
-  });
+  const pickDocument = async () => {
+  //   DocumentPicker.getDocumentAsync({
+  //     type: "*/*",
+  //     copyToCacheDirectory: false,
+  //     multiple: true,
+  //   }).then(({uri}) => {
+  //     FileSystem.downloadAsync(
+  //         uri, 
+  //          FileSystem.documentDirectory + '<file name>')
+  //     .then(({uri}) => {
+  //          FileSystem.readAsStringAsync(uri)
+  //     }).then(result => {
+  //      console.log(result)
+  //  });
+  // });
 		  // alert(result.uri);
       // console.log(result);
         // setImage(result.uri);
@@ -69,6 +70,15 @@ const AddFileButton = (props) => {
       //   props.openModalAddFile();
       // let fff = await FileSystem.readAsStringAsync(result.uri);
       // console.log(fff)
+      let result = await DocumentPicker.getDocumentAsync({
+             type: "image/*",
+             copyToCacheDirectory: false,
+             multiple: true,
+           })
+		  alert(result.uri);
+      dispatch(postFail(result, 'photo'));
+      props.openModalAddFile();
+      console.log(result);
   };
 
   const pickVideo = async () => {
@@ -80,6 +90,7 @@ const AddFileButton = (props) => {
     });
 
     if (!result.cancelled) {
+      console.log(result);
       setImage(result.uri);
       dispatch(postFail(result, 'video'));
       props.openModalAddFile();
@@ -121,7 +132,7 @@ const AddFileButton = (props) => {
           <TouchableOpacity
             style={sendMaterialStyles.btnAddAudio}
             title="Pick an image from camera roll"
-            onPress={pickImage}
+            onPress={() => { props.navigate('ImageBrowserScreen'); }}
           >
             <Icon name="photo" color="#000" size={24} />
           </TouchableOpacity>

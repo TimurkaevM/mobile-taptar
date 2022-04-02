@@ -105,7 +105,7 @@ const ModalAddFile = (props) => {
     //     ),
     //   );
     // }
-      props.setModalVisible(!props.modalVisible);
+      // props.setModalVisible(!props.modalVisible);
       return dispatch(
         UploadOneFail(
           files,
@@ -140,25 +140,8 @@ const ModalAddFile = (props) => {
 
   return (
     <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={props.modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          props.setModalVisible(!props.modalVisible);
-        }}
-      >
         <View style={styles.centeredView}>
           <ScrollView>
-          <View style={styles.modalView}>
-              <TouchableOpacity
-                style={[styles.btnClose]}
-                onPress={() => props.setModalVisible(!props.modalVisible)}
-              >
-                <Text style={styles.textBtnClose}>назад</Text>
-              </TouchableOpacity>
-            </View>
 
             <View>
               <Text
@@ -365,7 +348,6 @@ const ModalAddFile = (props) => {
 
           </ScrollView>
         </View>
-      </Modal>
     </View>
   );
 };

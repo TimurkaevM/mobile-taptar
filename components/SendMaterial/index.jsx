@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TextInput, View, Image, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeText, changeTitle } from '../../redux/ducks/files';
-import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
+import { changeText, changeTitle, getDraftFiles } from '../../redux/ducks/files';
 import AddFileButton from './AddFileButton';
 import ModalAddFile from './ModalAddFile';
 import { Video } from 'expo-av';
+import {createStackNavigator} from '@react-navigation/stack';
+import SendMaterialMain from './SendMaterialMain';
+import ImageBrowserScreen from './ImageBrowserScreen';
+
+import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
+
+const Stack = createStackNavigator();
 
 function SendMaterial() {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDraftFiles())
+  }, [dispatch])
 
   const files = useSelector((state) => state.files.files);
 
@@ -21,7 +31,7 @@ function SendMaterial() {
 
   const title = useSelector((state) => state.files.materials.title);
   const text = useSelector((state) => state.files.materials.text);
-  const photo = useSelector((state) => state.files.materials.photo.one);
+  const photo = useSelector((state) => state.files.materials.photo.group);
   const video = useSelector((state) => state.files.materials.video.one);
 
   const handleChangeTitle = (event) => {
@@ -59,116 +69,29 @@ function SendMaterial() {
 
 
   return (
-    <SafeAreaView style={{ justifyContent: 'flex-start' }}>
-      <ScrollView>
-        {/* <View style={{ marginBottom: 40, marginTop: 10, alignItems: "center",  textTransform: "uppercase" }}>
-          <Text style={{ textTransform: "uppercase", fontWeight: "700" }}>Форма отправки материала</Text>
-        </View> */}
-
-        <View style={sendMaterialStyles.inputTitleContainer}>
-          <Text
-            style={{
-              textAlign: 'center',
-              marginBottom: 10,
-              textTransform: 'uppercase',
-              fontWeight: '400',
-              fontSize: 15,
-            }}
-          >
-            Название материала
-          </Text>
-          <TextInput
-            style={sendMaterialStyles.inputTitle}
-            type="password"
-            name="title"
-            value={title}
-            placeholder="Введите название"
-            onChange={handleChangeTitle}
-          />
-        </View>
-
-        <View style={sendMaterialStyles.inputTitleContainer}>
-          <Text
-            style={{
-              textAlign: 'center',
-              marginBottom: 10,
-              textTransform: 'uppercase',
-              fontWeight: '400',
-              fontSize: 15,
-            }}
-          >
-            Текст материала
-          </Text>
-          <TextInput
-            multiline
-            numberOfLines={7}
-            style={sendMaterialStyles.inputText}
-            type="password"
-            name="title"
-            value={text.text}
-            placeholder="Введите текст"
-            onChange={handleChangeText}
-          />
-        </View>
-
-        <AddFileButton openModalAddFile={openModalAddFile} />
-        {files.length === 0 ? null : (
-          <ModalAddFile
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-          />
-        )}
-
-        {photo.length ? (
-          <View style={sendMaterialStyles.inputTitleContainer}>
-            <Text
-              style={{
-                textAlign: 'left',
-                borderBottomWidth: 1,
-                paddingBottom: 3,
-                marginBottom: 10,
-                textTransform: 'uppercase',
-                fontWeight: '400',
-                fontSize: 15,
-              }}
-            >
-              Фото
-            </Text>
-            <FlatList
-              horizontal
-              data={photo}
-              renderItem={renderImage}
-              keyExtractor={item => item.id}
-            />
-          </View>
-        ) : null}
-
-        {video.length ? (
-          <View style={sendMaterialStyles.inputTitleContainer}>
-            <Text
-              style={{
-                textAlign: 'left',
-                borderBottomWidth: 1,
-                paddingBottom: 3,
-                marginBottom: 10,
-                textTransform: 'uppercase',
-                fontWeight: '400',
-                fontSize: 15,
-              }}
-            >
-              Видео
-            </Text>
-            <FlatList
-              horizontal
-              data={video}
-              renderItem={renderVideo}
-              keyExtractor={item => item.id}
-            />
-          </View>
-        ) : null}
-
-      </ScrollView>
-    </SafeAreaView>
+    <Stack.Navigator initialRouteName='Main'>
+      <Stack.Screen 
+        name='Main' 
+        component={SendMaterialMain}
+        options={{
+          title: 'Форма настройки материала',
+        }}
+      />
+      <Stack.Screen
+        name='ImageBrowserScreen'
+        component={ImageBrowserScreen}
+        options={{
+          title: 'Selected 0 files',
+        }}
+      />
+      <Stack.Screen
+        name='ModalAddFile'
+        component={ModalAddFile}
+        options={{
+          title: 'Настройка принадлежностей',
+        }}
+      />
+    </Stack.Navigator>
   );
 }
 
