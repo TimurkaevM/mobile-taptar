@@ -30,8 +30,8 @@ function Main() {
         name="SendMaterial"
         component={SendMaterial}
         options={{
-          title: 'Материал',
-          tabBarLabel: 'Материал',
+          title: 'Отправить',
+          tabBarLabel: 'Отправить',
           tabBarColor: '#6948f4',
           tabBarIcon: ({ color }) => (
             <Icon name="add" color={color} size={24} />

@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeText, changeTitle } from '../../redux/ducks/files';
 import AddFileButton from './AddFileButton';
-import ModalAddFile from './ModalAddFile';
 import { Video } from 'expo-av';
 
 import { sendMaterialStyles } from '../../styles/sendMaterialStyles';

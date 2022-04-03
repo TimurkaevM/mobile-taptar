@@ -28,7 +28,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const ModalAddFile = (props) => {
+const AddFileScreen = (props) => {
   const dispatch = useDispatch();
 
   const files = useSelector((state) => state.files.files);
@@ -468,4 +468,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModalAddFile;
+export default AddFileScreen;

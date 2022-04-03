@@ -27,7 +27,7 @@ import { useDispatch } from 'react-redux';
     const file = await ImageManipulator.manipulateAsync(
       uri,
       [{ resize: { width: 1000 } }],
-      { compress: 0.8, format: ImageManipulator.SaveFormat.JPEG }
+      { compress: 0.8, format: ImageManipulator.SaveFormat.PNG }
     );
     return file;
   };
@@ -41,13 +41,19 @@ import { useDispatch } from 'react-redux';
         for (let photo of photos) {
           console.log(photo);
           const pPhoto = await _processImageAsync(photo.uri);
+          const strArr = pPhoto.uri.split('.');
+
+          const newStr = strArr.map((item) => {
+            if(item === 'png') return 'mp4';
+            return item
+          }).join('.');
           cPhotos.push({
-            uri: pPhoto.uri,
+            uri: newStr,
             name: photo.filename,
             type: 'image/jpg',
           });
         }
-        dispatch(postFail(cPhotos, 'photo'));
+        dispatch(postFail(cPhotos, 'video'));
         navigate('ModalAddFile')
         console.log(cPhotos);
       })
@@ -91,7 +97,7 @@ import { useDispatch } from 'react-redux';
         callback={imagesCallback}
         renderSelectedComponent={renderSelectedComponent}
         emptyStayComponent={emptyStayComponent}
-        mediaType="photo"
+        mediaType="video"
       />
     </View>
   );

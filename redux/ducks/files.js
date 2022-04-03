@@ -966,7 +966,7 @@ export const postFail = (file, format) => {
         });
       }
     } catch (e) {
-      console.log(e);
+      console.log(e.response);
     }
   };
 };

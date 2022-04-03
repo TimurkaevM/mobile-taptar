@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #00650c;
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #00650c;
+        stroke-width: 30px;
+      }
+    </style>
+  </defs>
+  <path id="_7_" data-name="7 " class="cls-1" d="M687.505,516.115L402.889,696.656c-15.467,9.894-36.219,5.512-36.219-9.045V301.956c0-16.87,19.344-17.99,36.219-9.043L687.505,473.457A30.274,30.274,0,0,1,687.505,516.115ZM396.673,660.688l270.058-165.9-270.058-165.9V660.688Z"/>
+  <ellipse class="cls-2" cx="486.5" cy="500" rx="389.5" ry="385"/>
+</svg>
