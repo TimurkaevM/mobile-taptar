@@ -926,7 +926,7 @@ export const clearFiles = (files, info) => {
 
 export const postFail = (file, format) => {
   const form = new FormData();
-  form.append('file', file[0]);
+  form.append('file',{ uri: file[0].uri, name: file[0].filename, type: 'image/jpeg' });
   form.append('type', format);
 
   return async (dispatch) => {

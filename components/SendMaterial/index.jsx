@@ -34,8 +34,11 @@ function SendMaterial() {
         name='ImageBrowserScreen'
         component={ImageBrowserScreen}
         options={{
-          title: 'Selected 0 files',
+          gestureEnabled: false,
         }}
+        // options={{
+        //   title: 'Selected 0 files',
+        // }}
       />
       <Stack.Screen
         name='ModalAddFile'

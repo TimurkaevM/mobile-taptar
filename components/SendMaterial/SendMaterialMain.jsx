@@ -9,7 +9,7 @@ import { Video } from 'expo-av';
 import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
 
 function SendMaterialMain(props) {
-  const { navigate } = props.navigation;
+  const { navigate, push } = props.navigation;
 
   const dispatch = useDispatch();
 
@@ -115,7 +115,7 @@ function SendMaterialMain(props) {
           />
         </View>
 
-        <AddFileButton navigate={navigate} openModalAddFile={openModalAddFile} />
+        <AddFileButton push={push} navigate={navigate} openModalAddFile={openModalAddFile} />
 
         {photo.length ? (
           <View style={sendMaterialStyles.inputTitleContainer}>
