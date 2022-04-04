@@ -5,7 +5,7 @@ import SendMaterial from './SendMaterial';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Profile from './Profile';
 import { useDispatch } from 'react-redux';
-import { getCenturies, getTypes } from '../redux/ducks/tags';
+import { getAllTags } from '../redux/ducks/tags';
 
 import { appStyles } from '../styles/appStyles';
 
@@ -15,8 +15,7 @@ function Main() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTypes());
-    dispatch(getCenturies());
+    dispatch(getAllTags());
   }, [dispatch]);
 
   return (

@@ -27,6 +27,8 @@ export default function App(props) {
 
   const { navigate } = props.navigation; 
   const { params } = props.route;
+
+  const mediaType = params.media === 'photo' ? MediaType.photo : MediaType.video;
   
   const onSuccess = (data) => {
     console.log(data)
@@ -51,9 +53,9 @@ export default function App(props) {
     () => ({
       getImageMetaData: false, // true might perform slower results but gives meta data and absolute path for ios users
       initialLoad: 100,
-      assetsType: [MediaType.photo],
+      assetsType: [mediaType],
       minSelection: 1,
-      maxSelection: 3,
+      maxSelection: 10,
       portraitCols: 4,
       landscapeCols: 4,
     }),
@@ -75,22 +77,22 @@ export default function App(props) {
   };
 
   const _buttonStyle = {
-    backgroundColor: 'orange',
-    borderRadius: 5,
+    backgroundColor: '#4686cc',
+    borderRadius: 15,
   };
 
   const widgetNavigator = useMemo(
     () => ({
       Texts: {
-        finish: 'finish',
-        back: 'back',
-        selected: 'selected',
+        finish: 'загрузить',
+        back: 'назад',
+        selected: 'выбрано',
       },
       midTextColor: 'black',
       minSelection: 1,
       buttonTextStyle: _textStyle,
       buttonStyle: _buttonStyle,
-      onBack: () => {},
+      onBack: () => {navigate('Main')},
       onSuccess: (e) => onSuccess(e),
     }),
     []
@@ -99,7 +101,7 @@ export default function App(props) {
   const widgetStyles = useMemo(
     () => ({
       margin: 2,
-      bgColor: 'white',
+      bgColor: '#fafafa',
       spinnerColor: 'blue',
       widgetWidth: 99,
       videoIcon: {
@@ -122,7 +124,7 @@ export default function App(props) {
   return (
     <SafeAreaProvider>
       <SafeAreaView forceInset={ForceInset} style={styles.container}>
-        {/* <StatusBarPlaceHolder /> */}
+        <StatusBarPlaceHolder />
         <View style={styles.container}>
           <AssetsSelector
             Settings={widgetSettings}

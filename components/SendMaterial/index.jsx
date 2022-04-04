@@ -34,7 +34,7 @@ function SendMaterial() {
         name='ImageBrowserScreen'
         component={ImageBrowserScreen}
         options={{
-          gestureEnabled: false,
+          headerShown: false
         }}
         // options={{
         //   title: 'Selected 0 files',

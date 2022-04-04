@@ -139,7 +139,7 @@ const AddFileButton = (props) => {
           <TouchableOpacity
             style={sendMaterialStyles.btnAddVideo}
             title="Pick an image from camera roll"
-            onPress={pickImage}
+            onPress={() => { props.navigate('ImageBrowserScreen', {media: "video"}); }}
           >
             <Icon name="videocam" color="#000" size={24} />
           </TouchableOpacity>
