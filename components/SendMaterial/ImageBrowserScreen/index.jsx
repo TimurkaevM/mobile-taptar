@@ -5,10 +5,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import StatusBarPlaceHolder from './components/StatusBarPlaceHolder';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { MediaType } from 'expo-media-library';
-import { postFail } from '../../../redux/ducks/files';
+import { postFail, postFilesGroup } from '../../../redux/ducks/files';
 
 const ForceInset = {
   top: 'never',
@@ -23,16 +23,20 @@ const ForceInset = {
 
 
 export default function App(props) {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   const { navigate } = props.navigation; 
   const { params } = props.route;
 
   const mediaType = params.media === 'photo' ? MediaType.photo : MediaType.video;
+
+  const causes = useSelector(state => state.tags.causes);
+  const causId = causes.map(caus => caus.id)
   
   const onSuccess = (data) => {
     console.log(data)
-    dispatch(postFail(data, params.media));
+    // dispatch(postFail(data, params.media));
+    dispatch(postFilesGroup(data, params.media, causId));
     navigate('ModalAddFile');
   };
 

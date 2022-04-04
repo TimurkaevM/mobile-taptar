@@ -136,7 +136,7 @@ function SendMaterialMain(props) {
               horizontal
               data={photo}
               renderItem={renderImage}
-              keyExtractor={item => item.id}
+              keyExtractor={item => item.id.toString()}
             />
           </View>
         ) : null}
@@ -160,7 +160,7 @@ function SendMaterialMain(props) {
               horizontal
               data={video}
               renderItem={renderVideo}
-              keyExtractor={item => item.id}
+              keyExtractor={item => item.id.toString()}
             />
           </View>
         ) : null}

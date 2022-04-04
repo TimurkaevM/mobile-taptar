@@ -28,6 +28,10 @@ function SendMaterial() {
         component={SendMaterialMain}
         options={{
           title: 'Форма настройки материала',
+          headerStyle: {
+            backgroundColor: '#4686cc',
+          },
+          headerTintColor: '#fff',
         }}
       />
       <Stack.Screen

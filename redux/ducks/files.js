@@ -975,48 +975,89 @@ export const postFilesGroup = (files, format, causes) => {
   const form = new FormData();
   form.append('type', format);
   for (let i = 0; i < files.length; i++) {
-    form.append(`files[${i}]`, files[i]);
+    form.append(`files[${i}]`,{ uri: files[i].uri, name: files[i].filename, type: 'image/jpeg' });
   }
 
   for (let i = 0; i < causes.length; i++) {
     form.append(`causes[${i}]`, causes[i]);
   }
 
-  return (dispatch) => {
-    dispatch({ type: 'files/post/start', files, format, causes });
+  // return (dispatch) => {
+  //   dispatch({ type: 'files/post/start', files, format, causes });
 
-    api
-      .post('/user/draft/group', form, {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-        onUploadProgress: (progressEvent) => {
-          const totalLength = progressEvent.lengthComputable
-            ? progressEvent.total
-            : progressEvent.target.getResponseHeader('content-length') ||
-              progressEvent.target.getResponseHeader(
-                'x-decompressed-content-length',
+  //   api
+  //     .post('/user/draft/group', form, {
+  //       headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
+  //       onUploadProgress: (progressEvent) => {
+  //         const totalLength = progressEvent.lengthComputable
+  //           ? progressEvent.total
+  //           : progressEvent.target.getResponseHeader('content-length') ||
+  //             progressEvent.target.getResponseHeader(
+  //               'x-decompressed-content-length',
+  //             );
+  //         if (totalLength) {
+  //           let progress = Math.round(
+  //             (progressEvent.loaded * 100) / totalLength,
+  //           );
+  //           dispatch({
+  //             type: 'change/progress',
+  //             payload: progress,
+  //           });
+  //         }
+  //       },
+  //     })
+  //     .then((response) => response.data)
+  //     .then((data) => {
+  //       dispatch({
+  //         type: 'files/post/success',
+  //         payload: data,
+  //         format,
+  //       });
+  //     })
+  //     .catch((e) => {
+  //       console.error(e);
+  //     });
+  // };
+
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: 'files/post/start', files, format, causes });
+
+      if (value !== null) {
+        const response = await api.post('/user/draft/group', form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${value}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            const totalLength = progressEvent.lengthComputable
+              ? progressEvent.total
+              : progressEvent.target.getResponseHeader('content-length') ||
+                progressEvent.target.getResponseHeader(
+                  'x-decompressed-content-length',
+                );
+            if (totalLength) {
+              let progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength,
               );
-          if (totalLength) {
-            let progress = Math.round(
-              (progressEvent.loaded * 100) / totalLength,
-            );
-            dispatch({
-              type: 'change/progress',
-              payload: progress,
-            });
-          }
-        },
-      })
-      .then((response) => response.data)
-      .then((data) => {
+              dispatch({
+                type: 'change/progress',
+                payload: progress,
+              });
+            }
+          },
+        });
         dispatch({
           type: 'files/post/success',
-          payload: data,
+          payload: response.data,
           format,
         });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+      }
+    } catch (e) {
+      console.log(e.response);
+    }
   };
 };
 

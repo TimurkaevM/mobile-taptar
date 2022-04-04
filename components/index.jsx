@@ -5,7 +5,7 @@ import SendMaterial from './SendMaterial';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Profile from './Profile';
 import { useDispatch } from 'react-redux';
-import { getAllTags } from '../redux/ducks/tags';
+import { getAllTags, getCauses } from '../redux/ducks/tags';
 
 import { appStyles } from '../styles/appStyles';
 
@@ -16,6 +16,7 @@ function Main() {
 
   useEffect(() => {
     dispatch(getAllTags());
+    dispatch(getCauses());
   }, [dispatch]);
 
   return (
@@ -23,7 +24,7 @@ function Main() {
       initialRouteName="SendMaterial"
       activeColor="#ffffff"
       shifting={true}
-      barStyle={{ backgroundColor: '#6948f4' }}
+      barStyle={{ backgroundColor: '#4686cc' }}
     >
       <Tab.Screen
         name="SendMaterial"
@@ -31,7 +32,7 @@ function Main() {
         options={{
           title: 'Отправить',
           tabBarLabel: 'Отправить',
-          tabBarColor: '#6948f4',
+          tabBarColor: '#4686cc',
           tabBarIcon: ({ color }) => (
             <Icon name="add" color={color} size={24} />
           ),
@@ -42,7 +43,7 @@ function Main() {
         component={Messenger}
         options={{
           tabBarLabel: 'Чат',
-          tabBarColor: '#2c6d6a',
+          tabBarColor: '#4686cc',
           headerTitle: 'Чат',
           tabBarIcon: ({ color }) => (
             <Icon name="chat" color={color} size={24} />
