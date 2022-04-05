@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
-import { Text, View, StyleSheet, SafeAreaView, Alert } from 'react-native';
+import { View, StyleSheet, SafeAreaView } from 'react-native';
 import { AssetsSelector } from 'expo-images-picker';
 import { Ionicons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
 import StatusBarPlaceHolder from './components/StatusBarPlaceHolder';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,29 +14,28 @@ const ForceInset = {
   bottom: 'never',
 };
 
-// IOS users , make sure u can use the images uri to upload , if your getting invalid file path or u cant work with asset-library:// 
+// IOS users , make sure u can use the images uri to upload , if your getting invalid file path or u cant work with asset-library://
 // Use = > getImageMetaData: true which will be little slower but give u also the absolute path of the Asset. just console loge the result to see the localUri
 
 // See => https://docs.expo.dev/versions/latest/sdk/media-library/#assetinfo
 
-
-
 export default function App(props) {
   const dispatch = useDispatch();
 
-  const { navigate } = props.navigation; 
+  const { navigate } = props.navigation;
   const { params } = props.route;
 
-  const mediaType = params.media === 'photo' ? MediaType.photo : MediaType.video;
+  const mediaType =
+    params.media === 'photo' ? MediaType.photo : MediaType.video;
 
-  const causes = useSelector(state => state.tags.causes);
-  const causId = causes.map(caus => caus.id)
-  
+  const causes = useSelector((state) => state.tags.causes);
+  const causId = causes.map((caus) => caus.id);
+
   const onSuccess = (data) => {
-    console.log(data)
-    // dispatch(postFail(data, params.media));
-    dispatch(postFilesGroup(data, params.media, causId));
+    console.log(data);
     navigate('ModalAddFile');
+    if(data.length > 1) return dispatch(postFilesGroup(data, params.media, causId));
+    return dispatch(postFail(data, params.media));
   };
 
   const widgetErrors = useMemo(
@@ -50,7 +48,7 @@ export default function App(props) {
         hasNoAssets: 'No images found.',
       },
     }),
-    []
+    [],
   );
 
   const widgetSettings = useMemo(
@@ -63,7 +61,7 @@ export default function App(props) {
       portraitCols: 4,
       landscapeCols: 4,
     }),
-    []
+    [],
   );
 
   const widgetResize = useMemo(
@@ -73,7 +71,7 @@ export default function App(props) {
       base64: false,
       saveTo: 'jpeg',
     }),
-    []
+    [],
   );
 
   const _textStyle = {
@@ -96,10 +94,12 @@ export default function App(props) {
       minSelection: 1,
       buttonTextStyle: _textStyle,
       buttonStyle: _buttonStyle,
-      onBack: () => {navigate('Main')},
+      onBack: () => {
+        navigate('Main');
+      },
       onSuccess: (e) => onSuccess(e),
     }),
-    []
+    [],
   );
 
   const widgetStyles = useMemo(
@@ -122,7 +122,7 @@ export default function App(props) {
         size: 26,
       },
     }),
-    []
+    [],
   );
 
   return (

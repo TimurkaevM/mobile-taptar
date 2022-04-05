@@ -20,7 +20,7 @@ const initialState = {
 
     text: {
       text: '',
-      type: "text",
+      type: 'text',
       title: '',
       year: '',
       author: '',
@@ -98,7 +98,9 @@ export default function files(state = initialState, action) {
     case 'tag/types/remove':
       return {
         ...state,
-        tags_information: state.tags_information.filter((type) => type.id !== action.payload),
+        tags_information: state.tags_information.filter(
+          (type) => type.id !== action.payload,
+        ),
       };
 
     // Изменение текста
@@ -554,33 +556,33 @@ export default function files(state = initialState, action) {
 
           audio: {
             one: action.payload.message.audio.filter(
-              (item) => item.group_hash === null,
+              (item) => item.group_uid === null,
             ),
             group: getGroupFiles(
               action.payload.message.audio.filter(
-                (item) => item.group_hash !== null,
+                (item) => item.group_uid !== null,
               ),
             ),
           },
 
           document: {
             one: action.payload.message.document.filter(
-              (item) => item.group_hash === null,
+              (item) => item.group_uid === null,
             ),
             group: getGroupFiles(
               action.payload.message.document.filter(
-                (item) => item.group_hash !== null,
+                (item) => item.group_uid !== null,
               ),
             ),
           },
 
           video: {
             one: action.payload.message.video.filter(
-              (item) => item.group_hash === null,
+              (item) => item.group_uid === null,
             ),
             group: getGroupFiles(
               action.payload.message.video.filter(
-                (item) => item.group_hash !== null,
+                (item) => item.group_uid !== null,
               ),
             ),
           },
@@ -926,7 +928,11 @@ export const clearFiles = (files, info) => {
 
 export const postFail = (file, format) => {
   const form = new FormData();
-  form.append('file',{ uri: file[0].uri, name: file[0].filename, type: 'image/jpeg' });
+  form.append('file', {
+    uri: file[0].uri,
+    name: file[0].filename,
+    type: 'image/jpeg',
+  });
   form.append('type', format);
 
   return async (dispatch) => {
@@ -975,7 +981,11 @@ export const postFilesGroup = (files, format, causes) => {
   const form = new FormData();
   form.append('type', format);
   for (let i = 0; i < files.length; i++) {
-    form.append(`files[${i}]`,{ uri: files[i].uri, name: files[i].filename, type: 'image/jpeg' });
+    form.append(`files[${i}]`, {
+      uri: files[i].uri,
+      name: files[i].filename,
+      type: 'image/jpeg',
+    });
   }
 
   for (let i = 0; i < causes.length; i++) {

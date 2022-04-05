@@ -15,28 +15,28 @@ export const sendMaterialStyles = StyleSheet.create({
   },
 
   inputTitle: {
-    width: "100%",
+    width: '100%',
     height: 50,
     paddingLeft: 15,
-    borderWidth: .3,
+    borderWidth: 0.3,
     borderRadius: 7,
     marginBottom: 20,
-    backgroundColor: "#fafafa",
-    color: "#000",
+    backgroundColor: '#fafafa',
+    color: '#000',
     fontSize: 13,
   },
 
   inputText: {
-    width: "100%",
+    width: '100%',
     height: 200,
     padding: 20,
-    borderWidth: .3,
+    borderWidth: 0.3,
     borderRadius: 8,
     marginBottom: 50,
-    backgroundColor: "#fafafa",
-    color: "#000",
+    backgroundColor: '#fafafa',
+    color: '#000',
     fontSize: 13,
-    textAlignVertical: "top",
+    textAlignVertical: 'top',
   },
 
   btnAdd: {
@@ -59,7 +59,7 @@ export const sendMaterialStyles = StyleSheet.create({
   },
 
   iconAdd: {
-    transform: [{ rotate: "45deg" }],
+    transform: [{ rotate: '45deg' }],
   },
 
   btnAddAudio: {
@@ -84,14 +84,14 @@ export const sendMaterialStyles = StyleSheet.create({
     borderLeftWidth: 1,
   },
 
-
   mediaBox: {
-    overflow: "hidden",
     width: 200,
-    height: 200,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderRadius: 10,
+    height: 150,
+    overflow: 'hidden',
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -103,8 +103,8 @@ export const sendMaterialStyles = StyleSheet.create({
   },
 
   mediaImage: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 10,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
   },
 });

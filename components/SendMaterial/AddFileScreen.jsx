@@ -105,20 +105,20 @@ const AddFileScreen = (props) => {
     //     ),
     //   );
     // }
-      // props.setModalVisible(!props.modalVisible);
-      return dispatch(
-        UploadOneFail(
-          files,
-          props.type,
-          title,
-          year,
-          author,
-          location,
-          comment,
-          centuriesClient,
-          typesClient,
-        ),
-      );
+    // props.setModalVisible(!props.modalVisible);
+    return dispatch(
+      UploadOneFail(
+        files,
+        props.type,
+        title,
+        year,
+        author,
+        location,
+        comment,
+        centuriesClient,
+        typesClient,
+      ),
+    );
 
     // if (files.files) {
     //   props.handleAddClose();
@@ -140,214 +140,200 @@ const AddFileScreen = (props) => {
 
   return (
     <View style={styles.centeredView}>
-        <View style={styles.centeredView}>
-          <ScrollView>
+      <View style={styles.centeredView}>
+        <ScrollView>
+          <View style={styles.inputTitleContainer}>
+            <Text
+              style={{
+                textAlign: 'left',
+                marginBottom: 10,
+                textTransform: 'capitalize',
+                fontWeight: '400',
+                fontSize: 15,
+              }}
+            >
+              Название
+            </Text>
+            <TextInput
+              style={styles.inputTitle}
+              type="password"
+              name="titleTag"
+              value={title}
+              placeholder="Введите название"
+              onChange={handleChangeTitle}
+            />
+          </View>
 
-            <View>
-              <Text
-                style={{
-                  textTransform: 'uppercase',
-                  textAlign: 'center',
-                  margin: 20,
+          <View style={styles.inputTitleContainer}>
+            <Text
+              style={{
+                textAlign: 'left',
+                marginBottom: 10,
+                textTransform: 'capitalize',
+                fontWeight: '400',
+                fontSize: 15,
+              }}
+            >
+              Год
+            </Text>
+            <TextInput
+              style={styles.inputTitle}
+              type="password"
+              name="year"
+              value={year}
+              placeholder="Введите год"
+              onChange={handleChangeYear}
+            />
+          </View>
+
+          <View style={styles.inputTitleContainer}>
+            <Text
+              style={{
+                textAlign: 'left',
+                marginBottom: 10,
+                textTransform: 'capitalize',
+                fontWeight: '400',
+                fontSize: 15,
+              }}
+            >
+              Автор
+            </Text>
+            <TextInput
+              style={styles.inputTitle}
+              type="password"
+              name="author"
+              value={author}
+              placeholder="Введите автора"
+              onChange={handleChangeAuthor}
+            />
+          </View>
+
+          <View style={styles.inputTitleContainer}>
+            <Text
+              style={{
+                textAlign: 'left',
+                marginBottom: 10,
+                textTransform: 'capitalize',
+                fontWeight: '400',
+                fontSize: 15,
+              }}
+            >
+              Место
+            </Text>
+            <TextInput
+              style={styles.inputTitle}
+              type="password"
+              name="location"
+              value={location}
+              placeholder="Введите место"
+              onChange={handleChangeLocation}
+            />
+          </View>
+
+          <View style={styles.media}>
+            {files.type === 'photo' ? (
+              <Image
+                style={styles.tinyLogo}
+                source={{
+                  uri: `http://api.taptar.ru/storage/${files.path}`,
                 }}
-              >
-                Настройка принадлежностей
-              </Text>
-            </View>
-
-            <View style={styles.media}>
-              {files.type === "photo" ? (
-                <Image
-                  style={styles.tinyLogo}
-                  source={{
-                    uri: `http://api.taptar.ru/storage/${files.path}`,
-                  }}
-                />
-              ) : (
-                <Video
-                  style={styles.tinyLogo}
-                  source={{
-                    uri: `http://api.taptar.ru/storage/${files.path}`,
-                  }}
-                  useNativeControls
-                  resizeMode="contain"
-                  isLooping
-                  // onPlaybackStatusUpdate={status => setStatus(() => status)}
-                />
-              )}
-            </View>
-
-            <View style={styles.inputTitleContainer}>
-              <Text
-                style={{
-                  textAlign: 'left',
-                  marginBottom: 10,
-                  textTransform: 'uppercase',
-                  fontWeight: '400',
-                  fontSize: 15,
-                }}
-              >
-                Название
-              </Text>
-              <TextInput
-                style={styles.inputTitle}
-                type="password"
-                name="titleTag"
-                value={title}
-                placeholder="Введите название"
-                onChange={handleChangeTitle}
               />
-            </View>
-
-            <View style={styles.inputTitleContainer}>
-              <Text
-                style={{
-                  textAlign: 'left',
-                  marginBottom: 10,
-                  textTransform: 'uppercase',
-                  fontWeight: '400',
-                  fontSize: 15,
+            ) : (
+              <Video
+                style={styles.tinyLogo}
+                source={{
+                  uri: `http://api.taptar.ru/storage/${files.path}`,
                 }}
-              >
-                Год
-              </Text>
-              <TextInput
-                style={styles.inputTitle}
-                type="password"
-                name="year"
-                value={year}
-                placeholder="Введите год"
-                onChange={handleChangeYear}
+                useNativeControls
+                resizeMode="contain"
+                isLooping
+                // onPlaybackStatusUpdate={status => setStatus(() => status)}
               />
+            )}
+          </View>
+
+          <View style={styles.inputTitleContainer}>
+            <Text
+              style={{
+                textAlign: 'left',
+                marginBottom: 10,
+                textTransform: 'capitalize',
+                fontWeight: '400',
+                fontSize: 15,
+              }}
+            >
+              Комментарий
+            </Text>
+            <TextInput
+              multiline
+              numberOfLines={7}
+              style={styles.inputComment}
+              type="password"
+              name="comment"
+              value={comment}
+              placeholder="Введите комментарий..."
+              onChange={handleChangeComment}
+            />
+          </View>
+
+          <View style={styles.inputTitleContainer}>
+            <Text>Тип/Принадлежность:</Text>
+            <View style={styles.flexTags}>
+              {types.map((item) => {
+                const check = typesClient.some((type) => type.id === item.id);
+
+                const backgroundColor = check ? '#4686cc' : '#bed1e6';
+                const color = check ? 'white' : 'white';
+
+                return (
+                  <AddInformation
+                    check={check}
+                    key={item.id}
+                    item={item}
+                    backgroundColor={{ backgroundColor }}
+                    textColor={{ color }}
+                    handlePress={pressChangeInformation}
+                  />
+                );
+              })}
             </View>
+          </View>
 
-            <View style={styles.inputTitleContainer}>
-              <Text
-                style={{
-                  textAlign: 'left',
-                  marginBottom: 10,
-                  textTransform: 'uppercase',
-                  fontWeight: '400',
-                  fontSize: 15,
-                }}
-              >
-                Автор
-              </Text>
-              <TextInput
-                style={styles.inputTitle}
-                type="password"
-                name="author"
-                value={author}
-                placeholder="Введите автора"
-                onChange={handleChangeAuthor}
-              />
+          <View style={styles.inputTitleContainer}>
+            <Text>Период/Век:</Text>
+            <View style={styles.flexTags}>
+              {centuries.map((item) => {
+                const check = centuriesClient.some(
+                  (century) => century.id === item.id,
+                );
+
+                const backgroundColor = check ? '#4686cc' : '#bed1e6';
+                const color = check ? 'white' : 'white';
+
+                return (
+                  <AddInformation
+                    check={check}
+                    key={item.id}
+                    item={item}
+                    backgroundColor={{ backgroundColor }}
+                    textColor={{ color }}
+                    handlePress={pressChangeCenturies}
+                  />
+                );
+              })}
             </View>
+          </View>
 
-            <View style={styles.inputTitleContainer}>
-              <Text
-                style={{
-                  textAlign: 'left',
-                  marginBottom: 10,
-                  textTransform: 'uppercase',
-                  fontWeight: '400',
-                  fontSize: 15,
-                }}
-              >
-                Место
-              </Text>
-              <TextInput
-                style={styles.inputTitle}
-                type="password"
-                name="location"
-                value={location}
-                placeholder="Введите место"
-                onChange={handleChangeLocation}
-              />
-            </View>
-
-            <View style={styles.inputTitleContainer}>
-              <Text>Тип/Принадлежность:</Text>
-              <View style={styles.flexTags}>
-                {types.map((item) => {
-                  const check = typesClient.some((type) => type.id === item.id);
-
-                  const backgroundColor = check ? '#6e3b6e' : '#f9c2ff';
-                  const color = check ? 'white' : 'black';
-
-                  return (
-                    <AddInformation
-                      check={check}
-                      key={item.id}
-                      item={item}
-                      backgroundColor={{ backgroundColor }}
-                      textColor={{ color }}
-                      handlePress={pressChangeInformation}
-                    />
-                  );
-                })}
-              </View>
-            </View>
-
-            <View style={styles.inputTitleContainer}>
-              <Text>Период/Век:</Text>
-              <View style={styles.flexTags}>
-                {centuries.map((item) => {
-                  const check = centuriesClient.some(
-                    (century) => century.id === item.id,
-                  );
-
-                  const backgroundColor = check ? '#6e3b6e' : '#f9c2ff';
-                  const color = check ? 'white' : 'black';
-
-                  return (
-                    <AddInformation
-                      check={check}
-                      key={item.id}
-                      item={item}
-                      backgroundColor={{ backgroundColor }}
-                      textColor={{ color }}
-                      handlePress={pressChangeCenturies}
-                    />
-                  );
-                })}
-              </View>
-            </View>
-
-            <View style={styles.inputTitleContainer}>
-              <Text
-                style={{
-                  textAlign: 'left',
-                  marginBottom: 10,
-                  textTransform: 'uppercase',
-                  fontWeight: '400',
-                  fontSize: 15,
-                }}
-              >
-                Комментарий
-              </Text>
-              <TextInput
-                multiline
-                numberOfLines={7}
-                style={styles.inputComment}
-                type="password"
-                name="comment"
-                value={comment}
-                placeholder="Введите комментарий..."
-                onChange={handleChangeComment}
-              />
-            </View>
-
-            <View style={styles.changeBtn}>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={handleFailAddClick}
-              >
-                <Text style={styles.textStyle}>Применить</Text>
-              </Pressable>
-            </View>
-
-          </ScrollView>
-        </View>
+          <View style={styles.changeBtn}>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={handleFailAddClick}
+            >
+              <Text style={styles.textStyle}>Применить</Text>
+            </Pressable>
+          </View>
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -356,6 +342,7 @@ const styles = StyleSheet.create({
   tinyLogo: {
     width: '100%',
     height: '100%',
+    resizeMode: 'contain'
   },
 
   centeredView: {
@@ -441,10 +428,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     paddingLeft: 15,
-    borderWidth: 0.1,
-    borderRadius: 2,
+    borderWidth: 0.2,
+    borderRadius: 10,
     marginBottom: 20,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#fff',
     color: '#000',
     fontSize: 13,
   },
