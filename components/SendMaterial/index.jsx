@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  getDraftFiles,
-} from '../../redux/ducks/files';
+import { getDraftFiles } from '../../redux/ducks/files';
 import AddFileScreen from './AddFileScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import SendMaterialMain from './SendMaterialMain';

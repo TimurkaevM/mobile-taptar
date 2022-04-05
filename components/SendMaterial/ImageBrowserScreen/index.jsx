@@ -34,7 +34,8 @@ export default function App(props) {
   const onSuccess = (data) => {
     console.log(data);
     navigate('ModalAddFile');
-    if(data.length > 1) return dispatch(postFilesGroup(data, params.media, causId));
+    if (data.length > 1)
+      return dispatch(postFilesGroup(data, params.media, causId));
     return dispatch(postFail(data, params.media));
   };
 

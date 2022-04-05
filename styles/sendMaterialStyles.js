@@ -54,34 +54,29 @@ export const sendMaterialStyles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomLeftRadius: 50,
-    borderTopLeftRadius: 50,
+    borderRadius: 50,
   },
 
   iconAdd: {
     transform: [{ rotate: '45deg' }],
   },
 
-  btnAddAudio: {
-    backgroundColor: '#fafafa',
-    width: 50,
-    height: 50,
+  btnAddMedia: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    marginLeft: 10,
+    flexDirection: 'row',
+    backgroundColor: '#4686cc',
     alignItems: 'center',
     justifyContent: 'center',
-    borderLeftColor: '#000',
-    borderLeftWidth: 1,
   },
 
   btnAddVideo: {
+    padding: 20,
     backgroundColor: '#fafafa',
-    width: 50,
-    height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomRightRadius: 50,
-    borderTopRightRadius: 50,
-    borderLeftColor: '#000',
-    borderLeftWidth: 1,
   },
 
   mediaBox: {
