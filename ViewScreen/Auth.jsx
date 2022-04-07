@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+import { Button, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, ChangeError } from '../redux/ducks/user';
 
@@ -84,11 +84,29 @@ function Auth() {
         onChangeText={setPassword}
         onChange={passChange}
       />
-      <Button
-        style={authStyles.btn}
-        title=" Авторизоваться"
-        onPress={handleClick}
-      />
+      <View
+        style={{
+          alignItems: 'center',
+          marginTop: 23,
+        }}
+      >
+        <TouchableOpacity
+          style={authStyles.btn}
+          title="Pick an auth"
+          onPress={handleClick}
+        >
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 14,
+              textTransform: 'capitalize',
+              color: '#fff',
+            }}
+          >
+            Войти
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

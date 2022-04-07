@@ -1,11 +1,7 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Auth from './Auth';
 import Registration from './Registration';
-import MyTopTabBar from './MyTopTabBar';
-
-import { appStyles } from '../styles/appStyles';
 
 function ViewScreen() {
   const Tab = createMaterialTopTabNavigator();
@@ -15,10 +11,10 @@ function ViewScreen() {
     <Tab.Navigator
       initialRouteName="Auth"
       screenOptions={{
-        tabBarActiveTintColor: '#e91e63',
-        tabBarLabelStyle: { fontSize: 12, color: '#ffffff' },
+        tabBarActiveTintColor: '#4382c8',
+        tabBarLabelStyle: { fontSize: 14, textTransform: 'capitalize' },
         tabBarStyle: {
-          backgroundColor: 'rgba(35, 43, 85, 0.95)',
+          backgroundColor: '#f1f1f1',
           marginTop: 30,
           borderWidth: 0,
         },

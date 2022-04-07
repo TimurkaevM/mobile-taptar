@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registration, ChangeError } from '../redux/ducks/user';
 import {
-  Button,
+  TouchableOpacity,
   Text,
   TextInput,
   ScrollView,
@@ -122,11 +122,29 @@ function Registration() {
         Google
       </button>
       <div className={style.or}>или</div> */}
-          <Button
-            style={registrStyles.btn}
-            title=" Регистрация"
-            onPress={handleClick}
-          />
+          <View
+            style={{
+              alignItems: 'center',
+              marginTop: 23,
+            }}
+          >
+            <TouchableOpacity
+              style={registrStyles.btn}
+              title="Pick an auth"
+              onPress={handleClick}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 14,
+                  textTransform: 'capitalize',
+                  color: '#fff',
+                }}
+              >
+                Войти
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

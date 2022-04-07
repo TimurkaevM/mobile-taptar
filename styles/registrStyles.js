@@ -4,8 +4,7 @@ export const registrStyles = StyleSheet.create({
   scrollView: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor:
-      'linear-gradient(rgba(35, 43, 85, 0.75), rgba(35, 43, 85, 0.95))',
+    backgroundColor: '#f1f1f1',
   },
 
   container: {
@@ -30,12 +29,11 @@ export const registrStyles = StyleSheet.create({
 
   title: {
     fontWeight: '400',
-    textTransform: 'uppercase',
-    fontSize: 13,
+    textTransform: 'capitalize',
+    fontSize: 15,
     paddingLeft: 15,
     paddingBottom: 10,
-    color: 'rgba(255, 255, 255, 0.7)',
-    // display: "block",
+    color: '#4686cc',
   },
 
   input: {
@@ -43,11 +41,13 @@ export const registrStyles = StyleSheet.create({
     height: 50,
     paddingLeft: 15,
     borderWidth: 0,
-    borderRadius: 10,
-    marginBottom: 40,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    color: '#ffffff',
+    borderRadius: 30,
+    marginBottom: 50,
+    backgroundColor: '#ffffff',
+    color: '#4686cc',
     fontSize: 13,
+    borderWidth: 0.5,
+    borderColor: '#4686cc',
   },
 
   inputFocus: {
@@ -63,19 +63,13 @@ export const registrStyles = StyleSheet.create({
   },
 
   btn: {
-    width: 300,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    fontSize: 13,
-    textAlign: 'center',
-    color: 'rgba(255, 255, 255, 1)',
-    width: '100%',
-    height: 35,
+    marginHorizontal: 'auto',
+    width: 200,
     borderWidth: 0,
-    borderRadius: 10,
-    marginTop: 23,
-    backgroundColor: 'rgba(16, 89, 255, 1)',
-    // transition: "all 0.5s ease",
+    borderRadius: 20,
+    backgroundColor: '#4382c8',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
 
   // .auth button:hover {
