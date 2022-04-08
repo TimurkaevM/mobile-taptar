@@ -27,10 +27,13 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import AudioPlayer from '../Media/AudioPlayer';
 
 const AddFileScreen = (props) => {
   const dispatch = useDispatch();
 
+  const progress = useSelector((state) => state.files.progress);
+  const loadingFiles = useSelector((state) => state.files.loadingFiles);
   const files = useSelector((state) => state.files.files);
   const centuries = useSelector((state) => state.tags.centuries);
   const types = useSelector((state) => state.tags.types);
@@ -138,6 +141,21 @@ const AddFileScreen = (props) => {
     // }
   };
 
+
+  if (loadingFiles) return (
+    <Text
+    style={{
+      textAlign: 'left',
+      marginBottom: 10,
+      textTransform: 'capitalize',
+      fontWeight: '400',
+      fontSize: 15,
+    }}
+  >
+    {progress}
+  </Text>
+  );
+
   return (
     <View style={styles.centeredView}>
       <View style={styles.centeredView}>
@@ -239,16 +257,17 @@ const AddFileScreen = (props) => {
                 }}
               />
             ) : (
-              <Video
-                style={styles.tinyLogo}
-                source={{
-                  uri: `http://api.taptar.ru/storage/${files.path}`,
-                }}
-                useNativeControls
-                resizeMode="contain"
-                isLooping
-                // onPlaybackStatusUpdate={status => setStatus(() => status)}
-              />
+              // <Video
+              //   style={styles.tinyLogo}
+              //   source={{
+              //     uri: `http://api.taptar.ru/storage/${files.path}`,
+              //   }}
+              //   useNativeControls
+              //   resizeMode="contain"
+              //   isLooping
+              //   // onPlaybackStatusUpdate={status => setStatus(() => status)}
+              // />
+              <AudioPlayer path={files.path} />
             )}
           </View>
 

@@ -65,6 +65,7 @@ const AddFileButton = (props) => {
           uri: uri,
           type: 'audio/' + fileType,
         };
+        props.navigate('ModalAddFile');
         dispatch(postFailDocument(fileToUpload, 'audio'));
       }
     });
