@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import Svg, { Path, G } from 'react-native-svg';
 
 import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
-import { postFail } from '../../redux/ducks/files';
+import { postFail, postFailDocument } from '../../redux/ducks/files';
 
 const AddFileButton = (props) => {
   const [addFile, setAddFile] = useState(false);
@@ -19,69 +19,55 @@ const AddFileButton = (props) => {
   };
 
   const pickDocument = async () => {
-    //   DocumentPicker.getDocumentAsync({
-    //     type: "*/*",
-    //     copyToCacheDirectory: false,
-    //     multiple: true,
-    //   }).then(({uri}) => {
-    //     FileSystem.downloadAsync(
-    //         uri,
-    //          FileSystem.documentDirectory + '<file name>')
-    //     .then(({uri}) => {
-    //          FileSystem.readAsStringAsync(uri)
-    //     }).then(result => {
-    //      console.log(result)
-    //  });
-    // });
-    // alert(result.uri);
-    // console.log(result);
-    // setImage(result.uri);
-    // dispatch(postFail(result, 'audio'));
-    //   props.openModalAddFile();
-    // let fff = await FileSystem.readAsStringAsync(result.uri);
-    // console.log(fff)
     let result = await DocumentPicker.getDocumentAsync({
       type: 'application/*',
-      copyToCacheDirectory: false,
-      multiple: true,
+      copyToCacheDirectory: true,
+    }).then((response) => {
+      if (response.type == 'success') {
+        let { name, size, uri } = response;
+
+        if (Platform.OS === 'android' && uri[0] === '/') {
+          uri = `file://${uri}`;
+          uri = uri.replace(/%/g, '%25');
+        }
+
+        let nameParts = name.split('.');
+        let fileType = nameParts[nameParts.length - 1];
+        var fileToUpload = {
+          name: name,
+          size: size,
+          uri: uri,
+          type: 'application/' + fileType,
+        };
+        dispatch(postFailDocument(fileToUpload, 'document'));
+      }
     });
-    alert(result.uri);
-    // dispatch(postFail(result, 'document'));
-    props.openModalAddFile();
-    console.log(result);
   };
 
   const pickAudio = async () => {
-    //   DocumentPicker.getDocumentAsync({
-    //     type: "*/*",
-    //     copyToCacheDirectory: false,
-    //     multiple: true,
-    //   }).then(({uri}) => {
-    //     FileSystem.downloadAsync(
-    //         uri,
-    //          FileSystem.documentDirectory + '<file name>')
-    //     .then(({uri}) => {
-    //          FileSystem.readAsStringAsync(uri)
-    //     }).then(result => {
-    //      console.log(result)
-    //  });
-    // });
-    // alert(result.uri);
-    // console.log(result);
-    // setImage(result.uri);
-    // dispatch(postFail(result, 'audio'));
-    //   props.openModalAddFile();
-    // let fff = await FileSystem.readAsStringAsync(result.uri);
-    // console.log(fff)
     let result = await DocumentPicker.getDocumentAsync({
       type: 'audio/*',
-      copyToCacheDirectory: false,
-      multiple: true,
+      copyToCacheDirectory: true,
+    }).then((response) => {
+      if (response.type == 'success') {
+        let { name, size, uri } = response;
+
+        if (Platform.OS === 'android' && uri[0] === '/') {
+          uri = `file://${uri}`;
+          uri = uri.replace(/%/g, '%25');
+        }
+
+        let nameParts = name.split('.');
+        let fileType = nameParts[nameParts.length - 1];
+        var fileToUpload = {
+          name: name,
+          size: size,
+          uri: uri,
+          type: 'audio/' + fileType,
+        };
+        dispatch(postFailDocument(fileToUpload, 'audio'));
+      }
     });
-    alert(result.uri);
-    // dispatch(postFail(result, 'audio'));
-    props.openModalAddFile();
-    console.log(result);
   };
 
   return (

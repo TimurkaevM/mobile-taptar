@@ -519,21 +519,23 @@ export default function files(state = initialState, action) {
         const object = {};
 
         for (let i = 0; i < arr.length; i++) {
-          if (!result.includes(arr[i].group_hash)) {
-            result.push(arr[i].group_hash);
+          if (!result.includes(arr[i].group_uid)) {
+            result.push(arr[i].group_uid);
           }
         }
 
         for (let i = 0; i < result.length; i++) {
           object[result[i]] = {
-            group: '',
+            group_uid: '',
+            type: '',
             files: [],
           };
         }
 
         for (let i = 0; i < arr.length; i++) {
-          object[arr[i].group_hash].group = arr[i].group_hash;
-          object[arr[i].group_hash].files.push(arr[i]);
+          object[arr[i].group_uid].group_uid = arr[i].group_uid;
+          object[arr[i].group_uid].type = arr[i].type;
+          object[arr[i].group_uid].files.push(arr[i]);
         }
         return Object.values(object);
       }
@@ -932,6 +934,57 @@ export const postFail = (file, format) => {
     uri: file[0].uri,
     name: file[0].filename,
     type: 'image/jpeg',
+  });
+  form.append('type', format);
+
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: 'files/post/start', file, format, value, form });
+
+      if (value !== null) {
+        const response = await api.post('/user/draft/file', form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${value}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            const totalLength = progressEvent.lengthComputable
+              ? progressEvent.total
+              : progressEvent.target.getResponseHeader('content-length') ||
+                progressEvent.target.getResponseHeader(
+                  'x-decompressed-content-length',
+                );
+            if (totalLength) {
+              let progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength,
+              );
+              dispatch({
+                type: 'change/progress',
+                payload: progress,
+              });
+            }
+          },
+        });
+        dispatch({
+          type: 'files/post/success',
+          payload: response.data,
+          format,
+        });
+      }
+    } catch (e) {
+      console.log(e.response);
+    }
+  };
+};
+
+export const postFailDocument = (file, format) => {
+  const form = new FormData();
+  form.append('file', {
+    uri: file.uri,
+    name: file.name,
+    type: file.type,
   });
   form.append('type', format);
 
