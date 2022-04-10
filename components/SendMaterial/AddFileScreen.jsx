@@ -141,20 +141,20 @@ const AddFileScreen = (props) => {
     // }
   };
 
-
-  if (loadingFiles) return (
-    <Text
-    style={{
-      textAlign: 'left',
-      marginBottom: 10,
-      textTransform: 'capitalize',
-      fontWeight: '400',
-      fontSize: 15,
-    }}
-  >
-    {progress}
-  </Text>
-  );
+  if (loadingFiles)
+    return (
+      <Text
+        style={{
+          textAlign: 'left',
+          marginBottom: 10,
+          textTransform: 'capitalize',
+          fontWeight: '400',
+          fontSize: 15,
+        }}
+      >
+        {progress}
+      </Text>
+    );
 
   return (
     <View style={styles.centeredView}>

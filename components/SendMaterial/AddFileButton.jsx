@@ -78,6 +78,7 @@ const AddFileButton = (props) => {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 30,
       }}
     >
       <TouchableOpacity
