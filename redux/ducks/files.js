@@ -20,7 +20,7 @@ const initialState = {
 
     text: {
       text: '',
-      type: "text",
+      type: 'text',
       title: '',
       year: '',
       author: '',
@@ -98,7 +98,9 @@ export default function files(state = initialState, action) {
     case 'tag/types/remove':
       return {
         ...state,
-        tags_information: state.tags_information.filter((type) => type.id !== action.payload),
+        tags_information: state.tags_information.filter(
+          (type) => type.id !== action.payload,
+        ),
       };
 
     // Изменение текста
@@ -517,21 +519,23 @@ export default function files(state = initialState, action) {
         const object = {};
 
         for (let i = 0; i < arr.length; i++) {
-          if (!result.includes(arr[i].group_hash)) {
-            result.push(arr[i].group_hash);
+          if (!result.includes(arr[i].group_uid)) {
+            result.push(arr[i].group_uid);
           }
         }
 
         for (let i = 0; i < result.length; i++) {
           object[result[i]] = {
-            group: '',
+            group_uid: '',
+            type: '',
             files: [],
           };
         }
 
         for (let i = 0; i < arr.length; i++) {
-          object[arr[i].group_hash].group = arr[i].group_hash;
-          object[arr[i].group_hash].files.push(arr[i]);
+          object[arr[i].group_uid].group_uid = arr[i].group_uid;
+          object[arr[i].group_uid].type = arr[i].type;
+          object[arr[i].group_uid].files.push(arr[i]);
         }
         return Object.values(object);
       }
@@ -554,33 +558,33 @@ export default function files(state = initialState, action) {
 
           audio: {
             one: action.payload.message.audio.filter(
-              (item) => item.group_hash === null,
+              (item) => item.group_uid === null,
             ),
             group: getGroupFiles(
               action.payload.message.audio.filter(
-                (item) => item.group_hash !== null,
+                (item) => item.group_uid !== null,
               ),
             ),
           },
 
           document: {
             one: action.payload.message.document.filter(
-              (item) => item.group_hash === null,
+              (item) => item.group_uid === null,
             ),
             group: getGroupFiles(
               action.payload.message.document.filter(
-                (item) => item.group_hash !== null,
+                (item) => item.group_uid !== null,
               ),
             ),
           },
 
           video: {
             one: action.payload.message.video.filter(
-              (item) => item.group_hash === null,
+              (item) => item.group_uid === null,
             ),
             group: getGroupFiles(
               action.payload.message.video.filter(
-                (item) => item.group_hash !== null,
+                (item) => item.group_uid !== null,
               ),
             ),
           },
@@ -926,7 +930,62 @@ export const clearFiles = (files, info) => {
 
 export const postFail = (file, format) => {
   const form = new FormData();
-  form.append('file', file[0]);
+  form.append('file', {
+    uri: file[0].uri,
+    name: file[0].filename,
+    type: 'image/jpeg',
+  });
+  form.append('type', format);
+
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: 'files/post/start', file, format, value, form });
+
+      if (value !== null) {
+        const response = await api.post('/user/draft/file', form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${value}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            const totalLength = progressEvent.lengthComputable
+              ? progressEvent.total
+              : progressEvent.target.getResponseHeader('content-length') ||
+                progressEvent.target.getResponseHeader(
+                  'x-decompressed-content-length',
+                );
+            if (totalLength) {
+              let progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength,
+              );
+              dispatch({
+                type: 'change/progress',
+                payload: progress,
+              });
+            }
+          },
+        });
+        dispatch({
+          type: 'files/post/success',
+          payload: response.data,
+          format,
+        });
+      }
+    } catch (e) {
+      console.log(e.response);
+    }
+  };
+};
+
+export const postFailDocument = (file, format) => {
+  const form = new FormData();
+  form.append('file', {
+    uri: file.uri,
+    name: file.name,
+    type: file.type,
+  });
   form.append('type', format);
 
   return async (dispatch) => {
@@ -975,48 +1034,93 @@ export const postFilesGroup = (files, format, causes) => {
   const form = new FormData();
   form.append('type', format);
   for (let i = 0; i < files.length; i++) {
-    form.append(`files[${i}]`, files[i]);
+    form.append(`files[${i}]`, {
+      uri: files[i].uri,
+      name: files[i].filename,
+      type: 'image/jpeg',
+    });
   }
 
   for (let i = 0; i < causes.length; i++) {
     form.append(`causes[${i}]`, causes[i]);
   }
 
-  return (dispatch) => {
-    dispatch({ type: 'files/post/start', files, format, causes });
+  // return (dispatch) => {
+  //   dispatch({ type: 'files/post/start', files, format, causes });
 
-    api
-      .post('/user/draft/group', form, {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-        onUploadProgress: (progressEvent) => {
-          const totalLength = progressEvent.lengthComputable
-            ? progressEvent.total
-            : progressEvent.target.getResponseHeader('content-length') ||
-              progressEvent.target.getResponseHeader(
-                'x-decompressed-content-length',
+  //   api
+  //     .post('/user/draft/group', form, {
+  //       headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
+  //       onUploadProgress: (progressEvent) => {
+  //         const totalLength = progressEvent.lengthComputable
+  //           ? progressEvent.total
+  //           : progressEvent.target.getResponseHeader('content-length') ||
+  //             progressEvent.target.getResponseHeader(
+  //               'x-decompressed-content-length',
+  //             );
+  //         if (totalLength) {
+  //           let progress = Math.round(
+  //             (progressEvent.loaded * 100) / totalLength,
+  //           );
+  //           dispatch({
+  //             type: 'change/progress',
+  //             payload: progress,
+  //           });
+  //         }
+  //       },
+  //     })
+  //     .then((response) => response.data)
+  //     .then((data) => {
+  //       dispatch({
+  //         type: 'files/post/success',
+  //         payload: data,
+  //         format,
+  //       });
+  //     })
+  //     .catch((e) => {
+  //       console.error(e);
+  //     });
+  // };
+
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: 'files/post/start', files, format, causes });
+
+      if (value !== null) {
+        const response = await api.post('/user/draft/group', form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${value}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            const totalLength = progressEvent.lengthComputable
+              ? progressEvent.total
+              : progressEvent.target.getResponseHeader('content-length') ||
+                progressEvent.target.getResponseHeader(
+                  'x-decompressed-content-length',
+                );
+            if (totalLength) {
+              let progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength,
               );
-          if (totalLength) {
-            let progress = Math.round(
-              (progressEvent.loaded * 100) / totalLength,
-            );
-            dispatch({
-              type: 'change/progress',
-              payload: progress,
-            });
-          }
-        },
-      })
-      .then((response) => response.data)
-      .then((data) => {
+              dispatch({
+                type: 'change/progress',
+                payload: progress,
+              });
+            }
+          },
+        });
         dispatch({
           type: 'files/post/success',
-          payload: data,
+          payload: response.data,
           format,
         });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+      }
+    } catch (e) {
+      console.log(e.response);
+    }
   };
 };
 

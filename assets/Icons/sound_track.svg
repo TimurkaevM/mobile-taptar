@@ -1,0 +1,21 @@
+<svg id="Group_13_copy" data-name="Group 13 copy" xmlns="http://www.w3.org/2000/svg" width="2088" height="482" viewBox="0 0 2088 482">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+        stroke: #000;
+      }
+
+      .cls-1 {
+        stroke-width: 5px;
+      }
+
+      .cls-2 {
+        stroke-width: 3px;
+      }
+    </style>
+  </defs>
+  <rect class="cls-1" x="219" y="264.844" width="1729" height="70.312"/>
+  <rect x="246" y="159.219" width="1667" height="5.562"/>
+  <circle id="Ellipse_4_copy" data-name="Ellipse 4 copy" class="cls-2" cx="305.047" cy="162.266" r="20.578"/>
+</svg>

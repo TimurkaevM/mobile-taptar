@@ -1,16 +1,11 @@
 import { api } from '../../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const CENTURIES_START = 'centuries/load/start';
-export const CENTURIES_SUCCESS = 'centuries/load/success';
+export const ALL_TAGS_START = 'tags/load/start';
+export const ALL_TAGS_SUCCESS = 'tags/load/success';
+
 export const EFFECTS_START = 'effects/load/start';
 export const EFFECTS_SUCCESS = 'effects/load/success';
-export const CREDIBILITY_START = 'credibility/load/start';
-export const CREDIBILITY_SUCCESS = 'credibility/load/success';
-export const DELETE_START = 'delete/load/start';
-export const DELETE_SUCCESS = 'delete/load/success';
-export const TYPES_START = 'types/load/start';
-export const TYPES_SUCCESS = 'types/load/success';
 export const CAUSES_START = 'causes/load/start';
 export const CAUSES_SUCCESS = 'causes/load/success';
 export const CHECK_START = 'check/load/start';
@@ -35,30 +30,21 @@ const initialState = {
 
 export default function contribution(state = initialState, action) {
   switch (action.type) {
-    case CENTURIES_START:
+    case ALL_TAGS_START:
       return {
         ...state,
         loading: true,
       };
 
-    case CENTURIES_SUCCESS:
+    case ALL_TAGS_SUCCESS:
       return {
         ...state,
         loading: false,
-        centuries: action.payload.message,
-      };
-
-    case DELETE_START:
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case DELETE_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        deleteTag: action.payload.message,
+        centuries: action.payload.message.tags_century,
+        deleteTag: action.payload.message.tags_delete,
+        types: action.payload.message.tags_information,
+        albums: action.payload.message.albums,
+        credibility: action.payload.message.tags_credibility,
       };
 
     case EFFECTS_START:
@@ -72,32 +58,6 @@ export default function contribution(state = initialState, action) {
         ...state,
         loading: false,
         effects: action.payload.message,
-      };
-
-    case CREDIBILITY_START:
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case CREDIBILITY_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        credibility: action.payload.message,
-      };
-
-    case TYPES_START:
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case TYPES_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        types: action.payload.message,
       };
 
     case CAUSES_START:
@@ -154,73 +114,27 @@ export default function contribution(state = initialState, action) {
   }
 }
 
-export const getCenturies = () => {
+export const getAllTags = () => {
   return async (dispatch) => {
     try {
       const value = await AsyncStorage.getItem('token');
 
       dispatch({
-        type: CENTURIES_START,
+        type: ALL_TAGS_START,
       });
 
       if (value !== null) {
-        const response = await api.get('/tags/century', {
+        const response = await api.get('/tags/all', {
           headers: { Authorization: `Bearer ${value}` },
         });
         dispatch({
-          type: CENTURIES_SUCCESS,
+          type: ALL_TAGS_SUCCESS,
           payload: response.data,
         });
       }
     } catch (e) {
       console.log(e);
     }
-  };
-};
-
-export const getDelete = () => {
-  return (dispatch) => {
-    dispatch({
-      type: DELETE_START,
-    });
-
-    api
-      .get('/tags/delete', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        dispatch({
-          type: DELETE_SUCCESS,
-          payload: data,
-        });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
-};
-
-export const getCredibility = () => {
-  return (dispatch) => {
-    dispatch({
-      type: CREDIBILITY_START,
-    });
-
-    api
-      .get('/tags/credibility', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        dispatch({
-          type: CREDIBILITY_SUCCESS,
-          payload: data,
-        });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
   };
 };
 
@@ -247,50 +161,27 @@ export const getEffects = () => {
   };
 };
 
-export const getTypes = () => {
+export const getCauses = () => {
   return async (dispatch) => {
     try {
       const value = await AsyncStorage.getItem('token');
 
       dispatch({
-        type: TYPES_START,
+        type: CAUSES_START,
       });
 
       if (value !== null) {
-        const response = await api.get('/tags/information', {
+        const response = await api.get('/tags/group', {
           headers: { Authorization: `Bearer ${value}` },
         });
         dispatch({
-          type: TYPES_SUCCESS,
+          type: CAUSES_SUCCESS,
           payload: response.data,
         });
       }
     } catch (e) {
       console.log(e);
     }
-  };
-};
-
-export const getCauses = () => {
-  return (dispatch) => {
-    dispatch({
-      type: CAUSES_START,
-    });
-
-    api
-      .get('/tags/group', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        dispatch({
-          type: CAUSES_SUCCESS,
-          payload: data,
-        });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
   };
 };
 
