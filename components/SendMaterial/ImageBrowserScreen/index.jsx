@@ -19,7 +19,7 @@ const ForceInset = {
 
 // See => https://docs.expo.dev/versions/latest/sdk/media-library/#assetinfo
 
-export default function App(props) {
+export default function ImageBrowserScreen(props) {
   const dispatch = useDispatch();
 
   const { navigate } = props.navigation;

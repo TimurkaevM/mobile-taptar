@@ -8,14 +8,14 @@ import {
   FlatList,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeText, changeTitle } from '../../redux/ducks/files';
+import { changeText, changeTitle } from '../../../redux/ducks/files';
 import AddFileButton from './AddFileButton';
 import { Video } from 'expo-av';
 import Svg, { Path, G } from 'react-native-svg';
 
-import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
+import { sendMaterialStyles } from '../../../styles/sendMaterialStyles';
 
-function SendMaterialMain(props) {
+function FormSend(props) {
   const { navigate, push } = props.navigation;
 
   const dispatch = useDispatch();
@@ -1056,4 +1056,4 @@ function SendMaterialMain(props) {
   );
 }
 
-export default SendMaterialMain;
+export default FormSend;

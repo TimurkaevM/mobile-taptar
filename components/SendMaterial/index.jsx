@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getDraftFiles } from '../../redux/ducks/files';
-import AddFileScreen from './AddFileScreen';
+import TagsScreen from './TagsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-import SendMaterialMain from './SendMaterialMain';
+import FormSend from './FormSend';
 import ImageBrowserScreen from './ImageBrowserScreen';
+import AudioListScreen from './AudioListScreen';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,7 @@ function SendMaterial() {
     <Stack.Navigator initialRouteName="Main">
       <Stack.Screen
         name="Main"
-        component={SendMaterialMain}
+        component={FormSend}
         options={{
           title: 'Форма настройки материала',
           headerStyle: {
@@ -37,9 +38,20 @@ function SendMaterial() {
       />
       <Stack.Screen
         name="ModalAddFile"
-        component={AddFileScreen}
+        component={TagsScreen}
         options={{
           title: 'Настройка принадлежностей',
+          headerStyle: {
+            backgroundColor: '#4686cc',
+          },
+          headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
+        name="AudioListScreen"
+        component={AudioListScreen}
+        options={{
+          title: 'Список аудио',
           headerStyle: {
             backgroundColor: '#4686cc',
           },
