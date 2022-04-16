@@ -1,89 +1,127 @@
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import * as MediaLibrary from 'expo-media-library'
+import * as MediaLibrary from 'expo-media-library';
+import {
+  LayoutProvider,
+  RecyclerListView,
+  DataProvider,
+} from 'recyclerlistview';
 
 const AudioListScreen = () => {
   const [audioFiles, setAudioFiles] = useState([]);
   const [permissionError, setPermissionError] = useState(false);
 
-  console.log(audioFiles)
+  const [dataProvider, setDataProvider] = useState(
+    new DataProvider((r1, r2) => r1 !== r2),
+  );
 
   const getPermission = async () => {
     const permission = await MediaLibrary.getPermissionsAsync();
-    if(permission.granted){
+    if (permission.granted) {
       getAudioFiles();
     }
 
-    if(!permission.canAskAgain && !permission.granted) {
+    if (!permission.canAskAgain && !permission.granted) {
       setPermissionError(true);
     }
 
-    if(!permission.granted && permission.canAskAgain) {
-      const {status, canAskAgain} = await MediaLibrary.requestPermissionsAsync();
+    if (!permission.granted && permission.canAskAgain) {
+      const { status, canAskAgain } =
+        await MediaLibrary.requestPermissionsAsync();
 
-      if(status === 'denied' && canAskAgain) {
-        permissionAlert()
+      if (status === 'denied' && canAskAgain) {
+        permissionAlert();
       }
 
-      if(status === 'granted') {
+      if (status === 'granted') {
         getAudioFiles();
       }
 
-      if(status === 'denied' && !canAskAgain) {
+      if (status === 'denied' && !canAskAgain) {
         setPermissionError(true);
       }
     }
-  }
+  };
 
   const permissionAlert = () => {
-    Alert.alert('Permission Required', 'This app needs to read audio files', [{
-      text: 'I am ready',
-      onPress: () => getPermission(),
-    }, {
-      text: 'cancel',
-      onPress: () => permissionAlert(),
-    }])
-  }
+    Alert.alert('Permission Required', 'This app needs to read audio files', [
+      {
+        text: 'I am ready',
+        onPress: () => getPermission(),
+      },
+      {
+        text: 'cancel',
+        onPress: () => permissionAlert(),
+      },
+    ]);
+  };
 
   const getAudioFiles = async () => {
     let media = await MediaLibrary.getAssetsAsync({
       mediaType: 'audio',
-    })
+    });
     media = await MediaLibrary.getAssetsAsync({
       mediaType: 'audio',
       first: media.totalCount,
-    })
+    });
+    setAudioFiles([...audioFiles, ...media.assets]);
+    setDataProvider(
+      dataProvider.cloneWithRows([...audioFiles, ...media.assets]),
+    );
+  };
 
-    setAudioFiles(media.assets);
-  } 
+  const layoutProvider = new LayoutProvider(
+    (i) => 'audio',
+    (type, dim) => {
+      switch (type) {
+        case 'audio':
+          dim.width = Dimensions.get('window').width;
+          dim.height = 70;
+          break;
+        default:
+          dim.width = 0;
+          dim.height = 0;
+      }
+    },
+  );
+
+  const rowRender = (type, item) => {
+    return <Text>{item.filename}</Text>;
+  };
 
   useEffect(() => {
     getPermission();
   }, []);
 
-  if(permissionError) {
+  if (permissionError) {
     return (
       <View style={styles.container}>
-        <Text style={{fontSize: 25, textAlign: 'center', color: 'red'}}>
+        <Text style={{ fontSize: 25, textAlign: 'center', color: 'red' }}>
           It looks like you haven't accept the permission.
         </Text>
       </View>
-    )
+    );
   }
 
   return (
-    <ScrollView>
-      {audioFiles.map(item => <Text key={item.id}>{item.filename}</Text>)}
-    </ScrollView>
-  )
-}
+    <View style={{ flex: 1 }}>
+      {dataProvider && dataProvider.getSize() > 0 && (
+        <RecyclerListView
+          dataProvider={dataProvider}
+          layoutProvider={layoutProvider}
+          rowRenderer={rowRender}
+        />
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  }
-})
+  },
+});
 
 export default AudioListScreen;
