@@ -6,6 +6,7 @@ import {
   RecyclerListView,
   DataProvider,
 } from 'recyclerlistview';
+import AudioListItem from './components/AudioListItem';
 
 const AudioListScreen = () => {
   const [audioFiles, setAudioFiles] = useState([]);
@@ -86,7 +87,12 @@ const AudioListScreen = () => {
   );
 
   const rowRender = (type, item) => {
-    return <Text>{item.filename}</Text>;
+    return (
+      <AudioListItem 
+        title={item.filename}
+        duration={item.duration}
+      />
+    );
   };
 
   useEffect(() => {
