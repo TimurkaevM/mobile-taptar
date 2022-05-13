@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import color from '../../../misc/color';
+import color from '../misk/color';
 
 const getThumbnailText = (filename) => filename[0];
 

@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
 import { AssetsSelector } from 'expo-images-picker';
 import { Ionicons } from '@expo/vector-icons';
-import StatusBarPlaceHolder from './components/StatusBarPlaceHolder';
+import StatusBarPlaceHolder from '../misk/StatusBarPlaceHolder';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { MediaType } from 'expo-media-library';
-import { postFail, postFilesGroup } from '../../../redux/ducks/files';
+import { postFail, postFilesGroup } from '../redux/ducks/files';
 
 const ForceInset = {
   top: 'never',

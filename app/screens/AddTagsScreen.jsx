@@ -11,8 +11,8 @@ import {
   removeTypes,
   changeCommentTag,
   UploadOneFail,
-} from '../../../redux/ducks/files';
-import AddInformation from './AddInformation';
+} from '../redux/ducks/files';
+import AddInformation from '../components/AddInformation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import {
@@ -27,9 +27,9 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import AudioPlayer from '../../Media/AudioPlayer';
+import AudioPlayer from '../components/AudioPlayer';
 
-const TagsScreen = (props) => {
+const AddTagsScreen = (props) => {
   const dispatch = useDispatch();
 
   const progress = useSelector((state) => state.files.progress);
@@ -474,4 +474,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TagsScreen;
+export default AddTagsScreen;

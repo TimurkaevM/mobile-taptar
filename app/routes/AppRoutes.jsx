@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Main from '../../components';
-import { auth } from './redux/ducks/user';
-import ViewScreen from '../../ViewScreen';
+import MainRoutes from './MainRoutes';
+import { auth } from '../redux/ducks/user';
+import EntranceRoutes from './EntranceRoutes';
 
 export default function AppRoutes() {
   const isAuth = useSelector((state) => state.user.isAuth);
@@ -19,12 +19,12 @@ export default function AppRoutes() {
 
   if (isAuth && !user.length) {
     routes = (
-      <Main />
+      <MainRoutes />
       // <ViewScreen />
     );
   } else {
     routes = (
-      <ViewScreen />
+      <EntranceRoutes />
       // <Main />
     );
   }

@@ -6,7 +6,7 @@ import {
   RecyclerListView,
   DataProvider,
 } from 'recyclerlistview';
-import AudioListItem from './components/AudioListItem';
+import AudioListItem from '../components/AudioListItem';
 
 const AudioListScreen = () => {
   const [audioFiles, setAudioFiles] = useState([]);

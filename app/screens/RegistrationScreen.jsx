@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { registrStyles } from '../styles/registrStyles';
 
-function Registration() {
+function RegistrationScreen() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.user.loading);
   const error = useSelector((state) => state.user.error);
@@ -151,4 +151,4 @@ function Registration() {
   );
 }
 
-export default Registration;
+export default RegistrationScreen;

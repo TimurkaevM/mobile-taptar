@@ -5,7 +5,7 @@ import { login, ChangeError } from '../redux/ducks/user';
 
 import { authStyles } from '../styles/authStyles';
 
-function Auth() {
+function AuthScreen() {
   const dispatch = useDispatch();
 
   const loading = useSelector((state) => state.user.loading);
@@ -111,4 +111,4 @@ function Auth() {
   );
 }
 
-export default Auth;
+export default AuthScreen;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Auth from './Auth';
-import Registration from './Registration';
+import Auth from '../screens/AuthScreen';
+import Registration from '../screens/RegistrationScreen';
 
-function ViewScreen() {
+function EntranceRoutes() {
   const Tab = createMaterialTopTabNavigator();
 
   return (
@@ -36,4 +36,4 @@ function ViewScreen() {
   );
 }
 
-export default ViewScreen;
+export default EntranceRoutes;

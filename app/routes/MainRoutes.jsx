@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import Messenger from './Messenger';
-import SendMaterial from './SendMaterial';
-import Profile from './Profile';
+import Messenger from '../screens/ChatScreen';
+import SendMaterial from './SendMaterialRoutes';
+import Profile from '../screens/ProfileScreen';
 import { useDispatch } from 'react-redux';
 import { getAllTags, getCauses } from '../redux/ducks/tags';
 import Svg, { Path, G } from 'react-native-svg';
 
-function Main() {
+function MainRoutes() {
   const Tab = createMaterialBottomTabNavigator();
 
   const dispatch = useDispatch();
@@ -215,4 +215,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default MainRoutes;

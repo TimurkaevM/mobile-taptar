@@ -5,8 +5,8 @@ import * as DocumentPicker from 'expo-document-picker';
 import { useDispatch } from 'react-redux';
 import Svg, { Path, G } from 'react-native-svg';
 
-import { sendMaterialStyles } from '../../../styles/sendMaterialStyles';
-import { postFail, postFailDocument } from '../../../redux/ducks/files';
+import { sendMaterialStyles } from '../styles/sendMaterialStyles';
+import { postFail, postFailDocument } from '../redux/ducks/files';
 
 const AddFileButton = (props) => {
   const [addFile, setAddFile] = useState(false);

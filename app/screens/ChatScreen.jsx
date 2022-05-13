@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-function Messenger() {
+function ChatScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Messenger!</Text>
@@ -9,4 +9,4 @@ function Messenger() {
   );
 }
 
-export default Messenger;
+export default ChatScreen;

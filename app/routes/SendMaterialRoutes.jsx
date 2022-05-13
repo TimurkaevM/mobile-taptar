@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getDraftFiles } from '../../redux/ducks/files';
-import TagsScreen from './TagsScreen';
+import { getDraftFiles } from '../redux/ducks/files';
+import TagsScreen from '../screens/AddTagsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-import FormSend from './FormSend';
-import ImageBrowserScreen from './ImageBrowserScreen';
-import AudioListScreen from './AudioListScreen';
+import FormSend from '../screens/SendMaterialScreen';
+import ImageBrowserScreen from '../screens/ImageBrowserScreen';
+import AudioListScreen from '../screens/AudioListScreen';
 
 const Stack = createStackNavigator();
 
-function SendMaterial() {
+function SendMaterialRoutes() {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -62,4 +62,4 @@ function SendMaterial() {
   );
 }
 
-export default SendMaterial;
+export default SendMaterialRoutes;
