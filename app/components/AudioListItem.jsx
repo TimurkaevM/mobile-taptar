@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import color from '../misk/color';
-
-const getThumbnailText = (filename) => filename[0];
+import color from '../misc/color';
+import { Entypo } from '@expo/vector-icons';
 
 const convertTime = minutes => {
   if (minutes) {
@@ -28,14 +27,26 @@ const convertTime = minutes => {
   }
 };
 
-export default function AudioListItem({title, duration}) {
+const renderPlayPauseIcon = isPlaying => {
+  if (isPlaying)
+    return (
+      <Entypo name='controller-paus' size={24} color={color.ACTIVE_FONT} />
+    );
+  return <Entypo name='controller-play' size={24} color={color.ACTIVE_FONT} />;
+};
+
+export default function AudioListItem({title, duration, onAudioPress, isPlaying, activeListItem}){
   return (
     <>
     <View style={styles.container}>
       <View style={styles.leftContainer}>
-        <View style={styles.thumbnail}>
-          <Text style={styles.thumbnailText}>{getThumbnailText(title)}</Text>
-        </View>
+        <TouchableWithoutFeedback onPress={onAudioPress}>
+          <View style={styles.thumbnail}>
+            {activeListItem
+              ? renderPlayPauseIcon(isPlaying)
+              : <Entypo name='controller-play' size={24} color={color.ACTIVE_FONT} />}
+          </View>
+        </TouchableWithoutFeedback>
         <View style={styles.titleContainer}>
           <Text numberOfLines={1} style={styles.title}>{title}</Text>
           <Text style={styles.timeText}>{convertTime(duration)}</Text>
