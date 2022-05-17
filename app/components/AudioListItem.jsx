@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableWithoutFeedback, Pressable } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import color from '../misc/color';
 import { Entypo } from '@expo/vector-icons';
@@ -35,7 +35,7 @@ const renderPlayPauseIcon = isPlaying => {
   return <Entypo name='controller-play' size={24} color={color.ACTIVE_FONT} />;
 };
 
-export default function AudioListItem({title, duration, onAudioPress, isPlaying, activeListItem}){
+export default function AudioListItem({title, duration, onAudioPress, isPlaying, activeListItem, selectAudioPress, removeAudioPress, checkAudio}){
   return (
     <>
     <View style={styles.container}>
@@ -52,10 +52,11 @@ export default function AudioListItem({title, duration, onAudioPress, isPlaying,
           <Text style={styles.timeText}>{convertTime(duration)}</Text>
         </View>
       </View>
-      <View style={styles.rightContainer}>
-        {/* <AntDesign name="check" size={24} color="green" /> */}
-        <AntDesign name="close" size={24} color="red" />
-      </View>
+      <Pressable onPress={checkAudio ? removeAudioPress : selectAudioPress} style={styles.rightContainer}>
+        <View style={styles.circle}>
+          {checkAudio ? <View style={styles.circleInner}></View> : null}
+        </View>
+      </Pressable>
     </View>
     <View style={styles.separator} />
     </>
@@ -81,6 +82,20 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  circle: {
+    width: 30,
+    height: 30,
+    backgroundColor: color.APP_BG,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 40,
+  },
+  circleInner: {
+    width: 15,
+    height: 15,
+    backgroundColor: color.MAIN_COLOR,
+    borderRadius: 20,
   },
   thumbnail: {
     height: 50,

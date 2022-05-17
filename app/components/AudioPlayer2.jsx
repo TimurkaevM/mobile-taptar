@@ -14,7 +14,7 @@ import {
   playNext,
   resume,
 } from '../misc/audioController';
-import { convertTime, storeAudioForNextOpening } from '../misc/helper';
+import { convertTime } from '../misc/helper';
 import { selectAudio } from '../misc/audioController';
 
 const { width } = Dimensions.get('window');

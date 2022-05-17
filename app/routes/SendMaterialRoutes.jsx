@@ -50,12 +50,15 @@ function SendMaterialRoutes() {
       <Stack.Screen
         name="AudioListScreen"
         component={AudioListScreen}
+        // options={{
+        //   title: 'Список аудио',
+        //   headerStyle: {
+        //     backgroundColor: '#4686cc',
+        //   },
+        //   headerTintColor: '#fff',
+        // }}
         options={{
-          title: 'Список аудио',
-          headerStyle: {
-            backgroundColor: '#4686cc',
-          },
-          headerTintColor: '#fff',
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

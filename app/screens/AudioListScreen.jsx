@@ -1,146 +1,11 @@
-// import { Text, View, StyleSheet, ScrollView, Dimensions } from 'react-native';
-// import React, { useEffect, useState } from 'react';
-// import * as MediaLibrary from 'expo-media-library';
-// import { AudioContext } from '../context/AudioProvider';
-// import {
-//   LayoutProvider,
-//   RecyclerListView,
-//   DataProvider,
-// } from 'recyclerlistview';
-// import AudioListItem from '../components/AudioListItem';
-
-// const AudioListScreen = () => {
-//   const [audioFiles, setAudioFiles] = useState([]);
-//   const [permissionError, setPermissionError] = useState(false);
-
-//   const [dataProvider, setDataProvider] = useState(
-//     new DataProvider((r1, r2) => r1 !== r2),
-//   );
-
-//   const getPermission = async () => {
-//     const permission = await MediaLibrary.getPermissionsAsync();
-//     if (permission.granted) {
-//       getAudioFiles();
-//     }
-
-//     if (!permission.canAskAgain && !permission.granted) {
-//       setPermissionError(true);
-//     }
-
-//     if (!permission.granted && permission.canAskAgain) {
-//       const { status, canAskAgain } =
-//         await MediaLibrary.requestPermissionsAsync();
-
-//       if (status === 'denied' && canAskAgain) {
-//         permissionAlert();
-//       }
-
-//       if (status === 'granted') {
-//         getAudioFiles();
-//       }
-
-//       if (status === 'denied' && !canAskAgain) {
-//         setPermissionError(true);
-//       }
-//     }
-//   };
-
-//   const permissionAlert = () => {
-//     Alert.alert('Permission Required', 'This app needs to read audio files', [
-//       {
-//         text: 'I am ready',
-//         onPress: () => getPermission(),
-//       },
-//       {
-//         text: 'cancel',
-//         onPress: () => permissionAlert(),
-//       },
-//     ]);
-//   };
-
-//   const getAudioFiles = async () => {
-//     let media = await MediaLibrary.getAssetsAsync({
-//       mediaType: 'audio',
-//     });
-//     media = await MediaLibrary.getAssetsAsync({
-//       mediaType: 'audio',
-//       first: media.totalCount,
-//     });
-//     setAudioFiles([...audioFiles, ...media.assets]);
-//     setDataProvider(
-//       dataProvider.cloneWithRows([...audioFiles, ...media.assets]),
-//     );
-//   };
-
-//   const layoutProvider = new LayoutProvider(
-//     (i) => 'audio',
-//     (type, dim) => {
-//       switch (type) {
-//         case 'audio':
-//           dim.width = Dimensions.get('window').width;
-//           dim.height = 70;
-//           break;
-//         default:
-//           dim.width = 0;
-//           dim.height = 0;
-//       }
-//     },
-//   );
-
-//   const rowRender = (type, item) => {
-//     console.log(item);
-//     return (
-//       <AudioListItem
-//         uri={item.uri}
-//         title={item.filename}
-//         duration={item.duration}
-//       />
-//     );
-//   };
-
-//   useEffect(() => {
-//     getPermission();
-//   }, []);
-
-//   if (permissionError) {
-//     return (
-//       <View style={styles.container}>
-//         <Text style={{ fontSize: 25, textAlign: 'center', color: 'red' }}>
-//           It looks like you haven't accept the permission.
-//         </Text>
-//       </View>
-//     );
-//   }
-
-//   return (
-//     <View style={{ flex: 1 }}>
-//       {dataProvider && dataProvider.getSize() > 0 && (
-//         <RecyclerListView
-//           dataProvider={dataProvider}
-//           layoutProvider={layoutProvider}
-//           rowRenderer={rowRender}
-//         />
-//       )}
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-// });
-
-// export default AudioListScreen;
-
 import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { AudioContext } from '../context/AudioProvider';
 import { RecyclerListView, LayoutProvider } from 'recyclerlistview';
 import AudioListItem from '../components/AudioListItem';
 import { selectAudio } from '../misc/audioController';
+import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
+import AudioListHeader from '../components/AudioListHeader';
 
 export class AudioList extends Component {
   static contextType = AudioContext;
@@ -149,6 +14,7 @@ export class AudioList extends Component {
     super(props);
     this.state = {
       optionModalVisible: false,
+      selectedAudio: [],
     };
 
     this.currentItem = {};
@@ -173,31 +39,47 @@ export class AudioList extends Component {
     await selectAudio(audio, this.context);
   };
 
+  handleSelectAudio = audio => {
+    const { selectedAudio } = this.state;
+    if(selectedAudio.length >= 5) return;
+    this.setState({
+      ...this.state,
+      selectedAudio: [...selectedAudio, audio],
+    })
+  }
+
+  handleRemoveAudio = audio => {
+    this.setState({
+      ...this.state,
+      selectedAudio: this.state.selectedAudio.filter(item => item.id !== audio.id),
+    })
+  }
+
   componentDidMount() {
     this.context.loadPreviousAudio();
   }
 
   rowRenderer = (type, item, index, extendedState) => {
+    const checkAudio = this.state.selectedAudio.some(audio => audio.id === item.id);
     return (
       <AudioListItem
+        checkAudio={checkAudio}
         title={item.filename}
         isPlaying={extendedState.isPlaying}
         activeListItem={this.context.currentAudioIndex === index}
         duration={item.duration}
         onAudioPress={() => this.handleAudioPress(item)}
+        selectAudioPress={() => this.handleSelectAudio(item)}
+        removeAudioPress={() => this.handleRemoveAudio(item)}
       />
     );
   };
 
-  navigateToPlaylist = () => {
-    this.context.updateState(this.context, {
-      addToPlayList: this.currentItem,
-    });
-    this.props.navigation.navigate('PlayList');
-  };
-
   render() {
     return (
+      <>
+      <StatusBarPlaceHolder />
+      <AudioListHeader selectedAudio={this.state.selectedAudio} goBack={this.props.navigation.goBack} />
       <AudioContext.Consumer>
         {({ dataProvider, isPlaying }) => {
           if (!dataProvider._data.length) return null;
@@ -213,6 +95,7 @@ export class AudioList extends Component {
           );
         }}
       </AudioContext.Consumer>
+      </>
     );
   }
 }
