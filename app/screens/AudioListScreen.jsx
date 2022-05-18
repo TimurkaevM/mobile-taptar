@@ -61,6 +61,7 @@ export class AudioList extends Component {
 
   rowRenderer = (type, item, index, extendedState) => {
     const checkAudio = this.state.selectedAudio.some(audio => audio.id === item.id);
+    console.log(item)
     return (
       <AudioListItem
         checkAudio={checkAudio}
@@ -79,7 +80,7 @@ export class AudioList extends Component {
     return (
       <>
       <StatusBarPlaceHolder />
-      <AudioListHeader selectedAudio={this.state.selectedAudio} goBack={this.props.navigation.goBack} />
+      <AudioListHeader selectedAudio={this.state.selectedAudio} goBack={this.props.navigation.goBack} navigate={this.props.navigation.navigate} />
       <AudioContext.Consumer>
         {({ dataProvider, isPlaying }) => {
           if (!dataProvider._data.length) return null;
@@ -99,13 +100,5 @@ export class AudioList extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default AudioList;

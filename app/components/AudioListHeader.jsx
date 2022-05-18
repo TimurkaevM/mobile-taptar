@@ -1,9 +1,24 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import color from '../misc/color';
+import { postFail, postFilesGroup } from '../redux/ducks/files';
+import { useDispatch, useSelector } from 'react-redux';
 
-const AudioListHeader = ({ selectedAudio, goBack }) => {
+const AudioListHeader = ({ selectedAudio, goBack, navigate }) => {
   const selectedAudioLength = selectedAudio.length;
+  
+  const dispatch = useDispatch();
+
+  const causes = useSelector((state) => state.tags.causes);
+  const causId = causes.map((caus) => caus.id);
+
+  const onSuccess = () => {
+    if(selectedAudioLength === 0) return;
+    navigate('ModalAddFile');
+    if (selectedAudioLength > 1)
+      return dispatch(postFilesGroup(selectedAudio, 'audio', causId));
+    return dispatch(postFail(selectedAudio, 'audio'));
+  };
 
   return (
     <View style={styles.container}>
@@ -11,7 +26,7 @@ const AudioListHeader = ({ selectedAudio, goBack }) => {
         <Text style={styles.btnText}>назад</Text>
       </TouchableOpacity>
       <Text>{selectedAudioLength} выбрано</Text>
-      <TouchableOpacity style={styles.btn}>
+      <TouchableOpacity onPress={onSuccess} style={styles.btn}>
         <Text style={styles.btnText}>отправить</Text>
       </TouchableOpacity>
     </View>
