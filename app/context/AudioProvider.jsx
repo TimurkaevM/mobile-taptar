@@ -107,7 +107,7 @@ export class AudioProvider extends Component {
     }
   };
 
-  onPlaybackStatusUpdate = async playbackStatus => {
+  onPlaybackStatusUpdate = async (playbackStatus) => {
     if (playbackStatus.isLoaded && playbackStatus.isPlaying) {
       this.updateState(this, {
         playbackPosition: playbackStatus.positionMillis,
@@ -119,7 +119,7 @@ export class AudioProvider extends Component {
       if (this.state.isPlayListRunning) {
         let audio;
         const indexOnPlayList = this.state.activePlayList.audios.findIndex(
-          ({ id }) => id === this.state.currentAudio.id
+          ({ id }) => id === this.state.currentAudio.id,
         );
         const nextIndex = indexOnPlayList + 1;
         audio = this.state.activePlayList.audios[nextIndex];
@@ -127,7 +127,7 @@ export class AudioProvider extends Component {
         if (!audio) audio = this.state.activePlayList.audios[0];
 
         const indexOnAllList = this.state.audioFiles.findIndex(
-          ({ id }) => id === audio.id
+          ({ id }) => id === audio.id,
         );
 
         const status = await playNext(this.state.playbackObj, audio.uri);

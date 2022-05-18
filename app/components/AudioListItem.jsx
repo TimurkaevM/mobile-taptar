@@ -1,10 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableWithoutFeedback, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableWithoutFeedback,
+  Pressable,
+} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import color from '../misc/color';
 import { Entypo } from '@expo/vector-icons';
 
-const convertTime = minutes => {
+const convertTime = (minutes) => {
   if (minutes) {
     const hrs = minutes / 60;
     const minute = hrs.toString().split('.')[0];
@@ -27,40 +34,60 @@ const convertTime = minutes => {
   }
 };
 
-const renderPlayPauseIcon = isPlaying => {
+const renderPlayPauseIcon = (isPlaying) => {
   if (isPlaying)
     return (
-      <Entypo name='controller-paus' size={24} color={color.ACTIVE_FONT} />
+      <Entypo name="controller-paus" size={24} color={color.ACTIVE_FONT} />
     );
-  return <Entypo name='controller-play' size={24} color={color.ACTIVE_FONT} />;
+  return <Entypo name="controller-play" size={24} color={color.ACTIVE_FONT} />;
 };
 
-export default function AudioListItem({title, duration, onAudioPress, isPlaying, activeListItem, selectAudioPress, removeAudioPress, checkAudio}){
+export default function AudioListItem({
+  title,
+  duration,
+  onAudioPress,
+  isPlaying,
+  activeListItem,
+  selectAudioPress,
+  removeAudioPress,
+  checkAudio,
+}) {
   return (
     <>
-    <View style={styles.container}>
-      <View style={styles.leftContainer}>
-        <TouchableWithoutFeedback onPress={onAudioPress}>
-          <View style={styles.thumbnail}>
-            {activeListItem
-              ? renderPlayPauseIcon(isPlaying)
-              : <Entypo name='controller-play' size={24} color={color.ACTIVE_FONT} />}
+      <View style={styles.container}>
+        <View style={styles.leftContainer}>
+          <TouchableWithoutFeedback onPress={onAudioPress}>
+            <View style={styles.thumbnail}>
+              {activeListItem ? (
+                renderPlayPauseIcon(isPlaying)
+              ) : (
+                <Entypo
+                  name="controller-play"
+                  size={24}
+                  color={color.ACTIVE_FONT}
+                />
+              )}
+            </View>
+          </TouchableWithoutFeedback>
+          <View style={styles.titleContainer}>
+            <Text numberOfLines={1} style={styles.title}>
+              {title}
+            </Text>
+            <Text style={styles.timeText}>{convertTime(duration)}</Text>
           </View>
-        </TouchableWithoutFeedback>
-        <View style={styles.titleContainer}>
-          <Text numberOfLines={1} style={styles.title}>{title}</Text>
-          <Text style={styles.timeText}>{convertTime(duration)}</Text>
         </View>
+        <Pressable
+          onPress={checkAudio ? removeAudioPress : selectAudioPress}
+          style={styles.rightContainer}
+        >
+          <View style={styles.circle}>
+            {checkAudio ? <View style={styles.circleInner}></View> : null}
+          </View>
+        </Pressable>
       </View>
-      <Pressable onPress={checkAudio ? removeAudioPress : selectAudioPress} style={styles.rightContainer}>
-        <View style={styles.circle}>
-          {checkAudio ? <View style={styles.circleInner}></View> : null}
-        </View>
-      </Pressable>
-    </View>
-    <View style={styles.separator} />
+      <View style={styles.separator} />
     </>
-  )
+  );
 }
 
 const { width } = Dimensions.get('window');
@@ -130,4 +157,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: color.FONT_LIGHT,
   },
-})
+});

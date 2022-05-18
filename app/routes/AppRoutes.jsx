@@ -33,7 +33,5 @@ export default function AppRoutes() {
   //   return <PreloadAuth />;
   // }
 
-  return (
-      routes
-  );
+  return routes;
 }

@@ -1,4 +1,4 @@
-export const convertTime = minutes => {
+export const convertTime = (minutes) => {
   if (minutes) {
     const hrs = minutes / 60;
     const minute = hrs.toString().split('.')[0];

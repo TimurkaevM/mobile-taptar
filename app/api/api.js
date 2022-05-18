@@ -6,8 +6,8 @@ const headers = {
   'X-CSRF-TOKEN': 'XSRF-TOKEN',
   'Access-Control-Allow-Origin': '*',
   'X-Requested-With': 'XMLHttpRequest',
-  'xsrfCookieName': 'XSRF-TOKEN',
-  'xsrfHeaderName': 'X-XSRF-TOKEN',
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
   'Content-Type': 'application/json',
   'X-Custom-Header': 'foobar',
 };

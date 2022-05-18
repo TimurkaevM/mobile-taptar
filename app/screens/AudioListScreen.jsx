@@ -21,7 +21,7 @@ export class AudioList extends Component {
   }
 
   layoutProvider = new LayoutProvider(
-    i => 'audio',
+    (i) => 'audio',
     (type, dim) => {
       switch (type) {
         case 'audio':
@@ -32,36 +32,40 @@ export class AudioList extends Component {
           dim.width = 0;
           dim.height = 0;
       }
-    }
+    },
   );
 
-  handleAudioPress = async audio => {
+  handleAudioPress = async (audio) => {
     await selectAudio(audio, this.context);
   };
 
-  handleSelectAudio = audio => {
+  handleSelectAudio = (audio) => {
     const { selectedAudio } = this.state;
-    if(selectedAudio.length >= 5) return;
+    if (selectedAudio.length >= 5) return;
     this.setState({
       ...this.state,
       selectedAudio: [...selectedAudio, audio],
-    })
-  }
+    });
+  };
 
-  handleRemoveAudio = audio => {
+  handleRemoveAudio = (audio) => {
     this.setState({
       ...this.state,
-      selectedAudio: this.state.selectedAudio.filter(item => item.id !== audio.id),
-    })
-  }
+      selectedAudio: this.state.selectedAudio.filter(
+        (item) => item.id !== audio.id,
+      ),
+    });
+  };
 
   componentDidMount() {
     this.context.loadPreviousAudio();
   }
 
   rowRenderer = (type, item, index, extendedState) => {
-    const checkAudio = this.state.selectedAudio.some(audio => audio.id === item.id);
-    console.log(item)
+    const checkAudio = this.state.selectedAudio.some(
+      (audio) => audio.id === item.id,
+    );
+    console.log(item);
     return (
       <AudioListItem
         checkAudio={checkAudio}
@@ -79,23 +83,27 @@ export class AudioList extends Component {
   render() {
     return (
       <>
-      <StatusBarPlaceHolder />
-      <AudioListHeader selectedAudio={this.state.selectedAudio} goBack={this.props.navigation.goBack} navigate={this.props.navigation.navigate} />
-      <AudioContext.Consumer>
-        {({ dataProvider, isPlaying }) => {
-          if (!dataProvider._data.length) return null;
-          return (
-            <View style={{ flex: 1 }}>
-              <RecyclerListView
-                dataProvider={dataProvider}
-                layoutProvider={this.layoutProvider}
-                rowRenderer={this.rowRenderer}
-                extendedState={{ isPlaying }}
-              />
-            </View>
-          );
-        }}
-      </AudioContext.Consumer>
+        <StatusBarPlaceHolder />
+        <AudioListHeader
+          selectedAudio={this.state.selectedAudio}
+          goBack={this.props.navigation.goBack}
+          navigate={this.props.navigation.navigate}
+        />
+        <AudioContext.Consumer>
+          {({ dataProvider, isPlaying }) => {
+            if (!dataProvider._data.length) return null;
+            return (
+              <View style={{ flex: 1 }}>
+                <RecyclerListView
+                  dataProvider={dataProvider}
+                  layoutProvider={this.layoutProvider}
+                  rowRenderer={this.rowRenderer}
+                  extendedState={{ isPlaying }}
+                />
+              </View>
+            );
+          }}
+        </AudioContext.Consumer>
       </>
     );
   }

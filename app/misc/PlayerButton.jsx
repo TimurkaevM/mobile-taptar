@@ -2,9 +2,9 @@ import React from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import color from './color';
 
-const PlayerButton = props => {
+const PlayerButton = (props) => {
   const { iconType, size = 40, iconColor = color.FONT, onPress } = props;
-  const getIconName = type => {
+  const getIconName = (type) => {
     switch (type) {
       case 'PLAY':
         return 'pausecircle';

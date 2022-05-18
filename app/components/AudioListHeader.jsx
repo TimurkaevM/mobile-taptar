@@ -6,14 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const AudioListHeader = ({ selectedAudio, goBack, navigate }) => {
   const selectedAudioLength = selectedAudio.length;
-  
+
   const dispatch = useDispatch();
 
   const causes = useSelector((state) => state.tags.causes);
   const causId = causes.map((caus) => caus.id);
 
   const onSuccess = () => {
-    if(selectedAudioLength === 0) return;
+    if (selectedAudioLength === 0) return;
     navigate('ModalAddFile');
     if (selectedAudioLength > 1)
       return dispatch(postFilesGroup(selectedAudio, 'audio', causId));
@@ -30,8 +30,8 @@ const AudioListHeader = ({ selectedAudio, goBack, navigate }) => {
         <Text style={styles.btnText}>отправить</Text>
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: color.MAIN_COLOR,
     paddingHorizontal: 20,
-    paddingVertical: 10, 
+    paddingVertical: 10,
     borderRadius: 10,
   },
   btnText: {

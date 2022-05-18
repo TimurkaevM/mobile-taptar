@@ -182,7 +182,7 @@ const AudioPlayer = () => {
         </View>
         <View style={styles.midBannerContainer}>
           <MaterialCommunityIcons
-            name='music-circle'
+            name="music-circle"
             size={300}
             color={context.isPlaying ? color.ACTIVE_BG : color.FONT_MEDIUM}
           />
@@ -210,9 +210,9 @@ const AudioPlayer = () => {
             value={calculateSeebBar()}
             minimumTrackTintColor={color.FONT_MEDIUM}
             maximumTrackTintColor={color.ACTIVE_BG}
-            onValueChange={value => {
+            onValueChange={(value) => {
               setCurrentPosition(
-                convertTime(value * context.currentAudio.duration)
+                convertTime(value * context.currentAudio.duration),
               );
             }}
             onSlidingStart={async () => {
@@ -224,19 +224,19 @@ const AudioPlayer = () => {
                 console.log('error inside onSlidingStart callback', error);
               }
             }}
-            onSlidingComplete={async value => {
+            onSlidingComplete={async (value) => {
               await moveAudio(context, value);
               setCurrentPosition(0);
             }}
           />
           <View style={styles.audioControllers}>
-            <PlayerButton iconType='PREV' onPress={handlePrevious} />
+            <PlayerButton iconType="PREV" onPress={handlePrevious} />
             <PlayerButton
               onPress={handlePlayPause}
               style={{ marginHorizontal: 25 }}
               iconType={context.isPlaying ? 'PLAY' : 'PAUSE'}
             />
-            <PlayerButton iconType='NEXT' onPress={handleNext} />
+            <PlayerButton iconType="NEXT" onPress={handleNext} />
           </View>
         </View>
       </View>

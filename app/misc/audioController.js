@@ -1,17 +1,16 @@
-
 // play audio
 export const play = async (playbackObj, uri, lastPosition) => {
   try {
     if (!lastPosition)
       return await playbackObj.loadAsync(
         { uri },
-        { shouldPlay: true, progressUpdateIntervalMillis: 1000 }
+        { shouldPlay: true, progressUpdateIntervalMillis: 1000 },
       );
 
     // but if there is lastPosition then we will play audio from the lastPosition
     await playbackObj.loadAsync(
       { uri },
-      { progressUpdateIntervalMillis: 1000 }
+      { progressUpdateIntervalMillis: 1000 },
     );
 
     return await playbackObj.playFromPositionAsync(lastPosition);
@@ -21,7 +20,7 @@ export const play = async (playbackObj, uri, lastPosition) => {
 };
 
 // pause audio
-export const pause = async playbackObj => {
+export const pause = async (playbackObj) => {
   try {
     return await playbackObj.setStatusAsync({
       shouldPlay: false,
@@ -32,7 +31,7 @@ export const pause = async playbackObj => {
 };
 
 // resume audio
-export const resume = async playbackObj => {
+export const resume = async (playbackObj) => {
   try {
     return await playbackObj.playAsync();
   } catch (error) {
@@ -130,7 +129,7 @@ const selectAudioFromPlayList = async (context, select) => {
   let nextIndex;
 
   const indexOnPlayList = activePlayList.audios.findIndex(
-    ({ id }) => id === currentAudio.id
+    ({ id }) => id === currentAudio.id,
   );
 
   if (select === 'next') {
@@ -246,7 +245,7 @@ export const moveAudio = async (context, value) => {
 
   try {
     const status = await playbackObj.setPositionAsync(
-      Math.floor(soundObj.durationMillis * value)
+      Math.floor(soundObj.durationMillis * value),
     );
     updateState(context, {
       soundObj: status,
