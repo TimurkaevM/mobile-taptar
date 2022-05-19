@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import FormSend from '../screens/SendMaterialScreen';
 import ImageBrowserScreen from '../screens/ImageBrowserScreen';
 import AudioListScreen from '../screens/AudioListScreen';
+import PdfReaderScreen from '../screens/PdfReaderScreen';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,17 @@ function SendMaterialRoutes() {
         component={TagsScreen}
         options={{
           title: 'Настройка принадлежностей',
+          headerStyle: {
+            backgroundColor: '#4686cc',
+          },
+          headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
+        name="PdfReaderScreen"
+        component={PdfReaderScreen}
+        options={{
+          title: 'PDF файл',
           headerStyle: {
             backgroundColor: '#4686cc',
           },

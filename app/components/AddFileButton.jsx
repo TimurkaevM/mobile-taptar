@@ -10,7 +10,6 @@ import { postFail, postFailDocument } from '../redux/ducks/files';
 
 const AddFileButton = (props) => {
   const [addFile, setAddFile] = useState(false);
-  const [image, setImage] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -39,34 +38,8 @@ const AddFileButton = (props) => {
           uri: uri,
           type: 'application/' + fileType,
         };
+       props.navigate('ModalAddFile');
         dispatch(postFailDocument(fileToUpload, 'document'));
-      }
-    });
-  };
-
-  const pickAudio = async () => {
-    let result = await DocumentPicker.getDocumentAsync({
-      type: 'audio/*',
-      copyToCacheDirectory: true,
-    }).then((response) => {
-      if (response.type == 'success') {
-        let { name, size, uri } = response;
-
-        if (Platform.OS === 'android' && uri[0] === '/') {
-          uri = `file://${uri}`;
-          uri = uri.replace(/%/g, '%25');
-        }
-
-        let nameParts = name.split('.');
-        let fileType = nameParts[nameParts.length - 1];
-        var fileToUpload = {
-          name: name,
-          size: size,
-          uri: uri,
-          type: 'audio/' + fileType,
-        };
-        props.navigate('ModalAddFile');
-        dispatch(postFailDocument(fileToUpload, 'audio'));
       }
     });
   };

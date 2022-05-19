@@ -28,6 +28,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AudioPlayer from '../components/AudioPlayer';
+import PdfReader from '../components/PdfReader';
 
 const AddTagsScreen = (props) => {
   const dispatch = useDispatch();
@@ -267,7 +268,8 @@ const AddTagsScreen = (props) => {
               //   isLooping
               //   // onPlaybackStatusUpdate={status => setStatus(() => status)}
               // />
-              <AudioPlayer path={files.path} />
+              // <AudioPlayer path={files.path} />
+              <PdfReader path={files.path} navigate={props.navigation.navigate} />
             )}
           </View>
 
