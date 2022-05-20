@@ -80,9 +80,10 @@ export const sendMaterialStyles = StyleSheet.create({
   },
 
   mediaBox: {
+    position: 'relative',
+    zIndex: 1,
     width: 200,
     height: 150,
-    overflow: 'hidden',
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
@@ -94,13 +95,12 @@ export const sendMaterialStyles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 1.5,
   },
 
   mediaBoxBlue: {
     width: 200,
     height: 150,
-    overflow: 'hidden',
     margin: 20,
     backgroundColor: '#bed1e6',
     borderRadius: 20,

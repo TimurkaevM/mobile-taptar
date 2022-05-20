@@ -8,12 +8,16 @@ import { WebView } from 'react-native-webview';
 
 
 const PdfReader = ({path, navigate}) => {
+  const [ documentDownload, setDocumentDownload ] = React.useState(false);
   
   const handlePress = () => {
-    console.log('cccc')
-    return <WebView source={{ uri: `https://api.taptar.ru/storage/${path}` }} />
+    return setDocumentDownload(true);
     navigate('PdfReaderScreen', {path: path})
   }
+
+  // React.useEffect(() => {
+  //   return () => setDocumentDownload(false);
+  // }, [documentDownload])
 
   // const handlePress = () => {
   //   FileSystem.downloadAsync(
@@ -29,14 +33,19 @@ const PdfReader = ({path, navigate}) => {
   //     });
   // }
 
-  const saveFile = async (fileUri) => {
-        const asset = await MediaLibrary.createAssetAsync(fileUri)
-        await MediaLibrary.createAlbumAsync("Download", asset, false)
-}
-  console.log(path)
+//   const saveFile = async (fileUri) => {
+//         const asset = await MediaLibrary.createAssetAsync(fileUri)
+//         await MediaLibrary.createAlbumAsync("Download", asset, false)
+// }
+//   console.log(path)
 
   return (
     <Pressable onPress={handlePress} style={styles.container}>
+      {documentDownload ? (
+        <WebView 
+          source={{ uri: `https://api.taptar.ru/storage/${path}` }}
+        />
+      ) : null}
       <Svg
         width="100%"
         height="100%"

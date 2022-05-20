@@ -25,7 +25,6 @@ export default function AudioPlayer({ path }) {
   }, []);
 
   const onPlaybackStatusUpdate = async (status) => {
-    console.log(status, 'status');
     if (status.isLoaded && status.isPlaying) {
       setPlaybackDuration(status.durationMillis);
       setPlaybackPosition(status.positionMillis);

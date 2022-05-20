@@ -6,14 +6,18 @@ import {
   View,
   Image,
   FlatList,
+  TouchableOpacity,
+  Pressable
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeText, changeTitle } from '../redux/ducks/files';
 import AddFileButton from '../components/AddFileButton';
 import { Video } from 'expo-av';
-import Svg, { Path, G } from 'react-native-svg';
+import Svg, { Path, G, Circle } from 'react-native-svg';
 
 import { sendMaterialStyles } from '../styles/sendMaterialStyles';
+import DeleteFileModal from '../components/DeleteFileModal';
+import DeleteBtn from '../SvgIcons/DeleteBtn';
 
 function SendMaterialScreen(props) {
   const { navigate, push } = props.navigation;
@@ -24,7 +28,7 @@ function SendMaterialScreen(props) {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const openModalAddFile = () => {
+  const openModal = () => {
     setModalVisible(true);
   };
 
@@ -59,12 +63,15 @@ function SendMaterialScreen(props) {
     return (
       <View>
         <View style={sendMaterialStyles.mediaBox}>
-          <Image
+        <DeleteBtn openModal={openModal} />
+        <Pressable style={{width: '100%', height: '100%'}} onPress={() => console.log('ddd')}>
+        <Image
             style={sendMaterialStyles.mediaImage}
             source={{
               uri: `https://api.taptar.ru/storage/${item.path}`,
             }}
           />
+        </Pressable>
         </View>
         <Text
           style={{
@@ -517,7 +524,6 @@ function SendMaterialScreen(props) {
       <AddFileButton
         push={push}
         navigate={navigate}
-        openModalAddFile={openModalAddFile}
       />
 
       {photo.length ? (
@@ -1050,6 +1056,8 @@ function SendMaterialScreen(props) {
             renderItem={renderAudio}
             keyExtractor={(item) => item.group_uid}
           />
+
+          <DeleteFileModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
         </View>
       ) : null}
     </ScrollView>
