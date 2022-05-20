@@ -1,9 +1,9 @@
 import { View, Text, Image, Pressable, FlatList } from 'react-native';
 import React from 'react';
 import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
-import ImageListIcon from '../../SvgIcons/ImageListIcon';
+import ImageListIcon from '../../SvgIcons/SendMaterialIcons/ImageListIcon';
 import { useSelector } from 'react-redux';
-import DeleteBtn from '../../SvgIcons/DeleteBtn';
+import DeleteBtn from './DeleteBtn';
 
 const ImagesList = () => {
   const photos = useSelector((state) => state.files.materials.photo.group);

@@ -2,7 +2,7 @@ import { TouchableOpacity, StyleSheet, View } from 'react-native';
 import React from 'react';
 import Svg, { Path, G, Circle } from 'react-native-svg';
 import { useDispatch } from 'react-redux';
-import { openSendModalDelete } from '../redux/ducks/application';
+import { openSendModalDelete } from '../../redux/ducks/application';
 
 const DeleteBtn = ({ item }) => {
   const dispatch = useDispatch();

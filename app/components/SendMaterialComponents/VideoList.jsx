@@ -1,9 +1,9 @@
 import { View, Text, Pressable, FlatList } from 'react-native';
 import React from 'react';
 import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
-import VideoListIcon from '../../SvgIcons/VideoListIcon';
+import VideoListIcon from '../../SvgIcons/SendMaterialIcons/VideoListIcon';
 import { useSelector } from 'react-redux';
-import DeleteBtn from '../../SvgIcons/DeleteBtn';
+import DeleteBtn from './DeleteBtn';
 import { Video } from 'expo-av';
 
 const VideoList = () => {

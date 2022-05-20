@@ -2,9 +2,9 @@ import { View, Text, Pressable, FlatList } from 'react-native';
 import React from 'react';
 import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
 import { useSelector } from 'react-redux';
-import DeleteBtn from '../../SvgIcons/DeleteBtn';
-import DocumentItemIcon from '../../SvgIcons/DocumentItemIcon';
-import DocumentListIcon from '../../SvgIcons/DocumentListIcon';
+import DeleteBtn from './DeleteBtn';
+import DocumentItemIcon from '../../SvgIcons/SendMaterialIcons/DocumentItemIcon';
+import DocumentListIcon from '../../SvgIcons/SendMaterialIcons/DocumentListIcon';
 
 const DocumentList = () => {
   const document = useSelector((state) => state.files.materials.document.one);
