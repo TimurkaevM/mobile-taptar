@@ -12,7 +12,7 @@ import {
   changeCommentTag,
   UploadOneFail,
 } from '../redux/ducks/files';
-import AddInformation from '../components/AddInformation';
+import AddInformation from '../components/SendMaterialComponents/AddInformation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import {
@@ -27,8 +27,8 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import AudioPlayer from '../components/AudioPlayer';
-import PdfReader from '../components/PdfReader';
+import AudioPlayer from '../components/SendMaterialComponents/AudioPlayer';
+import PdfReader from '../components/SendMaterialComponents/PdfReader';
 
 const AddTagsScreen = (props) => {
   const dispatch = useDispatch();
@@ -269,7 +269,10 @@ const AddTagsScreen = (props) => {
               //   // onPlaybackStatusUpdate={status => setStatus(() => status)}
               // />
               // <AudioPlayer path={files.path} />
-              <PdfReader path={files.path} navigate={props.navigation.navigate} />
+              <PdfReader
+                path={files.path}
+                navigate={props.navigation.navigate}
+              />
             )}
           </View>
 

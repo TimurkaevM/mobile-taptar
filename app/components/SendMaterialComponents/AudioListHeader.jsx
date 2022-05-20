@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
-import color from '../misc/color';
-import { postFail, postFilesGroup } from '../redux/ducks/files';
+import color from '../../misc/color';
+import { postFail, postFilesGroup } from '../../redux/ducks/files';
 import { useDispatch, useSelector } from 'react-redux';
 
 const AudioListHeader = ({ selectedAudio, goBack, navigate }) => {

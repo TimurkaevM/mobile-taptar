@@ -1,13 +1,21 @@
-import { TouchableOpacity, StyleSheet, View } from 'react-native'
-import React from 'react'
-import Svg, { Path, G , Circle} from 'react-native-svg';
+import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import React from 'react';
+import Svg, { Path, G, Circle } from 'react-native-svg';
+import { useDispatch } from 'react-redux';
+import { openSendModalDelete } from '../redux/ducks/application';
 
-const DeleteBtn = ({openModal}) => {
+const DeleteBtn = ({ item }) => {
+  const dispatch = useDispatch();
+
+  const openModal = () => {
+    dispatch(openSendModalDelete(item));
+  };
+
   return (
-      <TouchableOpacity onPress={openModal} style={styles.container}>
+    <TouchableOpacity onPress={openModal} style={styles.container}>
       <Svg
-        width='100%'
-        height='100%'
+        width="100%"
+        height="100%"
         xmlns="http://www.w3.org/2000/svg"
         space="preserve"
         version="1.1"
@@ -31,8 +39,8 @@ const DeleteBtn = ({openModal}) => {
         </G>
       </Svg>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -53,6 +61,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-})
+});
 
-export default DeleteBtn
+export default DeleteBtn;

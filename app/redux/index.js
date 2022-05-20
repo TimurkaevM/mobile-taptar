@@ -8,6 +8,7 @@ import contacts from './ducks/contacts';
 import messages from './ducks/messages';
 import contribution from './ducks/contribution';
 import workshop from './ducks/workshop';
+import application from './ducks/application';
 import historianCabinet from './ducks/historianCabinet';
 import historianSend from './ducks/historianSend';
 import incomingMaterials from './ducks/incomingMaterials';
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   contribution,
   tags,
   contacts,
+  application,
   messages,
   // incomingMaterials,
   // historianCabinet,

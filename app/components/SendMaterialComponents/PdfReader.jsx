@@ -5,15 +5,13 @@ import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import { WebView } from 'react-native-webview';
 
+const PdfReader = ({ path, navigate }) => {
+  const [documentDownload, setDocumentDownload] = React.useState(false);
 
-
-const PdfReader = ({path, navigate}) => {
-  const [ documentDownload, setDocumentDownload ] = React.useState(false);
-  
   const handlePress = () => {
     return setDocumentDownload(true);
-    navigate('PdfReaderScreen', {path: path})
-  }
+    navigate('PdfReaderScreen', { path: path });
+  };
 
   // React.useEffect(() => {
   //   return () => setDocumentDownload(false);
@@ -33,18 +31,16 @@ const PdfReader = ({path, navigate}) => {
   //     });
   // }
 
-//   const saveFile = async (fileUri) => {
-//         const asset = await MediaLibrary.createAssetAsync(fileUri)
-//         await MediaLibrary.createAlbumAsync("Download", asset, false)
-// }
-//   console.log(path)
+  //   const saveFile = async (fileUri) => {
+  //         const asset = await MediaLibrary.createAssetAsync(fileUri)
+  //         await MediaLibrary.createAlbumAsync("Download", asset, false)
+  // }
+  //   console.log(path)
 
   return (
     <Pressable onPress={handlePress} style={styles.container}>
       {documentDownload ? (
-        <WebView 
-          source={{ uri: `https://api.taptar.ru/storage/${path}` }}
-        />
+        <WebView source={{ uri: `https://api.taptar.ru/storage/${path}` }} />
       ) : null}
       <Svg
         width="100%"
@@ -95,13 +91,13 @@ const PdfReader = ({path, navigate}) => {
         </G>
       </Svg>
     </Pressable>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     width: 100,
     height: 200,
   },
-})
+});
 export default PdfReader;

@@ -1,6 +1,12 @@
 import { api } from '../../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const REMOVE_FILE_START = 'file/remove/start';
+const REMOVE_FILE_SUCCESS = 'file/remove/success';
+
+const REMOVE_FILES_START = 'files/remove/start';
+const REMOVE_FILES_SUCCESS = 'files/remove/success';
+
 const initialState = {
   loading: false,
   progress: 0,
@@ -347,7 +353,7 @@ export default function files(state = initialState, action) {
         tags_information: [],
       };
 
-    case 'files/clear/start':
+    case REMOVE_FILE_START:
       return {
         ...state,
         files: {},
@@ -360,38 +366,46 @@ export default function files(state = initialState, action) {
         tags_information: [],
       };
 
-    case 'files/clear/success':
-      if (action.payload.amount === 'one') {
-        return {
-          ...state,
-          materials: {
-            ...state.materials,
-            [action.payload.format]: {
-              ...state.materials[action.payload.format],
-              one: state.materials[action.payload.format].one.filter(
-                (item) => item.id !== action.payload.file.id,
-              ),
-            },
+    case REMOVE_FILE_SUCCESS:
+      return {
+        ...state,
+        materials: {
+          ...state.materials,
+          [action.payload.type]: {
+            ...state.materials[action.payload.type],
+            one: state.materials[action.payload.type].one.filter(
+              (item) => item.id !== action.payload.id,
+            ),
           },
-        };
-      }
+        },
+      };
 
-      if (action.payload.amount === 'group') {
-        return {
-          ...state,
-          materials: {
-            ...state.materials,
-            [action.payload.format]: {
-              ...state.materials[action.payload.format],
-              group: state.materials[action.payload.format].group.filter(
-                (item) => action.payload.groupId !== item.group,
-              ),
-            },
+    case REMOVE_FILES_START:
+      return {
+        ...state,
+        files: {},
+        title: '',
+        year: '',
+        author: '',
+        location: '',
+        comment: '',
+        tags_century: [],
+        tags_information: [],
+      };
+
+    case REMOVE_FILES_SUCCESS:
+      return {
+        ...state,
+        materials: {
+          ...state.materials,
+          [action.payload.type]: {
+            ...state.materials[action.payload.type],
+            group: state.materials[action.payload.type].group.filter(
+              (item) => action.payload.group_uid !== item.group_uid,
+            ),
           },
-        };
-      }
-
-      return state;
+        },
+      };
 
     //добавление группы файлов
     case 'group/upload':
@@ -876,55 +890,56 @@ export const deleteOneFail = (id, format, amount, groupId) => {
   };
 };
 
-export const clearFiles = (files, info) => {
-  if (info.amount === 'one') {
-    return (dispatch) => {
+export const removeFiles = (files) => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
       dispatch({
-        type: 'files/clear/start',
-        files,
+        type: REMOVE_FILES_START,
       });
 
-      api
-        .delete(`/draft/file/delete/${files.id}`, {
-          headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-        })
-        .then((response) => response.data)
-        .then((data) => {
-          dispatch({
-            type: 'files/clear/success',
-            payload: info,
-            message: data,
-          });
-        })
-        .catch((e) => {
-          console.error(e);
+      if (value !== null) {
+        const response = await api.delete(
+          `/user/draft/group/${files.group_uid}`,
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
+        dispatch({
+          type: REMOVE_FILES_SUCCESS,
+          payload: files,
+          data: response.data,
         });
-    };
-  }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};
 
-  return (dispatch) => {
-    dispatch({
-      type: 'files/clear/start',
-      files,
-    });
+export const removeFile = (file) => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    files.files.forEach((item) => {
-      api
-        .delete(`/draft/file/delete/${item.id}`, {
-          headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-        })
-        .then((response) => response.data)
-        .then((data) => {
-          dispatch({
-            type: 'files/clear/success',
-            payload: info,
-            message: data,
-          });
-        })
-        .catch((e) => {
-          console.error(e.data);
+      dispatch({
+        type: REMOVE_FILE_START,
+      });
+
+      if (value !== null) {
+        const response = await api.delete(`/user/draft/file/${file.id}`, {
+          headers: { Authorization: `Bearer ${value}` },
         });
-    });
+        dispatch({
+          type: REMOVE_FILE_SUCCESS,
+          payload: file,
+          data: response.data,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 
@@ -1044,43 +1059,6 @@ export const postFilesGroup = (files, format, causes) => {
   for (let i = 0; i < causes.length; i++) {
     form.append(`causes[${i}]`, causes[i]);
   }
-
-  // return (dispatch) => {
-  //   dispatch({ type: 'files/post/start', files, format, causes });
-
-  //   api
-  //     .post('/user/draft/group', form, {
-  //       headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-  //       onUploadProgress: (progressEvent) => {
-  //         const totalLength = progressEvent.lengthComputable
-  //           ? progressEvent.total
-  //           : progressEvent.target.getResponseHeader('content-length') ||
-  //             progressEvent.target.getResponseHeader(
-  //               'x-decompressed-content-length',
-  //             );
-  //         if (totalLength) {
-  //           let progress = Math.round(
-  //             (progressEvent.loaded * 100) / totalLength,
-  //           );
-  //           dispatch({
-  //             type: 'change/progress',
-  //             payload: progress,
-  //           });
-  //         }
-  //       },
-  //     })
-  //     .then((response) => response.data)
-  //     .then((data) => {
-  //       dispatch({
-  //         type: 'files/post/success',
-  //         payload: data,
-  //         format,
-  //       });
-  //     })
-  //     .catch((e) => {
-  //       console.error(e);
-  //     });
-  // };
 
   return async (dispatch) => {
     try {

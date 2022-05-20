@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { AudioContext } from '../context/AudioProvider';
 import { RecyclerListView, LayoutProvider } from 'recyclerlistview';
-import AudioListItem from '../components/AudioListItem';
+import AudioListItem from '../components/SendMaterialComponents/AudioListItem';
 import { selectAudio } from '../misc/audioController';
 import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
-import AudioListHeader from '../components/AudioListHeader';
+import AudioListHeader from '../components/SendMaterialComponents/AudioListHeader';
 
 export class AudioList extends Component {
   static contextType = AudioContext;

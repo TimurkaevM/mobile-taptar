@@ -1,0 +1,79 @@
+import { View, Text, Image, Pressable, FlatList } from 'react-native';
+import React from 'react';
+import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
+import ImageListIcon from '../../SvgIcons/ImageListIcon';
+import { useSelector } from 'react-redux';
+import DeleteBtn from '../../SvgIcons/DeleteBtn';
+
+const ImagesList = () => {
+  const photos = useSelector((state) => state.files.materials.photo.group);
+
+  const renderImages = ({ item }) => {
+    const title = item.files[0].title === null ? '' : item.files[0].title;
+    const titleSub = title.substr(0, 12);
+    const titleFile = title;
+
+    const changeTitle = titleFile.length >= 12 ? `${titleSub}...` : titleFile;
+
+    return (
+      <View>
+        <View style={sendMaterialStyles.mediaBox}>
+          <DeleteBtn item={item} />
+          <Image
+            style={sendMaterialStyles.mediaImage}
+            source={{
+              uri: `https://api.taptar.ru/storage/${item.files[0].path}`,
+            }}
+          />
+        </View>
+        <Text
+          style={{
+            textAlign: 'center',
+            marginBottom: 10,
+            fontWeight: '400',
+            fontSize: 15,
+          }}
+        >
+          {title ? changeTitle : 'Нет названия'}
+        </Text>
+      </View>
+    );
+  };
+
+  return (
+    <View style={sendMaterialStyles.inputTitleContainer}>
+      <View style={sendMaterialStyles.inputTitleContainer}>
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingBottom: 15,
+            borderBottomWidth: 1,
+            marginBottom: 10,
+            borderColor: '#000',
+            alignItems: 'center',
+          }}
+        >
+          <ImageListIcon />
+          <Text
+            style={{
+              textAlign: 'left',
+              fontWeight: '400',
+              fontSize: 15,
+              marginLeft: 10,
+            }}
+          >
+            Фото (группа файлов)
+          </Text>
+        </View>
+        <FlatList
+          horizontal
+          data={photos}
+          renderItem={renderImages}
+          keyExtractor={(item) => item.group_uid}
+        />
+      </View>
+    </View>
+  );
+};
+
+export default ImagesList;

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import { Audio } from 'expo-av';
-import color from '../misc/color';
+import color from '../../misc/color';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
-import PlayerButton from '../misc/PlayerButton';
-import { pause, play, resume } from '../misc/audioController';
-import { convertTime } from '../misc/convertTime';
+import PlayerButton from '../../misc/PlayerButton';
+import { pause, play, resume } from '../../misc/audioController';
+import { convertTime } from '../../misc/convertTime';
 
 const { width } = Dimensions.get('window');
 
