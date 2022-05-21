@@ -10,7 +10,17 @@ import {
   UploadTextFail,
 } from '../../redux/ducks/files';
 
-const AddTagsHeader = ({ navigate, nameError, yearError, authorError, commentError, setAuthorError, setCommentError, setNameError, setYearError }) => {
+const AddTagsHeader = ({
+  navigate,
+  nameError,
+  yearError,
+  authorError,
+  commentError,
+  setAuthorError,
+  setCommentError,
+  setNameError,
+  setYearError,
+}) => {
   const dispatch = useDispatch();
 
   const currentTime = new Date();
@@ -124,10 +134,26 @@ const AddTagsHeader = ({ navigate, nameError, yearError, authorError, commentErr
           <Text style={styles.btnText}>отправить</Text>
         </TouchableOpacity>
       </View>
-      {nameError && <Text style={{ color: 'red', textAlign: 'center', marginTop: 10, }}>{nameError}</Text>}
-        {commentError && <Text style={{ color: 'red', textAlign: 'center', marginTop: 10, }}>{commentError}</Text>}
-        {yearError && <Text style={{ color: 'red', textAlign: 'center', marginTop: 10, }}>{yearError}</Text>}
-        {authorError && <Text style={{ color: 'red', textAlign: 'center', marginTop: 10, }}>{authorError}</Text>}
+      {nameError && (
+        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
+          {nameError}
+        </Text>
+      )}
+      {commentError && (
+        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
+          {commentError}
+        </Text>
+      )}
+      {yearError && (
+        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
+          {yearError}
+        </Text>
+      )}
+      {authorError && (
+        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
+          {authorError}
+        </Text>
+      )}
     </View>
   );
 };

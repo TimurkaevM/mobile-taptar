@@ -24,7 +24,7 @@ const InputInfoBox = ({
   const author = useSelector((state) => state.files.author);
 
   const handleChangeTitle = (event) => {
-    if(nameError) {
+    if (nameError) {
       setNameError(null);
       dispatch(changeTitleTag(event.nativeEvent.text));
     } else {
@@ -33,7 +33,7 @@ const InputInfoBox = ({
   };
 
   const handleChangeAuthor = (event) => {
-    if(authorError) {
+    if (authorError) {
       setAuthorError(null);
       dispatch(changeAuthorTag(event.nativeEvent.text));
     } else {
@@ -46,7 +46,7 @@ const InputInfoBox = ({
   };
 
   const handleChangeYear = (event) => {
-    if(yearError) {
+    if (yearError) {
       setYearError(null);
       dispatch(changeYearTag(event.nativeEvent.text));
     } else {

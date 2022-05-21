@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import InputInfoBox from '../components/AddTagsComponents/InputInfoBox';
 import CommentClient from '../components/AddTagsComponents/CommentClient';
 import TagsInformation from '../components/AddTagsComponents/TagsInformation';
@@ -65,7 +60,10 @@ const AddTagsScreen = (props) => {
             yearError={yearError}
           />
           <MediaBox />
-          <CommentClient setCommentError={setCommentError} commentError={commentError} />
+          <CommentClient
+            setCommentError={setCommentError}
+            commentError={commentError}
+          />
           <TagsInformation />
           <TagsCenturies />
         </ScrollView>

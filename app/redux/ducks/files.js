@@ -749,17 +749,21 @@ export const UploadOneFail = (
       dispatch({ type: ONE_UPLOAD_START });
 
       if (value !== null) {
-        const response = await api.post(`user/draft/edit/file/${file.id}`, {
-          title: name,
-          year,
-          author,
-          location: place,
-          comment,
-          tags_century: centuries,
-          tags_information: types,
-        }, {
-          headers: { Authorization: `Bearer ${value}` },
-        });
+        const response = await api.post(
+          `user/draft/edit/file/${file.id}`,
+          {
+            title: name,
+            year,
+            author,
+            location: place,
+            comment,
+            tags_century: centuries,
+            tags_information: types,
+          },
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
         dispatch({
           type: ONE_UPLOAD_SUCCESS,
           data: response.data,
@@ -798,17 +802,21 @@ export const UploadGroupFails = (
       dispatch({ type: GROUP_UPLOAD_START });
 
       if (value !== null) {
-        const response = await api.post(`user/draft/edit/group/${file.group}`, {
-          title: name,
-        year,
-        author,
-        location: place,
-        comment,
-        tags_century: centuries,
-        tags_information: types,
-        }, {
-          headers: { Authorization: `Bearer ${value}` },
-        });
+        const response = await api.post(
+          `user/draft/edit/group/${file.group}`,
+          {
+            title: name,
+            year,
+            author,
+            location: place,
+            comment,
+            tags_century: centuries,
+            tags_information: types,
+          },
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
         dispatch({
           type: GROUP_UPLOAD_SUCCESS,
           data: response.data,
