@@ -7,7 +7,6 @@ import {
   TouchableWithoutFeedback,
   Pressable,
 } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import color from '../../misc/color';
 import { Entypo } from '@expo/vector-icons';
 
