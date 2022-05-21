@@ -10,8 +10,11 @@ import {
   UploadTextFail,
 } from '../../redux/ducks/files';
 
-const AddTagsHeader = ({ navigate }) => {
+const AddTagsHeader = ({ navigate, nameError, yearError, authorError, commentError, setAuthorError, setCommentError, setNameError, setYearError }) => {
   const dispatch = useDispatch();
+
+  const currentTime = new Date();
+  const currentYear = currentTime.getFullYear();
 
   const files = useSelector((state) => state.files.files);
   const title = useSelector((state) => state.files.title);
@@ -44,27 +47,27 @@ const AddTagsHeader = ({ navigate }) => {
     if (author.length !== 0 && /\d/.test(author)) {
       return setAuthorError('В авторе не может быть чисел');
     }
-    if (props.type === 'text') {
-      // props.handleClose();
-      return dispatch(
-        UploadTextFail(
-          title,
-          year,
-          author,
-          location,
-          comment,
-          centuriesClient,
-          typesClient,
-          props.content.text,
-        ),
-      );
-    }
-    if (props.amount === 'one') {
-      // props.handleAddClose();
+    // if (props.type === 'text') {
+    //   props.handleClose();
+    //   return dispatch(
+    //     UploadTextFail(
+    //       title,
+    //       year,
+    //       author,
+    //       location,
+    //       comment,
+    //       centuriesClient,
+    //       typesClient,
+    //       props.content.text,
+    //     ),
+    //   );
+    // }
+    if (!files.group) {
+      navigate('Main');
       return dispatch(
         UploadOneFail(
           files,
-          props.type,
+          files.type,
           title,
           year,
           author,
@@ -76,12 +79,12 @@ const AddTagsHeader = ({ navigate }) => {
       );
     }
 
-    if (props.amount === 'group') {
-      // props.handleAddClose();
+    if (files.group) {
+      navigate('Main');
       return dispatch(
         UploadGroupFails(
           files,
-          props.type,
+          files.type,
           title,
           year,
           author,
@@ -112,25 +115,33 @@ const AddTagsHeader = ({ navigate }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onPressClose} style={styles.btn}>
-        <Text style={styles.btnText}>отклонить</Text>
-      </TouchableOpacity>
-      <Text>Настройка</Text>
-      <TouchableOpacity onPress={onSuccess} style={styles.btn}>
-        <Text style={styles.btnText}>отправить</Text>
-      </TouchableOpacity>
+      <View style={styles.content}>
+        <TouchableOpacity onPress={onPressClose} style={styles.btn}>
+          <Text style={styles.btnText}>отклонить</Text>
+        </TouchableOpacity>
+        <Text>Настройка</Text>
+        <TouchableOpacity onPress={onSuccess} style={styles.btn}>
+          <Text style={styles.btnText}>отправить</Text>
+        </TouchableOpacity>
+      </View>
+      {nameError && <Text style={{ color: 'red', textAlign: 'center', marginTop: 10, }}>{nameError}</Text>}
+        {commentError && <Text style={{ color: 'red', textAlign: 'center', marginTop: 10, }}>{commentError}</Text>}
+        {yearError && <Text style={{ color: 'red', textAlign: 'center', marginTop: 10, }}>{yearError}</Text>}
+        {authorError && <Text style={{ color: 'red', textAlign: 'center', marginTop: 10, }}>{authorError}</Text>}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: 20,
+    paddingVertical: 15,
     backgroundColor: 'white',
+  },
+  content: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 15,
   },
   btn: {
     backgroundColor: color.MAIN_COLOR,

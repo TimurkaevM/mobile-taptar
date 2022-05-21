@@ -8,7 +8,14 @@ import {
   changeYearTag,
 } from '../../redux/ducks/files';
 
-const InputInfoBox = () => {
+const InputInfoBox = ({
+  setNameError,
+  setAuthorError,
+  setYearError,
+  nameError,
+  authorError,
+  yearError,
+}) => {
   const dispatch = useDispatch();
 
   const title = useSelector((state) => state.files.title);
@@ -17,11 +24,21 @@ const InputInfoBox = () => {
   const author = useSelector((state) => state.files.author);
 
   const handleChangeTitle = (event) => {
-    dispatch(changeTitleTag(event.nativeEvent.text));
+    if(nameError) {
+      setNameError(null);
+      dispatch(changeTitleTag(event.nativeEvent.text));
+    } else {
+      dispatch(changeTitleTag(event.nativeEvent.text));
+    }
   };
 
   const handleChangeAuthor = (event) => {
-    dispatch(changeAuthorTag(event.nativeEvent.text));
+    if(authorError) {
+      setAuthorError(null);
+      dispatch(changeAuthorTag(event.nativeEvent.text));
+    } else {
+      dispatch(changeAuthorTag(event.nativeEvent.text));
+    }
   };
 
   const handleChangeLocation = (event) => {
@@ -29,7 +46,12 @@ const InputInfoBox = () => {
   };
 
   const handleChangeYear = (event) => {
-    dispatch(changeYearTag(event.nativeEvent.text));
+    if(yearError) {
+      setYearError(null);
+      dispatch(changeYearTag(event.nativeEvent.text));
+    } else {
+      dispatch(changeYearTag(event.nativeEvent.text));
+    }
   };
 
   return (

@@ -7,6 +7,12 @@ const REMOVE_FILE_SUCCESS = 'file/remove/success';
 const REMOVE_FILES_START = 'files/remove/start';
 const REMOVE_FILES_SUCCESS = 'files/remove/success';
 
+const ONE_UPLOAD_START = 'one/upload/start';
+const ONE_UPLOAD_SUCCESS = 'one/upload/success';
+
+const GROUP_UPLOAD_START = 'group/upload/start';
+const GROUP_UPLOAD_SUCCESS = 'group/upload/success';
+
 const initialState = {
   loading: false,
   progress: 0,
@@ -151,23 +157,25 @@ export default function files(state = initialState, action) {
         comment: '',
         tags_century: [],
         tags_information: [],
+        sendError: false,
         materials: {
           ...state.materials,
           text: {
             ...state.materials.text,
+            id: action.data.message.id,
             text: action.payload,
-            title: action.title,
+            title: action.name,
             year: action.year,
             author: action.author,
-            location: action.location,
+            location: action.place,
             comment: action.comment,
-            tags_century: action.tags_century,
+            tags_century: action.centuries,
             tags_information: action.types,
           },
         },
       };
     //добавление одного файла
-    case 'one/upload':
+    case ONE_UPLOAD_SUCCESS:
       return {
         ...state,
         title: '',
@@ -177,20 +185,21 @@ export default function files(state = initialState, action) {
         comment: '',
         tags_century: [],
         tags_information: [],
+        sendError: false,
         materials: {
           ...state.materials,
-          [action.payload.type]: {
-            ...state.materials[action.payload.type],
+          [action.format]: {
+            ...state.materials[action.format],
             one: [
-              ...state.materials[action.payload.type].one,
+              ...state.materials[action.format].one,
               {
                 id: action.payload.id,
                 path: action.payload.path,
                 type: action.payload.type,
-                title: action.title,
+                title: action.name,
                 year: action.year,
                 author: action.author,
-                location: action.location,
+                location: action.place,
                 comment: action.comment,
                 tags_century: action.centuries,
                 tags_information: action.types,
@@ -408,73 +417,7 @@ export default function files(state = initialState, action) {
       };
 
     //добавление группы файлов
-    case 'group/upload':
-      if (action.format === 'application') {
-        return {
-          ...state,
-          files: {},
-          title: '',
-          year: '',
-          author: '',
-          location: '',
-          comment: '',
-          tags_century: [],
-          tags_information: [],
-          materials: {
-            ...state.materials,
-            document: {
-              ...state.materials.document,
-              group: [
-                ...state.materials.document.group,
-                {
-                  group: action.payload.group,
-                  files: action.payload.files,
-                  title: action.title,
-                  year: action.year,
-                  author: action.author,
-                  location: action.location,
-                  comment: action.comment,
-                  tags_century: action.centuries,
-                  tags_information: action.types,
-                },
-              ],
-            },
-          },
-        };
-      }
-      if (action.format === 'image') {
-        return {
-          ...state,
-          files: {},
-          title: '',
-          year: '',
-          author: '',
-          location: '',
-          comment: '',
-          tags_century: [],
-          tags_information: [],
-          materials: {
-            ...state.materials,
-            photo: {
-              ...state.materials.photo,
-              group: [
-                ...state.materials.photo.group,
-                {
-                  group: action.payload.group,
-                  files: action.payload.files,
-                  title: action.title,
-                  year: action.year,
-                  author: action.author,
-                  location: action.location,
-                  comment: action.comment,
-                  tags_century: action.centuries,
-                  tags_information: action.types,
-                },
-              ],
-            },
-          },
-        };
-      }
+    case GROUP_UPLOAD_SUCCESS:
       return {
         ...state,
         files: {},
@@ -485,6 +428,7 @@ export default function files(state = initialState, action) {
         comment: '',
         tags_century: [],
         tags_information: [],
+        sendError: false,
         materials: {
           ...state.materials,
           [action.format]: {
@@ -492,12 +436,12 @@ export default function files(state = initialState, action) {
             group: [
               ...state.materials[action.format].group,
               {
-                group: action.payload.group,
+                group_uid: action.payload.group,
                 files: action.payload.files,
-                title: action.title,
+                title: action.name,
                 year: action.year,
                 author: action.author,
-                location: action.location,
+                location: action.place,
                 comment: action.comment,
                 tags_century: action.centuries,
                 tags_information: action.types,
@@ -548,7 +492,14 @@ export default function files(state = initialState, action) {
 
         for (let i = 0; i < arr.length; i++) {
           object[arr[i].group_uid].group_uid = arr[i].group_uid;
+          object[arr[i].group_uid].tags_century = arr[i].tags_century;
           object[arr[i].group_uid].type = arr[i].type;
+          object[arr[i].group_uid].title = arr[i].title;
+          object[arr[i].group_uid].author = arr[i].author;
+          object[arr[i].group_uid].location = arr[i].location;
+          object[arr[i].group_uid].tags_information = arr[i].tags_information;
+          object[arr[i].group_uid].comment = arr[i].comment;
+          object[arr[i].group_uid].year = arr[i].year;
           object[arr[i].group_uid].files.push(arr[i]);
         }
         return Object.values(object);
@@ -783,73 +734,98 @@ export const changeText = (value) => {
 export const UploadOneFail = (
   file,
   format,
-  title,
+  name,
   year,
   author,
-  location,
+  place,
   comment,
   centuries,
   types,
 ) => {
-  return {
-    type: 'one/upload',
-    payload: file,
-    format,
-    title,
-    year,
-    author,
-    location,
-    comment,
-    centuries,
-    types,
-  };
-};
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-export const UploadTextFail = (
-  title,
-  year,
-  author,
-  location,
-  comment,
-  centuries,
-  types,
-  file,
-) => {
-  return {
-    type: 'text/upload',
-    payload: file,
-    title,
-    year,
-    author,
-    location,
-    comment,
-    centuries,
-    types,
+      dispatch({ type: ONE_UPLOAD_START });
+
+      if (value !== null) {
+        const response = await api.post(`user/draft/edit/file/${file.id}`, {
+          title: name,
+          year,
+          author,
+          location: place,
+          comment,
+          tags_century: centuries,
+          tags_information: types,
+        }, {
+          headers: { Authorization: `Bearer ${value}` },
+        });
+        dispatch({
+          type: ONE_UPLOAD_SUCCESS,
+          data: response.data,
+          payload: file,
+          format,
+          name,
+          year,
+          author,
+          place,
+          comment,
+          centuries,
+          types,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 
 export const UploadGroupFails = (
   file,
   format,
-  title,
+  name,
   year,
   author,
-  location,
+  place,
   comment,
   centuries,
   types,
 ) => {
-  return {
-    type: 'group/upload',
-    payload: file,
-    format,
-    title,
-    year,
-    author,
-    location,
-    comment,
-    centuries,
-    types,
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: GROUP_UPLOAD_START });
+
+      if (value !== null) {
+        const response = await api.post(`user/draft/edit/group/${file.group}`, {
+          title: name,
+        year,
+        author,
+        location: place,
+        comment,
+        tags_century: centuries,
+        tags_information: types,
+        }, {
+          headers: { Authorization: `Bearer ${value}` },
+        });
+        dispatch({
+          type: GROUP_UPLOAD_SUCCESS,
+          data: response.data,
+          payload: file,
+          format,
+          name,
+          year,
+          author,
+          place,
+          comment,
+          centuries,
+          types,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 

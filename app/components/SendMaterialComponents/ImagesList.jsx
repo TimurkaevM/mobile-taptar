@@ -9,7 +9,7 @@ const ImagesList = () => {
   const photos = useSelector((state) => state.files.materials.photo.group);
 
   const renderImages = ({ item }) => {
-    const title = item.files[0].title === null ? '' : item.files[0].title;
+    const title = item.title === null ? '' : item.title;
     const titleSub = title.substr(0, 12);
     const titleFile = title;
 

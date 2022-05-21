@@ -11,7 +11,7 @@ const DocumentsList = () => {
     (state) => state.files.materials.document.group,
   );
   const renderDocument = ({ item }) => {
-    const title = item.files[0].title === null ? '' : item.files[0].title;
+    const title = item.title === null ? '' : item.title;
     const titleSub = title.substr(0, 12);
     const titleFile = title;
 

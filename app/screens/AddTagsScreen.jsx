@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Video, AVPlaybackStatus } from 'expo-av';
+import { useSelector } from 'react-redux';
 import {
   StyleSheet,
   Text,
-  Pressable,
   View,
-  Image,
   ScrollView,
 } from 'react-native';
 import InputInfoBox from '../components/AddTagsComponents/InputInfoBox';
@@ -24,10 +20,10 @@ const AddTagsScreen = (props) => {
   const progress = useSelector((state) => state.files.progress);
   const loadingFiles = useSelector((state) => state.files.loadingFiles);
 
-  const [nameError, setNameError] = useState('');
-  const [yearError, setYearError] = useState('');
-  const [authorError, setAuthorError] = useState('');
-  const [commentError, setCommentError] = useState('');
+  const [nameError, setNameError] = useState(null);
+  const [yearError, setYearError] = useState(null);
+  const [authorError, setAuthorError] = useState(null);
+  const [commentError, setCommentError] = useState(null);
 
   if (loadingFiles)
     return (
@@ -64,9 +60,12 @@ const AddTagsScreen = (props) => {
             setNameError={setNameError}
             setAuthorError={setAuthorError}
             setYearError={setYearError}
+            nameError={nameError}
+            authorError={authorError}
+            yearError={yearError}
           />
           <MediaBox />
-          <CommentClient setCommentError={setCommentError} />
+          <CommentClient setCommentError={setCommentError} commentError={commentError} />
           <TagsInformation />
           <TagsCenturies />
         </ScrollView>

@@ -3,13 +3,18 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeCommentTag } from '../../redux/ducks/files';
 
-const CommentClient = () => {
+const CommentClient = ({setCommentError, commentError}) => {
   const dispatch = useDispatch();
 
   const comment = useSelector((state) => state.files.comment);
 
   const handleChangeComment = (event) => {
-    dispatch(changeCommentTag(event.nativeEvent.text));
+    if(commentError) {
+      setCommentError(null);
+      dispatch(changeCommentTag(event.nativeEvent.text));
+    } else {
+      dispatch(changeCommentTag(event.nativeEvent.text));
+    }
   };
 
   return (
