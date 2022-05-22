@@ -31,7 +31,7 @@ function SendMaterialScreen(props) {
   return (
     <ScrollView>
       <MaterialTitle />
-      <MaterialText />
+      <MaterialText navigate={navigate} />
       <AddFileButton push={push} navigate={navigate} />
       {photo.length ? <ImageList /> : null}
       {photos.length ? <ImagesList /> : null}

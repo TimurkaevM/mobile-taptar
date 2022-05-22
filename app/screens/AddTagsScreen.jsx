@@ -8,10 +8,15 @@ import TagsCenturies from '../components/AddTagsComponents/TagsCenturies';
 import AddTagsHeader from '../components/AddTagsComponents/AddTagsHeader';
 import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 import MediaBox from '../components/AddTagsComponents/MediaBox';
+import MaterialText from '../components/AddTagsComponents/MaterialText';
 
 const AddTagsScreen = (props) => {
   const { navigate } = props.navigation;
 
+  const { params } = props.route;
+
+  const text = params?.type;
+  
   const progress = useSelector((state) => state.files.progress);
   const loadingFiles = useSelector((state) => state.files.loadingFiles);
 
@@ -19,6 +24,7 @@ const AddTagsScreen = (props) => {
   const [yearError, setYearError] = useState(null);
   const [authorError, setAuthorError] = useState(null);
   const [commentError, setCommentError] = useState(null);
+  const [textError, setTextError] = useState(null);
 
   if (loadingFiles)
     return (
@@ -44,10 +50,13 @@ const AddTagsScreen = (props) => {
         setAuthorError={setAuthorError}
         setCommentError={setCommentError}
         setYearError={setYearError}
+        setTextError={setTextError}
         nameError={nameError}
+        textError={textError}
         authorError={authorError}
         commentError={commentError}
         yearError={yearError}
+        materialText={text}
       />
       <View style={styles.centeredView}>
         <ScrollView>
@@ -59,7 +68,7 @@ const AddTagsScreen = (props) => {
             authorError={authorError}
             yearError={yearError}
           />
-          <MediaBox />
+          {text ? <MaterialText textError={textError} setTextError={setTextError} /> : <MediaBox />}
           <CommentClient
             setCommentError={setCommentError}
             commentError={commentError}

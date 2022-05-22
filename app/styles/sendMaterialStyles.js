@@ -26,13 +26,19 @@ export const sendMaterialStyles = StyleSheet.create({
     fontSize: 13,
   },
 
+  textTitleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
   inputText: {
     width: '100%',
     height: 200,
     padding: 20,
     borderWidth: 0.3,
     borderRadius: 8,
-    marginBottom: 50,
+    marginBottom: 70,
     backgroundColor: '#fafafa',
     color: '#000',
     fontSize: 13,

@@ -15,6 +15,8 @@ const ImagesList = () => {
 
     const changeTitle = titleFile.length >= 12 ? `${titleSub}...` : titleFile;
 
+    console.log(item)
+
     return (
       <View>
         <View style={sendMaterialStyles.mediaBox}>
@@ -42,7 +44,6 @@ const ImagesList = () => {
 
   return (
     <View style={sendMaterialStyles.inputTitleContainer}>
-      <View style={sendMaterialStyles.inputTitleContainer}>
         <View
           style={{
             flexDirection: 'row',
@@ -71,7 +72,6 @@ const ImagesList = () => {
           renderItem={renderImages}
           keyExtractor={(item) => item.group_uid}
         />
-      </View>
     </View>
   );
 };

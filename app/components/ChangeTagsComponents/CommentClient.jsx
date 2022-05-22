@@ -1,20 +1,13 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeCommentTag } from '../../redux/ducks/files';
 
-const CommentClient = ({ setCommentError, commentError }) => {
-  const dispatch = useDispatch();
 
-  const comment = useSelector((state) => state.files.comment);
-
+const CommentClient = ({ setCommentError, commentError, comment, setComment }) => {
   const handleChangeComment = (event) => {
     if (commentError) {
       setCommentError(null);
-      dispatch(changeCommentTag(event.nativeEvent.text));
-    } else {
-      dispatch(changeCommentTag(event.nativeEvent.text));
-    }
+    } 
+    return;
   };
 
   return (
@@ -39,6 +32,7 @@ const CommentClient = ({ setCommentError, commentError }) => {
         value={comment}
         placeholder="Введите комментарий..."
         onChange={handleChangeComment}
+        onChangeText={setComment}
       />
     </View>
   );

@@ -3,10 +3,8 @@ import { useSelector } from 'react-redux';
 import MediaBoxFile from './MediaBoxFile';
 import MediaBoxFiles from './MediaBoxFiles';
 
-const MediaBox = () => {
-  const files = useSelector((state) => state.files.files);
-
-  return files.group ? <MediaBoxFiles /> : <MediaBoxFile />;
+const MediaBox = ({ item }) => {
+  return item.group_uid ? <MediaBoxFiles item={item} /> : <MediaBoxFile item={item} />;
 };
 
 export default MediaBox;

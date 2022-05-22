@@ -13,6 +13,23 @@ const ONE_UPLOAD_SUCCESS = 'one/upload/success';
 const GROUP_UPLOAD_START = 'group/upload/start';
 const GROUP_UPLOAD_SUCCESS = 'group/upload/success';
 
+const TEXT_UPLOAD_START = 'text/upload/start';
+const TEXT_UPLOAD_SUCCESS = 'text/upload/success';
+
+const ONE_CHANGE_START = 'one/change/start';
+const ONE_CHANGE_SUCCESS = 'one/change/success';
+
+const GROUP_CHANGE_START = 'group/change/start';
+const GROUP_CHANGE_SUCCESS = 'group/change/success';
+
+const TEXT_CHANGE_START = 'text/change/start';
+const TEXT_CHANGE_SUCCESS = 'text/change/success';
+
+const DRAFT_GET_START = 'draft/load/start';
+const DRAFT_GET_SUCCESS = 'draft/load/success';
+
+const CLEAN_TAGS = 'clean/tags';
+
 const initialState = {
   loading: false,
   progress: 0,
@@ -30,17 +47,7 @@ const initialState = {
   materials: {
     title: '',
 
-    text: {
-      text: '',
-      type: 'text',
-      title: '',
-      year: '',
-      author: '',
-      location: '',
-      comment: '',
-      tags_century: [],
-      tags_information: [],
-    },
+    text: {},
 
     photo: {
       one: [],
@@ -78,6 +85,16 @@ export default function files(state = initialState, action) {
 
     //Изменение текста
     case 'text/change':
+      if (action.payload.length === 0) {
+        return {
+          ...state,
+          materials: {
+            ...state.materials,
+            text: {},
+          },
+        };
+      }
+
       return {
         ...state,
         materials: {
@@ -85,6 +102,24 @@ export default function files(state = initialState, action) {
           text: { ...state.materials.text, text: action.payload },
         },
       };
+
+      case 'text/delete/success':
+        return {
+          ...state,
+          materials: {
+            ...state.materials,
+            text: {},
+          },
+        };
+  
+      case 'text/clear/success':
+        return {
+          ...state,
+          materials: {
+            ...state.materials,
+            text: {},
+          },
+        };
 
     //Изменение тегов
     case 'tag/centuries/change':
@@ -146,18 +181,10 @@ export default function files(state = initialState, action) {
         comment: action.payload,
       };
 
-    //Добавление одного файла
-    case 'text/upload':
+    //Добавление текста
+    case TEXT_UPLOAD_SUCCESS:
       return {
         ...state,
-        title: '',
-        year: '',
-        author: '',
-        location: '',
-        comment: '',
-        tags_century: [],
-        tags_information: [],
-        sendError: false,
         materials: {
           ...state.materials,
           text: {
@@ -174,18 +201,11 @@ export default function files(state = initialState, action) {
           },
         },
       };
+
     //добавление одного файла
     case ONE_UPLOAD_SUCCESS:
       return {
         ...state,
-        title: '',
-        year: '',
-        author: '',
-        location: '',
-        comment: '',
-        tags_century: [],
-        tags_information: [],
-        sendError: false,
         materials: {
           ...state.materials,
           [action.format]: {
@@ -349,7 +369,7 @@ export default function files(state = initialState, action) {
       return state;
 
     //очистка files
-    case 'state/tags/remove':
+    case CLEAN_TAGS:
       return {
         ...state,
         files: {},
@@ -360,6 +380,7 @@ export default function files(state = initialState, action) {
         comment: '',
         tags_century: [],
         tags_information: [],
+        sendError: false,
       };
 
     case REMOVE_FILE_START:
@@ -420,15 +441,6 @@ export default function files(state = initialState, action) {
     case GROUP_UPLOAD_SUCCESS:
       return {
         ...state,
-        files: {},
-        title: '',
-        year: '',
-        author: '',
-        location: '',
-        comment: '',
-        tags_century: [],
-        tags_information: [],
-        sendError: false,
         materials: {
           ...state.materials,
           [action.format]: {
@@ -450,6 +462,72 @@ export default function files(state = initialState, action) {
           },
         },
       };
+      //Change files
+      case TEXT_CHANGE_SUCCESS:
+      return {
+        ...state,
+        materials: {
+          ...state.materials,
+          text: {
+            ...state.materials.text,
+            title: action.name,
+            year: action.year,
+            author: action.author,
+            location: action.place,
+            comment: action.comment,
+            tags_century: action.centuries,
+            tags_information: action.types,
+          },
+        },
+      };
+
+    case ONE_CHANGE_SUCCESS:
+      return {
+        ...state,
+        materials: {
+          ...state.materials,
+          [action.format]: {
+            ...state.materials[action.format],
+            one: state.materials[action.format].one.map((item) => {
+              if (item.id === action.id) {
+                item.title = action.name;
+                item.year = action.year;
+                item.author = action.author;
+                item.location = action.place;
+                item.comment = action.comment;
+                item.tags_century = action.centuries;
+                item.tags_information = action.types;
+              }
+
+              return item;
+            }),
+          },
+        },
+      };
+
+    case GROUP_CHANGE_SUCCESS:
+      return {
+        ...state,
+        materials: {
+          ...state.materials,
+          [action.format]: {
+            ...state.materials[action.format],
+            group: state.materials[action.format].group.map((item) => {
+              if (item.group_uid === action.group) {
+                item.title = action.name;
+                item.year = action.year;
+                item.author = action.author;
+                item.location = action.place;
+                item.comment = action.comment;
+                item.tags_century = action.centuries;
+                item.tags_information = action.types;
+              }
+
+              return item;
+            }),
+          },
+        },
+      };
 
     case 'files/post/start':
       return {
@@ -465,13 +543,13 @@ export default function files(state = initialState, action) {
         progress: 0,
       };
 
-    case 'draft/load/start':
+    case DRAFT_GET_START:
       return {
         ...state,
         loading: true,
       };
 
-    case 'draft/load/success':
+    case DRAFT_GET_SUCCESS:
       function getGroupFiles(arr) {
         const result = [];
         const object = {};
@@ -510,6 +588,7 @@ export default function files(state = initialState, action) {
         loading: false,
         materials: {
           ...state.materials,
+          text: action.payload.message.text,
           photo: {
             one: action.payload.message.photo.filter(
               (item) => item.group_uid === null,
@@ -730,7 +809,92 @@ export const changeText = (value) => {
   };
 };
 
+//Удаление текста с сервера
+
+export const deleteDraftText = (id) => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: 'text/delete/start' });
+
+      if (value !== null) {
+        const response = await api.delete(
+          `/user/draft/text/${id}`,
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
+        dispatch({
+          type: 'text/delete/success',
+          payload: response.data,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};
+
+export const clearTextForm = () => {
+  return {
+    type: 'text/clear/success',
+  };
+};
+
 // Файлы
+export const UploadTextFail = (
+  name,
+  year,
+  author,
+  place,
+  comment,
+  centuries,
+  types,
+  file,
+) => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: TEXT_UPLOAD_START });
+
+      if (value !== null) {
+        const response = await api.post(
+          'user/draft/text',
+          {
+            text: file,
+            title: name,
+            year,
+            author,
+            location: place,
+            comment,
+            tags_century: centuries,
+            tags_information: types,
+          },
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
+        dispatch({
+          type: TEXT_UPLOAD_SUCCESS,
+          data: response.data,
+          payload: file,
+          name,
+          year,
+          author,
+          place,
+          comment,
+          centuries,
+          types,
+        });
+      }
+    } catch (e) {
+      console.error(e.response.data);
+    }
+  };
+};
+
 export const UploadOneFail = (
   file,
   format,
@@ -837,9 +1001,9 @@ export const UploadGroupFails = (
   };
 };
 
-export const RemoveStateTags = () => {
+export const cleanStateTags = () => {
   return {
-    type: 'state/tags/remove',
+    type: CLEAN_TAGS,
   };
 };
 
@@ -1092,7 +1256,7 @@ export const getDraftFiles = () => {
       const value = await AsyncStorage.getItem('token');
 
       dispatch({
-        type: 'draft/load/start',
+        type: DRAFT_GET_START,
       });
 
       if (value !== null) {
@@ -1100,7 +1264,7 @@ export const getDraftFiles = () => {
           headers: { Authorization: `Bearer ${value}` },
         });
         dispatch({
-          type: 'draft/load/success',
+          type: DRAFT_GET_SUCCESS,
           payload: response.data,
         });
       }
@@ -1119,32 +1283,160 @@ export const ChangeFilesTags = (file) => {
   };
 };
 
-export const ChangeFiles = (
-  id,
-  format,
-  amount,
-  group,
-  title,
+export const changeTextFile = (
+  file,
+  name,
   year,
   author,
-  location,
+  place,
   comment,
   centuries,
   types,
 ) => {
-  return {
-    type: 'change/files/success',
-    id,
-    format,
-    amount,
-    group,
-    title,
-    year,
-    author,
-    location,
-    comment,
-    centuries,
-    types,
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: TEXT_CHANGE_START });
+
+      if (value !== null) {
+        const response = await api.post(
+          `/user/draft/edit/text/${file.id}`,
+          {
+            text: file.text,
+        title: name,
+        year,
+        author,
+        location: place,
+        comment,
+        tags_century: centuries,
+        tags_information: types,
+          },
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
+        dispatch({
+          type: TEXT_CHANGE_SUCCESS,
+          data: response.data,
+          name,
+          year,
+          author,
+          place,
+          comment,
+          centuries,
+          types,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};
+
+export const changeOneFile = (
+  id,
+  format,
+  name,
+  year,
+  author,
+  place,
+  comment,
+  centuries,
+  types,
+) => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: ONE_CHANGE_START });
+
+      if (value !== null) {
+        const response = await api.post(
+          `/user/draft/edit/file/${id}`,
+          {
+            title: name,
+        year,
+        author,
+        location: place,
+        comment,
+        tags_century: centuries,
+        tags_information: types,
+          },
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
+        dispatch({
+          type: ONE_CHANGE_SUCCESS,
+          data: response.data,
+          name,
+          year,
+          author,
+          place,
+          comment,
+          centuries,
+          types,
+          format,
+          id,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};
+
+export const changeGroupFiles = (
+  format,
+  group,
+  name,
+  year,
+  author,
+  place,
+  comment,
+  centuries,
+  types,
+) => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: GROUP_CHANGE_START });
+
+      if (value !== null) {
+        const response = await api.post(
+          `/user/draft/edit/group/${group}`,
+          {
+            title: name,
+        year,
+        author,
+        location: place,
+        comment,
+        tags_century: centuries,
+        tags_information: types,
+          },
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
+        dispatch({
+          type: GROUP_CHANGE_SUCCESS,
+          data: response.data,
+          name,
+          year,
+          author,
+          place,
+          comment,
+          centuries,
+          types,
+          group,
+          format,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 

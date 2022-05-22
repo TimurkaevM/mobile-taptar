@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getDraftFiles } from '../redux/ducks/files';
-import TagsScreen from '../screens/AddTagsScreen';
+import AddTagsScreen from '../screens/AddTagsScreen';
+import ChangeTagsScreen from '../screens/ChangeTagsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import FormSend from '../screens/SendMaterialScreen';
 import ImageBrowserScreen from '../screens/ImageBrowserScreen';
@@ -39,7 +40,14 @@ function SendMaterialRoutes() {
       />
       <Stack.Screen
         name="ModalAddFile"
-        component={TagsScreen}
+        component={AddTagsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ChangeTagsScreen"
+        component={ChangeTagsScreen}
         options={{
           headerShown: false,
         }}

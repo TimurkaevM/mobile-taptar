@@ -1,21 +1,22 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeCommentTag } from '../../redux/ducks/files';
+import { changeText } from '../../redux/ducks/files';
 
-const CommentClient = ({ setCommentError, commentError }) => {
+const MaterialText = ({ setTextError, textError }) => {
   const dispatch = useDispatch();
 
-  const comment = useSelector((state) => state.files.comment);
+  const text = useSelector((state) => state.files.materials.text);
 
-  const handleChangeComment = (event) => {
-    if (commentError) {
-      setCommentError(null);
-      dispatch(changeCommentTag(event.nativeEvent.text));
+  const handleChangeText = (event) => {
+    if (textError) {
+      setTextError(null);
+      dispatch(changeText(event.nativeEvent.text));
     } else {
-      dispatch(changeCommentTag(event.nativeEvent.text));
+      dispatch(changeText(event.nativeEvent.text));
     }
   };
+
 
   return (
     <View style={styles.inputTitleContainer}>
@@ -28,17 +29,17 @@ const CommentClient = ({ setCommentError, commentError }) => {
           fontSize: 15,
         }}
       >
-        Комментарий
+        Изменить текст
       </Text>
       <TextInput
         multiline
-        numberOfLines={4}
+        numberOfLines={7}
         style={styles.inputComment}
         type="password"
         name="comment"
-        value={comment}
+        value={text.text}
         placeholder="Введите комментарий..."
-        onChange={handleChangeComment}
+        onChange={handleChangeText}
       />
     </View>
   );
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
 
   inputComment: {
     width: '100%',
-    height: 100,
+    height: 200,
     padding: 20,
     borderWidth: 0.1,
     borderRadius: 2,
@@ -64,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CommentClient;
+export default MaterialText;

@@ -3,12 +3,10 @@ import React from 'react';
 import color from '../../misc/color';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  changeGroupFiles,
+  changeOneFile,
+  changeTextFile,
   cleanStateTags,
-  removeFile,
-  removeFiles,
-  UploadGroupFails,
-  UploadOneFail,
-  UploadTextFail,
 } from '../../redux/ducks/files';
 
 const AddTagsHeader = ({
@@ -23,23 +21,20 @@ const AddTagsHeader = ({
   setNameError,
   setTextError,
   setYearError,
-  materialText,
+  title,
+  year,
+  location,
+  author,
+  comment,
+  centuryClient,
+  informationClient,
+  item,
 }) => {
   const dispatch = useDispatch();
-
-  console.log(materialText)
 
   const currentTime = new Date();
   const currentYear = currentTime.getFullYear();
 
-  const files = useSelector((state) => state.files.files);
-  const title = useSelector((state) => state.files.title);
-  const year = useSelector((state) => state.files.year);
-  const location = useSelector((state) => state.files.location);
-  const comment = useSelector((state) => state.files.comment);
-  const centuriesClient = useSelector((state) => state.files.tags_century);
-  const typesClient = useSelector((state) => state.files.tags_information);
-  const author = useSelector((state) => state.files.author);
   const text = useSelector((state) => state.files.materials.text);
 
   const onSuccess = () => {
@@ -67,37 +62,37 @@ const AddTagsHeader = ({
     if (author.length !== 0 && /\d/.test(author)) {
       return setAuthorError('В авторе не может быть чисел');
     }
-    if (materialText) {
+    if (item.type === 'text') {
       navigate('Main');
       dispatch(cleanStateTags());
       dispatch(
-        UploadTextFail(
+        changeTextFile(
+          text,
           title,
           year,
           author,
           location,
           comment,
-          centuriesClient,
-          typesClient,
-          text.text,
+          centuryClient,
+          informationClient,
         ),
       );
       return;
     }
-    if (!files.group) {
+    if (!item.group_uid) {
       navigate('Main');
       dispatch(cleanStateTags());
       dispatch(
-        UploadOneFail(
-          files,
-          files.type,
-          title,
-          year,
-          author,
-          location,
-          comment,
-          centuriesClient,
-          typesClient,
+        changeOneFile(
+          item.id,
+  item.type,
+  title,
+  year,
+  author,
+  location,
+  comment,
+  centuryClient,
+  informationClient,
         ),
       );
       return;
@@ -105,40 +100,22 @@ const AddTagsHeader = ({
       navigate('Main');
       dispatch(cleanStateTags());
       dispatch(
-        UploadGroupFails(
-          files,
-          files.type,
+        changeGroupFiles(
+          item.type,
+          item.group_uid,
           title,
           year,
           author,
           location,
           comment,
-          centuriesClient,
-          typesClient,
+          centuryClient,
+          informationClient,
         ),
       );
   };
 
   const onPressClose = () => {
-    if(materialText) {
-      dispatch(cleanStateTags());
-      return;
-    }
-    if (files.group) {
-      dispatch(cleanStateTags());
-      dispatch(
-        removeFiles({
-          files: files.files,
-          type: files.type,
-          group_uid: files.group,
-        }),
-      );
-      navigate('Main');
-      return;
-    }
-    dispatch(cleanStateTags());
-      dispatch(removeFile(files));
-      navigate('Main');
+    navigate('Main');
   };
 
   return (
