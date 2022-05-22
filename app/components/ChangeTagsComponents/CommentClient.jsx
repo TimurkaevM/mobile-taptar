@@ -1,12 +1,16 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
 
-
-const CommentClient = ({ setCommentError, commentError, comment, setComment }) => {
+const CommentClient = ({
+  setCommentError,
+  commentError,
+  comment,
+  setComment,
+}) => {
   const handleChangeComment = (event) => {
     if (commentError) {
       setCommentError(null);
-    } 
+    }
     return;
   };
 

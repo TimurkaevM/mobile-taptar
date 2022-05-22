@@ -16,15 +16,9 @@ const ChangeTagsScreen = (props) => {
 
   const item = params.item;
 
-  const [title, setTitle] = useState(
-    item.title === null ? '' : item.title,
-  );
-  const [year, setYear] = useState(
-    item.year === null ? '' : item.year,
-  );
-  const [author, setAuthor] = useState(
-    item.author === null ? '' : item.author,
-  );
+  const [title, setTitle] = useState(item.title === null ? '' : item.title);
+  const [year, setYear] = useState(item.year === null ? '' : item.year);
+  const [author, setAuthor] = useState(item.author === null ? '' : item.author);
   const [location, setLocation] = useState(
     item.location === null ? '' : item.location,
   );
@@ -38,7 +32,6 @@ const ChangeTagsScreen = (props) => {
     item.tags_information,
   );
   const [centuryClient, setCenturyClient] = useState(item.tags_century);
-
 
   const [nameError, setNameError] = useState(null);
   const [yearError, setYearError] = useState(null);
@@ -88,15 +81,25 @@ const ChangeTagsScreen = (props) => {
             setYear={setYear}
             setLocation={setLocation}
           />
-          {item.type === 'text' ? <MaterialText textError={textError} setTextError={setTextError} /> : <MediaBox item={item} />}
+          {item.type === 'text' ? (
+            <MaterialText textError={textError} setTextError={setTextError} />
+          ) : (
+            <MediaBox item={item} />
+          )}
           <CommentClient
             setCommentError={setCommentError}
             commentError={commentError}
             setComment={setComment}
             comment={comment}
           />
-          <TagsInformation informationClient={informationClient} setInformationClient={setInformationClient} />
-          <TagsCenturies centuryClient={centuryClient} setCenturyClient={setCenturyClient} />
+          <TagsInformation
+            informationClient={informationClient}
+            setInformationClient={setInformationClient}
+          />
+          <TagsCenturies
+            centuryClient={centuryClient}
+            setCenturyClient={setCenturyClient}
+          />
         </ScrollView>
       </View>
     </>

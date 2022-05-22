@@ -27,7 +27,7 @@ const AddTagsHeader = ({
 }) => {
   const dispatch = useDispatch();
 
-  console.log(materialText)
+  console.log(materialText);
 
   const currentTime = new Date();
   const currentYear = currentTime.getFullYear();
@@ -102,25 +102,25 @@ const AddTagsHeader = ({
       );
       return;
     }
-      navigate('Main');
-      dispatch(cleanStateTags());
-      dispatch(
-        UploadGroupFails(
-          files,
-          files.type,
-          title,
-          year,
-          author,
-          location,
-          comment,
-          centuriesClient,
-          typesClient,
-        ),
-      );
+    navigate('Main');
+    dispatch(cleanStateTags());
+    dispatch(
+      UploadGroupFails(
+        files,
+        files.type,
+        title,
+        year,
+        author,
+        location,
+        comment,
+        centuriesClient,
+        typesClient,
+      ),
+    );
   };
 
   const onPressClose = () => {
-    if(materialText) {
+    if (materialText) {
       dispatch(cleanStateTags());
       return;
     }
@@ -137,8 +137,8 @@ const AddTagsHeader = ({
       return;
     }
     dispatch(cleanStateTags());
-      dispatch(removeFile(files));
-      navigate('Main');
+    dispatch(removeFile(files));
+    navigate('Main');
   };
 
   return (
@@ -172,7 +172,7 @@ const AddTagsHeader = ({
           {authorError}
         </Text>
       )}
-            {textError && (
+      {textError && (
         <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
           {textError}
         </Text>

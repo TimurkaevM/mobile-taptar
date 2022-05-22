@@ -3,19 +3,18 @@ import React from 'react';
 import AddInformation from './AddInformation';
 import { useSelector } from 'react-redux';
 
-const TagsCenturies = ({
-  centuryClient,
-  setCenturyClient,
-}) => {
+const TagsCenturies = ({ centuryClient, setCenturyClient }) => {
   const centuries = useSelector((state) => state.tags.centuries);
 
   const pressChangeCenturies = (tag, check) => {
     if (check) {
-      const filteredCenturies = centuryClient.filter( item => item.id !== tag.id);
+      const filteredCenturies = centuryClient.filter(
+        (item) => item.id !== tag.id,
+      );
       setCenturyClient(filteredCenturies);
       return;
     }
-    const addCenturies = [...centuryClient, tag]
+    const addCenturies = [...centuryClient, tag];
     setCenturyClient(addCenturies);
   };
 
@@ -24,9 +23,7 @@ const TagsCenturies = ({
       <Text>Период/Век:</Text>
       <View style={styles.flexTags}>
         {centuries.map((item) => {
-          const check = centuryClient.some(
-            (century) => century.id === item.id,
-          );
+          const check = centuryClient.some((century) => century.id === item.id);
 
           const backgroundColor = check ? '#4686cc' : '#bed1e6';
           const color = check ? 'white' : 'white';

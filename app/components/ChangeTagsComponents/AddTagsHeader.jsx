@@ -85,24 +85,7 @@ const AddTagsHeader = ({
       dispatch(
         changeOneFile(
           item.id,
-  item.type,
-  title,
-  year,
-  author,
-  location,
-  comment,
-  centuryClient,
-  informationClient,
-        ),
-      );
-      return;
-    }
-      navigate('Main');
-      dispatch(cleanStateTags());
-      dispatch(
-        changeGroupFiles(
           item.type,
-          item.group_uid,
           title,
           year,
           author,
@@ -112,6 +95,23 @@ const AddTagsHeader = ({
           informationClient,
         ),
       );
+      return;
+    }
+    navigate('Main');
+    dispatch(cleanStateTags());
+    dispatch(
+      changeGroupFiles(
+        item.type,
+        item.group_uid,
+        title,
+        year,
+        author,
+        location,
+        comment,
+        centuryClient,
+        informationClient,
+      ),
+    );
   };
 
   const onPressClose = () => {
@@ -149,7 +149,7 @@ const AddTagsHeader = ({
           {authorError}
         </Text>
       )}
-            {textError && (
+      {textError && (
         <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
           {textError}
         </Text>

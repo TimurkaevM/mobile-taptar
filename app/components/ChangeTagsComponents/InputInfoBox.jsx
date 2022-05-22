@@ -27,18 +27,18 @@ const InputInfoBox = ({
   const handleChangeAuthor = (event) => {
     if (authorError) {
       setAuthorError(null);
-    } 
+    }
     return;
   };
 
   const handleChangeLocation = (event) => {
     return;
-    };
+  };
 
   const handleChangeYear = (event) => {
     if (yearError) {
       setYearError(null);
-    } 
+    }
     return;
   };
 

@@ -7,65 +7,65 @@ import DeleteBtn from './DeleteBtn';
 
 const MediaBoxFiles = ({ item }) => {
   const renderItems = ({ media }) => {
-  let mediaItem = null;
+    let mediaItem = null;
 
-  if (item.type === 'photo') {
-    mediaItem = (
-      <View style={styles.media}>
-        <Image
-          style={styles.tinyLogo}
-          source={{
-            uri: `http://api.taptar.ru/storage/${media.path}`,
-          }}
-        />
-      </View>
-    );
-  }
+    if (item.type === 'photo') {
+      mediaItem = (
+        <View style={styles.media}>
+          <Image
+            style={styles.tinyLogo}
+            source={{
+              uri: `http://api.taptar.ru/storage/${media.path}`,
+            }}
+          />
+        </View>
+      );
+    }
 
-  if (item.type === 'video') {
-    mediaItem = (
-      <View style={styles.media}>
-        <Video
-          style={styles.tinyLogo}
-          source={{
-            uri: `http://api.taptar.ru/storage/${media.path}`,
-          }}
-          useNativeControls
-          resizeMode="contain"
-          isLooping
-          // onPlaybackStatusUpdate={status => setStatus(() => status)}
-        />
-      </View>
-    );
-  }
+    if (item.type === 'video') {
+      mediaItem = (
+        <View style={styles.media}>
+          <Video
+            style={styles.tinyLogo}
+            source={{
+              uri: `http://api.taptar.ru/storage/${media.path}`,
+            }}
+            useNativeControls
+            resizeMode="contain"
+            isLooping
+            // onPlaybackStatusUpdate={status => setStatus(() => status)}
+          />
+        </View>
+      );
+    }
 
-  if (item.type === 'audio') {
-    mediaItem = (
-      <View style={styles.media}>
-        <AudioPlayer path={media.path} />
-      </View>
-    );
-  }
+    if (item.type === 'audio') {
+      mediaItem = (
+        <View style={styles.media}>
+          <AudioPlayer path={media.path} />
+        </View>
+      );
+    }
 
-  if (item.type === 'document') {
-    mediaItem = (
-      <View style={styles.mediaDocument}>
-        <PdfReader path={media.path} />
-      </View>
-    );
-  }
+    if (item.type === 'document') {
+      mediaItem = (
+        <View style={styles.mediaDocument}>
+          <PdfReader path={media.path} />
+        </View>
+      );
+    }
 
     return mediaItem;
   };
 
   return (
     <View style={styles.container}>
-        <FlatList
-          horizontal
-          data={item.files}
-          renderItem={renderItems}
-          keyExtractor={(item) => item.id.toString()}
-        />
+      <FlatList
+        horizontal
+        data={item.files}
+        renderItem={renderItems}
+        keyExtractor={(item) => item.id.toString()}
+      />
     </View>
   );
 };

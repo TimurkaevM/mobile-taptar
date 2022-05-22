@@ -15,7 +15,7 @@ const ImagesList = () => {
 
     const changeTitle = titleFile.length >= 12 ? `${titleSub}...` : titleFile;
 
-    console.log(item)
+    console.log(item);
 
     return (
       <View>
@@ -44,34 +44,34 @@ const ImagesList = () => {
 
   return (
     <View style={sendMaterialStyles.inputTitleContainer}>
-        <View
+      <View
+        style={{
+          flexDirection: 'row',
+          paddingBottom: 15,
+          borderBottomWidth: 1,
+          marginBottom: 10,
+          borderColor: '#000',
+          alignItems: 'center',
+        }}
+      >
+        <ImageListIcon />
+        <Text
           style={{
-            flexDirection: 'row',
-            paddingBottom: 15,
-            borderBottomWidth: 1,
-            marginBottom: 10,
-            borderColor: '#000',
-            alignItems: 'center',
+            textAlign: 'left',
+            fontWeight: '400',
+            fontSize: 15,
+            marginLeft: 10,
           }}
         >
-          <ImageListIcon />
-          <Text
-            style={{
-              textAlign: 'left',
-              fontWeight: '400',
-              fontSize: 15,
-              marginLeft: 10,
-            }}
-          >
-            Фото (группа файлов)
-          </Text>
-        </View>
-        <FlatList
-          horizontal
-          data={photos}
-          renderItem={renderImages}
-          keyExtractor={(item) => item.group_uid}
-        />
+          Фото (группа файлов)
+        </Text>
+      </View>
+      <FlatList
+        horizontal
+        data={photos}
+        renderItem={renderImages}
+        keyExtractor={(item) => item.group_uid}
+      />
     </View>
   );
 };

@@ -16,7 +16,7 @@ const AddTagsScreen = (props) => {
   const { params } = props.route;
 
   const text = params?.type;
-  
+
   const progress = useSelector((state) => state.files.progress);
   const loadingFiles = useSelector((state) => state.files.loadingFiles);
 
@@ -68,7 +68,11 @@ const AddTagsScreen = (props) => {
             authorError={authorError}
             yearError={yearError}
           />
-          {text ? <MaterialText textError={textError} setTextError={setTextError} /> : <MediaBox />}
+          {text ? (
+            <MaterialText textError={textError} setTextError={setTextError} />
+          ) : (
+            <MediaBox />
+          )}
           <CommentClient
             setCommentError={setCommentError}
             commentError={commentError}

@@ -4,8 +4,7 @@ import PdfReader from './PdfReader';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import AudioPlayer from './AudioPlayer';
 
-const MediaBoxFile = ({item}) => {
-
+const MediaBoxFile = ({ item }) => {
   let mediaItem = null;
 
   if (item.type === 'photo') {

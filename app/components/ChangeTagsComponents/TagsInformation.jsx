@@ -3,19 +3,18 @@ import React from 'react';
 import AddInformation from './AddInformation';
 import { useSelector } from 'react-redux';
 
-const TagsInformation = ({
-  informationClient,
-  setInformationClient,
-}) => {
+const TagsInformation = ({ informationClient, setInformationClient }) => {
   const types = useSelector((state) => state.tags.types);
 
   const pressChangeInformation = (tag, check) => {
     if (check) {
-      const filteredInformation = informationClient.filter( item => item.id !== tag.id);
+      const filteredInformation = informationClient.filter(
+        (item) => item.id !== tag.id,
+      );
       setInformationClient(filteredInformation);
       return;
     }
-    const addInformation = [...informationClient, tag]
+    const addInformation = [...informationClient, tag];
     setInformationClient(addInformation);
   };
 

@@ -103,23 +103,23 @@ export default function files(state = initialState, action) {
         },
       };
 
-      case 'text/delete/success':
-        return {
-          ...state,
-          materials: {
-            ...state.materials,
-            text: {},
-          },
-        };
-  
-      case 'text/clear/success':
-        return {
-          ...state,
-          materials: {
-            ...state.materials,
-            text: {},
-          },
-        };
+    case 'text/delete/success':
+      return {
+        ...state,
+        materials: {
+          ...state.materials,
+          text: {},
+        },
+      };
+
+    case 'text/clear/success':
+      return {
+        ...state,
+        materials: {
+          ...state.materials,
+          text: {},
+        },
+      };
 
     //Изменение тегов
     case 'tag/centuries/change':
@@ -462,8 +462,8 @@ export default function files(state = initialState, action) {
           },
         },
       };
-      //Change files
-      case TEXT_CHANGE_SUCCESS:
+    //Change files
+    case TEXT_CHANGE_SUCCESS:
       return {
         ...state,
         materials: {
@@ -819,12 +819,9 @@ export const deleteDraftText = (id) => {
       dispatch({ type: 'text/delete/start' });
 
       if (value !== null) {
-        const response = await api.delete(
-          `/user/draft/text/${id}`,
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
+        const response = await api.delete(`/user/draft/text/${id}`, {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: 'text/delete/success',
           payload: response.data,
@@ -1304,13 +1301,13 @@ export const changeTextFile = (
           `/user/draft/edit/text/${file.id}`,
           {
             text: file.text,
-        title: name,
-        year,
-        author,
-        location: place,
-        comment,
-        tags_century: centuries,
-        tags_information: types,
+            title: name,
+            year,
+            author,
+            location: place,
+            comment,
+            tags_century: centuries,
+            tags_information: types,
           },
           {
             headers: { Authorization: `Bearer ${value}` },
@@ -1356,12 +1353,12 @@ export const changeOneFile = (
           `/user/draft/edit/file/${id}`,
           {
             title: name,
-        year,
-        author,
-        location: place,
-        comment,
-        tags_century: centuries,
-        tags_information: types,
+            year,
+            author,
+            location: place,
+            comment,
+            tags_century: centuries,
+            tags_information: types,
           },
           {
             headers: { Authorization: `Bearer ${value}` },
@@ -1409,12 +1406,12 @@ export const changeGroupFiles = (
           `/user/draft/edit/group/${group}`,
           {
             title: name,
-        year,
-        author,
-        location: place,
-        comment,
-        tags_century: centuries,
-        tags_information: types,
+            year,
+            author,
+            location: place,
+            comment,
+            tags_century: centuries,
+            tags_information: types,
           },
           {
             headers: { Authorization: `Bearer ${value}` },

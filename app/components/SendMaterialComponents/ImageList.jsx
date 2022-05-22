@@ -13,7 +13,7 @@ const ImageList = () => {
     const titleSub = title.substr(0, 12);
     const titleFile = title;
 
-    console.log(item)
+    console.log(item);
 
     const changeTitle = titleFile.length >= 12 ? `${titleSub}...` : titleFile;
     return (

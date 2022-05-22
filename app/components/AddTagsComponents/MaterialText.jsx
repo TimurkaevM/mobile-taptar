@@ -17,7 +17,6 @@ const MaterialText = ({ setTextError, textError }) => {
     }
   };
 
-
   return (
     <View style={styles.inputTitleContainer}>
       <Text
