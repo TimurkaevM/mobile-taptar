@@ -198,6 +198,7 @@ export default function files(state = initialState, action) {
             comment: action.comment,
             tags_century: action.centuries,
             tags_information: action.types,
+            type: 'text',
           },
         },
       };
@@ -223,6 +224,7 @@ export default function files(state = initialState, action) {
                 comment: action.comment,
                 tags_century: action.centuries,
                 tags_information: action.types,
+                type: action.format,
               },
             ],
           },
@@ -457,6 +459,7 @@ export default function files(state = initialState, action) {
                 comment: action.comment,
                 tags_century: action.centuries,
                 tags_information: action.types,
+                type: action.format,
               },
             ],
           },

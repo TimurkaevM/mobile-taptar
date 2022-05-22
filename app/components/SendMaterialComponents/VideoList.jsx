@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import DeleteBtn from './DeleteBtn';
 import { Video } from 'expo-av';
 
-const VideoList = () => {
+const VideoList = ({ navigate }) => {
   const video = useSelector((state) => state.files.materials.video.one);
 
   const renderVideo = ({ item }) => {
@@ -19,16 +19,20 @@ const VideoList = () => {
       <View>
         <View style={sendMaterialStyles.mediaBox}>
           <DeleteBtn item={item} />
-
-          <Video
-            style={sendMaterialStyles.mediaImage}
-            source={{
-              uri: `https://api.taptar.ru/storage/${item.path}`,
-            }}
-            useNativeControls={false}
-            resizeMode="contain"
-            // isLooping
-          />
+          <Pressable
+            style={{ width: '100%', height: '100%' }}
+            onPress={() => navigate('ChangeTagsScreen', { item: item })}
+          >
+            <Video
+              style={sendMaterialStyles.mediaImage}
+              source={{
+                uri: `https://api.taptar.ru/storage/${item.path}`,
+              }}
+              useNativeControls={false}
+              resizeMode="contain"
+              // isLooping
+            />
+          </Pressable>
         </View>
         <Text
           style={{

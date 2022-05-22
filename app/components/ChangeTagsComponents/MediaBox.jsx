@@ -5,7 +5,7 @@ import MediaBoxFiles from './MediaBoxFiles';
 
 const MediaBox = ({ item }) => {
   return item.group_uid ? (
-    <MediaBoxFiles item={item} />
+    <MediaBoxFiles media={item} />
   ) : (
     <MediaBoxFile item={item} />
   );

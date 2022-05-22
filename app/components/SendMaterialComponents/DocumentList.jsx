@@ -6,7 +6,7 @@ import DeleteBtn from './DeleteBtn';
 import DocumentItemIcon from '../../SvgIcons/SendMaterialIcons/DocumentItemIcon';
 import DocumentListIcon from '../../SvgIcons/SendMaterialIcons/DocumentListIcon';
 
-const DocumentList = () => {
+const DocumentList = ({ navigate }) => {
   const document = useSelector((state) => state.files.materials.document.one);
 
   const renderDocument = ({ item }) => {
@@ -26,7 +26,7 @@ const DocumentList = () => {
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            onPress={() => console.log('ddd')}
+            onPress={() => navigate('ChangeTagsScreen', { item: item })}
           >
             <DocumentItemIcon />
           </Pressable>

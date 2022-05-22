@@ -7,7 +7,6 @@ function EntranceRoutes() {
   const Tab = createMaterialTopTabNavigator();
 
   return (
-    // <NavigationContainer>
     <Tab.Navigator
       initialRouteName="Auth"
       screenOptions={{
@@ -19,7 +18,6 @@ function EntranceRoutes() {
           borderWidth: 0,
         },
       }}
-      // tabBar={(props) => <MyTopTabBar {...props} />}
     >
       <Tab.Screen
         name="Auth"
@@ -32,7 +30,6 @@ function EntranceRoutes() {
         options={{ tabBarLabel: 'Регистрация' }}
       />
     </Tab.Navigator>
-    // </NavigationContainer>
   );
 }
 

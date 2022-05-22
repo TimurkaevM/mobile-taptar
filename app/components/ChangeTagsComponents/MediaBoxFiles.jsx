@@ -5,30 +5,31 @@ import { Video, AVPlaybackStatus } from 'expo-av';
 import AudioPlayer from './AudioPlayer';
 import DeleteBtn from './DeleteBtn';
 
-const MediaBoxFiles = ({ item }) => {
-  const renderItems = ({ media }) => {
+const MediaBoxFiles = ({ media }) => {
+  console.log(media);
+  const renderItems = ({ item }) => {
     let mediaItem = null;
 
-    if (item.type === 'photo') {
+    if (media.type === 'photo') {
       mediaItem = (
         <View style={styles.media}>
           <Image
             style={styles.tinyLogo}
             source={{
-              uri: `http://api.taptar.ru/storage/${media.path}`,
+              uri: `http://api.taptar.ru/storage/${item.path}`,
             }}
           />
         </View>
       );
     }
 
-    if (item.type === 'video') {
+    if (media.type === 'video') {
       mediaItem = (
         <View style={styles.media}>
           <Video
             style={styles.tinyLogo}
             source={{
-              uri: `http://api.taptar.ru/storage/${media.path}`,
+              uri: `http://api.taptar.ru/storage/${item.path}`,
             }}
             useNativeControls
             resizeMode="contain"
@@ -39,18 +40,18 @@ const MediaBoxFiles = ({ item }) => {
       );
     }
 
-    if (item.type === 'audio') {
+    if (media.type === 'audio') {
       mediaItem = (
         <View style={styles.media}>
-          <AudioPlayer path={media.path} />
+          <AudioPlayer path={item.path} />
         </View>
       );
     }
 
-    if (item.type === 'document') {
+    if (media.type === 'document') {
       mediaItem = (
         <View style={styles.mediaDocument}>
-          <PdfReader path={media.path} />
+          <PdfReader path={item.path} />
         </View>
       );
     }
@@ -62,7 +63,7 @@ const MediaBoxFiles = ({ item }) => {
     <View style={styles.container}>
       <FlatList
         horizontal
-        data={item.files}
+        data={media.files}
         renderItem={renderItems}
         keyExtractor={(item) => item.id.toString()}
       />
@@ -98,6 +99,8 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     backgroundColor: 'white',
     borderRadius: 20,
+    marginVertical: 20,
+    marginHorizontal: 35,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',

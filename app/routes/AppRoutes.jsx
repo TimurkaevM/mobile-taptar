@@ -18,15 +18,9 @@ export default function AppRoutes() {
   let routes;
 
   if (isAuth && !user.length) {
-    routes = (
-      <MainRoutes />
-      // <ViewScreen />
-    );
+    routes = <MainRoutes />;
   } else {
-    routes = (
-      <EntranceRoutes />
-      // <Main />
-    );
+    routes = <EntranceRoutes />;
   }
 
   // if (loadingAuth) {

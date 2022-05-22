@@ -33,14 +33,14 @@ function SendMaterialScreen(props) {
       <MaterialTitle />
       <MaterialText navigate={navigate} />
       <AddFileButton push={push} navigate={navigate} />
-      {photo.length ? <ImageList /> : null}
-      {photos.length ? <ImagesList /> : null}
-      {video.length ? <VideoList /> : null}
-      {videos.length ? <VideosList /> : null}
-      {document.length ? <DocumentList /> : null}
-      {documents.length ? <DocumentsList /> : null}
-      {audio.length ? <AudioList /> : null}
-      {audios.length ? <AudiosList /> : null}
+      {photo.length ? <ImageList navigate={navigate} /> : null}
+      {photos.length ? <ImagesList navigate={navigate} /> : null}
+      {video.length ? <VideoList navigate={navigate} /> : null}
+      {videos.length ? <VideosList navigate={navigate} /> : null}
+      {document.length ? <DocumentList navigate={navigate} /> : null}
+      {documents.length ? <DocumentsList navigate={navigate} /> : null}
+      {audio.length ? <AudioList navigate={navigate} /> : null}
+      {audios.length ? <AudiosList navigate={navigate} /> : null}
       <DeleteFileModal />
     </ScrollView>
   );

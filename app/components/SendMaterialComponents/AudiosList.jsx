@@ -7,7 +7,7 @@ import AudioBottomItemIcon from '../../SvgIcons/SendMaterialIcons/AudioBottomIte
 import AudioTopItemIcon from '../../SvgIcons/SendMaterialIcons/AudioTopItemIcon';
 import AudioListIcon from '../../SvgIcons/SendMaterialIcons/AudioListIcon';
 
-const AudiosList = () => {
+const AudiosList = ({ navigate }) => {
   const audios = useSelector((state) => state.files.materials.audio.group);
   const renderAudio = ({ item }) => {
     const title = item.title === null ? '' : item.title;
@@ -26,7 +26,7 @@ const AudiosList = () => {
               alignItems: 'center',
               justifyContent: 'center',
             }}
-            onPress={() => console.log('ddd')}
+            onPress={() => navigate('ChangeTagsScreen', { item: item })}
           >
             <AudioTopItemIcon />
             <AudioBottomItemIcon />

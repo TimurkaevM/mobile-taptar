@@ -5,7 +5,7 @@ import ImageListIcon from '../../SvgIcons/SendMaterialIcons/ImageListIcon';
 import { useSelector } from 'react-redux';
 import DeleteBtn from './DeleteBtn';
 
-const ImageList = () => {
+const ImageList = ({ navigate }) => {
   const photo = useSelector((state) => state.files.materials.photo.one);
 
   const renderImage = ({ item }) => {
@@ -22,7 +22,7 @@ const ImageList = () => {
           <DeleteBtn item={item} />
           <Pressable
             style={{ width: '100%', height: '100%' }}
-            onPress={() => console.log('ddd')}
+            onPress={() => navigate('ChangeTagsScreen', { item: item })}
           >
             <Image
               style={sendMaterialStyles.mediaImage}

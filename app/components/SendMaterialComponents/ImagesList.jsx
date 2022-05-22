@@ -5,7 +5,7 @@ import ImageListIcon from '../../SvgIcons/SendMaterialIcons/ImageListIcon';
 import { useSelector } from 'react-redux';
 import DeleteBtn from './DeleteBtn';
 
-const ImagesList = () => {
+const ImagesList = ({ navigate }) => {
   const photos = useSelector((state) => state.files.materials.photo.group);
 
   const renderImages = ({ item }) => {
@@ -15,18 +15,21 @@ const ImagesList = () => {
 
     const changeTitle = titleFile.length >= 12 ? `${titleSub}...` : titleFile;
 
-    console.log(item);
-
     return (
       <View>
         <View style={sendMaterialStyles.mediaBox}>
           <DeleteBtn item={item} />
-          <Image
-            style={sendMaterialStyles.mediaImage}
-            source={{
-              uri: `https://api.taptar.ru/storage/${item.files[0].path}`,
-            }}
-          />
+          <Pressable
+            style={{ width: '100%', height: '100%' }}
+            onPress={() => navigate('ChangeTagsScreen', { item: item })}
+          >
+            <Image
+              style={sendMaterialStyles.mediaImage}
+              source={{
+                uri: `https://api.taptar.ru/storage/${item.files[0].path}`,
+              }}
+            />
+          </Pressable>
         </View>
         <Text
           style={{
