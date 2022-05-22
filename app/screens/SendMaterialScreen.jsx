@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, ActivityIndicator, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import AddFileButton from '../components/SendMaterialComponents/AddFileButton';
 import DeleteFileModal from '../components/SendMaterialComponents/DeleteFileModal';
@@ -13,10 +13,15 @@ import AudiosList from '../components/SendMaterialComponents/AudiosList';
 import AudioList from '../components/SendMaterialComponents/AudioList';
 import MaterialTitle from '../components/SendMaterialComponents/MaterialTitle';
 import MaterialText from '../components/SendMaterialComponents/MaterialText';
+import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
+import SendMaterialHeader from '../components/SendMaterialComponents/SendMaterialHeader';
+import MaterialError from '../components/SendMaterialComponents/MaterialError';
 
 function SendMaterialScreen(props) {
   const { navigate, push } = props.navigation;
 
+  const loading = useSelector((state) => state.files.loading);
+  const draftError = useSelector((state) => state.files.draftError);
   const photo = useSelector((state) => state.files.materials.photo.one);
   const video = useSelector((state) => state.files.materials.video.one);
   const audio = useSelector((state) => state.files.materials.audio.one);
@@ -28,22 +33,43 @@ function SendMaterialScreen(props) {
     (state) => state.files.materials.document.group,
   );
 
-  return (
-    <ScrollView>
-      <MaterialTitle />
-      <MaterialText navigate={navigate} />
-      <AddFileButton push={push} navigate={navigate} />
-      {photo.length ? <ImageList navigate={navigate} /> : null}
-      {photos.length ? <ImagesList navigate={navigate} /> : null}
-      {video.length ? <VideoList navigate={navigate} /> : null}
-      {videos.length ? <VideosList navigate={navigate} /> : null}
-      {document.length ? <DocumentList navigate={navigate} /> : null}
-      {documents.length ? <DocumentsList navigate={navigate} /> : null}
-      {audio.length ? <AudioList navigate={navigate} /> : null}
-      {audios.length ? <AudiosList navigate={navigate} /> : null}
-      <DeleteFileModal />
-    </ScrollView>
+  if (loading) {
+    return (
+      <View style={styles.preloader}>
+        <ActivityIndicator size={50} color="#4686cc" />
+      </View>
+    );
+  }
+
+  return draftError ? (
+    <MaterialError />
+  ) : (
+    <>
+      <StatusBarPlaceHolder />
+      <SendMaterialHeader />
+      <ScrollView>
+        <MaterialTitle />
+        <MaterialText navigate={navigate} />
+        <AddFileButton push={push} navigate={navigate} />
+        {photo.length ? <ImageList navigate={navigate} /> : null}
+        {photos.length ? <ImagesList navigate={navigate} /> : null}
+        {video.length ? <VideoList navigate={navigate} /> : null}
+        {videos.length ? <VideosList navigate={navigate} /> : null}
+        {document.length ? <DocumentList navigate={navigate} /> : null}
+        {documents.length ? <DocumentsList navigate={navigate} /> : null}
+        {audio.length ? <AudioList navigate={navigate} /> : null}
+        {audios.length ? <AudiosList navigate={navigate} /> : null}
+        <DeleteFileModal />
+      </ScrollView>
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+  preloader: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+});
 
 export default SendMaterialScreen;

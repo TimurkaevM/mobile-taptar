@@ -27,6 +27,13 @@ const TEXT_CHANGE_SUCCESS = 'text/change/success';
 
 const DRAFT_GET_START = 'draft/load/start';
 const DRAFT_GET_SUCCESS = 'draft/load/success';
+const DRAFT_GET_ERROR = 'draft/load/error';
+const DRAFT_CHANGE_ERROR = 'draft/change/error';
+
+const MATERIA_POST_START = 'material/post/start';
+const MATERIA_POST_SUCCESS = 'material/post/success';
+const MATERIA_POST_ERROR = 'material/post/error';
+const SEND_ERROR_CHANGE = 'send/error/change';
 
 const CLEAN_TAGS = 'clean/tags';
 
@@ -41,6 +48,9 @@ const initialState = {
   comment: '',
   tags_century: [],
   tags_information: [],
+
+  sendError: false,
+  draftError: false,
 
   files: {},
 
@@ -638,94 +648,87 @@ export default function files(state = initialState, action) {
         },
       };
 
-    case 'change/files/tags':
+    case DRAFT_GET_ERROR:
       return {
         ...state,
-        title: action.payload.title ? action.payload.title : '',
-        year: action.payload.year ? action.payload.year : '',
-        author: action.payload.author ? action.payload.author : '',
-        location: action.payload.location ? action.payload.location : '',
-        comment: action.payload.comment ? action.payload.comment : '',
-        tags_century: action.payload.centuries ? action.payload.centuries : [],
-        tags_information: action.payload.types ? action.payload.types : [],
+        loading: false,
+        draftError: true,
       };
 
-    case 'change/files/success':
-      if (action.format === 'text') {
-        return {
-          ...state,
-          materials: {
-            ...state.materials,
-            text: {
-              ...state.materials.text,
-              title: action.title,
-              year: action.year,
-              author: action.author,
-              location: action.location,
-              comment: action.comment,
-              tags_century: action.centuries,
-              tags_information: action.types,
-            },
-          },
-        };
-      }
-
-      if (action.amount === 'one') {
-        return {
-          ...state,
-          materials: {
-            ...state.materials,
-            [action.format]: {
-              ...state.materials[action.format],
-              one: state.materials[action.format].one.map((item) => {
-                if (item.id === action.id) {
-                  item.title = action.title;
-                  item.year = action.year;
-                  item.author = action.author;
-                  item.location = action.location;
-                  item.comment = action.comment;
-                  item.tags_century = action.centuries;
-                  item.tags_information = action.types;
-                }
-
-                return item;
-              }),
-            },
-          },
-        };
-      }
-
-      if (action.amount === 'group') {
-        return {
-          ...state,
-          materials: {
-            ...state.materials,
-            [action.format]: {
-              ...state.materials[action.format],
-              group: state.materials[action.format].group.map((item) => {
-                if (item.id === action.id) {
-                  item.title = action.title;
-                  item.year = action.year;
-                  item.author = action.author;
-                  item.location = action.location;
-                  item.comment = action.comment;
-                  item.tags_century = action.centuries;
-                  item.tags_information = action.types;
-                }
-
-                return item;
-              }),
-            },
-          },
-        };
-      }
-
-      return state;
+    case DRAFT_CHANGE_ERROR:
+      return {
+        ...state,
+        draftError: false,
+      };
 
     case 'change/progress':
       return {
         ...state,
         progress: action.payload,
+      };
+
+    case MATERIA_POST_START:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case MATERIA_POST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        progress: 0,
+        loadingFiles: false,
+        title: '',
+        year: '',
+        author: '',
+        location: '',
+        comment: '',
+        tags_century: [],
+        tags_information: [],
+
+        files: {},
+
+        materials: {
+          title: '',
+
+          text: {
+            text: '',
+          },
+
+          photo: {
+            one: [],
+            group: [],
+          },
+
+          audio: {
+            one: [],
+            group: [],
+          },
+
+          document: {
+            one: [],
+            group: [],
+          },
+
+          video: {
+            one: [],
+            group: [],
+          },
+        },
+      };
+
+    case MATERIA_POST_ERROR:
+      return {
+        ...state,
+        loading: false,
+        sendError: true,
+      };
+
+    case SEND_ERROR_CHANGE:
+      return {
+        ...state,
+        sendError: false,
       };
 
     default:
@@ -1270,18 +1273,20 @@ export const getDraftFiles = () => {
       }
     } catch (e) {
       console.error(e);
+      dispatch({
+        type: DRAFT_GET_ERROR,
+      });
     }
   };
 };
 
-//Изменение принадлежностей файлов
-
-export const ChangeFilesTags = (file) => {
+export const setDraftError = () => {
   return {
-    type: 'change/files/tags',
-    payload: file,
+    type: DRAFT_CHANGE_ERROR,
   };
 };
+
+//Изменение принадлежностей файлов
 
 export const changeTextFile = (
   file,
@@ -1443,26 +1448,43 @@ export const changeGroupFiles = (
 // api/user/add/material/send
 
 export const postMaterial = (title, text, photo, document, video, audio) => {
-  return (dispatch) => {
-    dispatch({ type: 'material/post/start' });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .post(
-        '/user/contribution/material/send',
-        { title, text, photo, document, audio, video },
-        {
-          headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-        },
-      )
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({ type: MATERIA_POST_START });
+
+      if (value !== null) {
+        const response = await api.post(
+          '/user/contribution/material/send',
+          {
+            title,
+            text,
+            photo,
+            document,
+            audio,
+            video,
+          },
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
         dispatch({
-          type: 'material/post/success',
-          payload: data,
+          type: MATERIA_POST_SUCCESS,
+          data: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
+      }
+    } catch (e) {
+      console.error(e);
+      dispatch({
+        type: MATERIA_POST_ERROR,
       });
+    }
+  };
+};
+
+export const setSendError = () => {
+  return {
+    type: SEND_ERROR_CHANGE,
   };
 };

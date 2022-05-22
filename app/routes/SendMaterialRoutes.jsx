@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getDraftFiles } from '../redux/ducks/files';
 import AddTagsScreen from '../screens/AddTagsScreen';
 import ChangeTagsScreen from '../screens/ChangeTagsScreen';
@@ -14,9 +14,11 @@ const Stack = createStackNavigator();
 function SendMaterialRoutes() {
   const dispatch = useDispatch();
 
+  const draftError = useSelector((state) => state.files.draftError);
+
   useEffect(() => {
     dispatch(getDraftFiles());
-  }, [dispatch]);
+  }, [dispatch, draftError]);
 
   return (
     <Stack.Navigator initialRouteName="Main">
@@ -24,11 +26,7 @@ function SendMaterialRoutes() {
         name="Main"
         component={FormSend}
         options={{
-          title: 'Форма настройки материала',
-          headerStyle: {
-            backgroundColor: '#4686cc',
-          },
-          headerTintColor: '#fff',
+          headerShown: false,
         }}
       />
       <Stack.Screen
