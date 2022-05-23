@@ -59,18 +59,10 @@ export default function contribution(state = initialState, action) {
       };
 
     case READY_SUCCESS:
-      if (action.payload.code === 404) {
-        return {
-          ...state,
-          loading: false,
-          readyMaterial: action.payload.message,
-        };
-      }
-
       return {
         ...state,
         loading: false,
-        readyMaterial: action.payload.message.message,
+        readyMaterial: action.payload.message,
       };
 
     case MATERIAL_START:
@@ -80,18 +72,21 @@ export default function contribution(state = initialState, action) {
       };
 
     case MATERIAL_SUCCESS:
-      if (action.payload.code === 404) {
-        return {
-          ...state,
-          loading: false,
-          material: action.payload.message,
-        };
-      }
+      const materials = action.payload.message;
+      const arrWait = materials.filter((item) => item.status === 'wait');
+      const processingArr = materials.filter(
+        (item) => item.status === 'processing',
+      );
+      const processedArr = materials.filter(
+        (item) => item.status === 'processed',
+      );
 
       return {
         ...state,
         loading: false,
-        material: action.payload.message['0'],
+        material: Array.isArray(materials)
+          ? [...arrWait, ...processingArr, ...processedArr]
+          : materials,
       };
 
     case PHOTO_START:
@@ -101,18 +96,10 @@ export default function contribution(state = initialState, action) {
       };
 
     case PHOTO_SUCCESS:
-      if (action.payload.code === 404) {
-        return {
-          ...state,
-          loading: false,
-          photo: action.payload.message,
-        };
-      }
-
       return {
         ...state,
         loading: false,
-        photo: action.payload.message.message,
+        photo: action.payload.message,
       };
 
     case VIDEO_START:
@@ -122,18 +109,10 @@ export default function contribution(state = initialState, action) {
       };
 
     case VIDEO_SUCCESS:
-      if (action.payload.code === 404) {
-        return {
-          ...state,
-          loading: false,
-          video: action.payload.message,
-        };
-      }
-
       return {
         ...state,
         loading: false,
-        video: action.payload.message.message,
+        video: action.payload.message,
       };
 
     case AUDIO_START:
@@ -143,18 +122,10 @@ export default function contribution(state = initialState, action) {
       };
 
     case AUDIO_SUCCESS:
-      if (action.payload.code === 404) {
-        return {
-          ...state,
-          loading: false,
-          audio: action.payload.message,
-        };
-      }
-
       return {
         ...state,
         loading: false,
-        audio: action.payload.message.message,
+        audio: action.payload.message,
       };
 
     case DOCUMENT_START:
@@ -164,18 +135,10 @@ export default function contribution(state = initialState, action) {
       };
 
     case DOCUMENT_SUCCESS:
-      if (action.payload.code === 404) {
-        return {
-          ...state,
-          loading: false,
-          document: action.payload.message,
-        };
-      }
-
       return {
         ...state,
         loading: false,
-        document: action.payload.message.message,
+        document: action.payload.message,
       };
 
     default:
@@ -184,162 +147,155 @@ export default function contribution(state = initialState, action) {
 }
 
 export const getMaterial = () => {
-  return (dispatch) => {
-    dispatch({
-      type: MATERIAL_START,
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get('/user/contribution/all', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({ type: MATERIAL_START });
+
+      if (value !== null) {
+        const response = await api.get('/user/contribution/all', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: MATERIAL_SUCCESS,
-          payload: data,
+          payload: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 
 export const getReadyMaterial = () => {
-  return (dispatch) => {
-    dispatch({
-      type: READY_START,
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get('/user/contribution/material', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({ type: READY_START });
+
+      if (value !== null) {
+        const response = await api.get('/user/contribution/material', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: READY_SUCCESS,
-          payload: data,
+          payload: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 
 export const getPhoto = () => {
-  return (dispatch) => {
-    dispatch({
-      type: PHOTO_START,
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get('/user/contribution/photo', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({ type: PHOTO_START });
+
+      if (value !== null) {
+        const response = await api.get('/user/contribution/photo', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: PHOTO_SUCCESS,
-          payload: data,
+          payload: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 
 export const getVideo = () => {
-  return (dispatch) => {
-    dispatch({
-      type: VIDEO_START,
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get('/user/contribution/video', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({ type: VIDEO_START });
+
+      if (value !== null) {
+        const response = await api.get('/user/contribution/video', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: VIDEO_SUCCESS,
-          payload: data,
+          payload: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 
 export const getAudio = () => {
-  return (dispatch) => {
-    dispatch({
-      type: AUDIO_START,
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get('/user/contribution/audio', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({ type: AUDIO_START });
+
+      if (value !== null) {
+        const response = await api.get('/user/contribution/audio', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: AUDIO_SUCCESS,
-          payload: data,
+          payload: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 
 export const getDocument = () => {
-  return (dispatch) => {
-    dispatch({
-      type: DOCUMENT_START,
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get('/user/contribution/document', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({ type: DOCUMENT_START });
+
+      if (value !== null) {
+        const response = await api.get('/user/contribution/document', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: DOCUMENT_SUCCESS,
-          payload: data,
+          payload: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 
 export const getShowMaterial = (id) => {
-  return (dispatch) => {
-    dispatch({
-      type: SHOW_START,
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get(`/user/contribution/material/${id}`, {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({ type: SHOW_START });
+
+      if (value !== null) {
+        const response = await api.get(`/user/contribution/material/${id}`, {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: SHOW_SUCCESS,
-          payload: data,
+          payload: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };

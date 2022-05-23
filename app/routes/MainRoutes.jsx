@@ -6,6 +6,7 @@ import Profile from '../screens/ProfileScreen';
 import { useDispatch } from 'react-redux';
 import { getAllTags, getCauses } from '../redux/ducks/tags';
 import Svg, { Path, G } from 'react-native-svg';
+import ContributionRoutes from './ContributionRoutes';
 
 function MainRoutes() {
   const Tab = createMaterialBottomTabNavigator();
@@ -72,8 +73,8 @@ function MainRoutes() {
         }}
       />
       <Tab.Screen
-        name="Мой кабинет"
-        component={Messenger}
+        name="ContributionRoutes"
+        component={ContributionRoutes}
         options={{
           tabBarLabel: 'Мой кабинет',
           tabBarColor: '#4686cc',
