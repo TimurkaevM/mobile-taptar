@@ -1,13 +1,13 @@
 import Svg, { Path, G } from 'react-native-svg';
 import React from 'react';
 
-const MaterialIcon = ({ color }) => {
+const MaterialIcon = ({ size, color }) => {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
       space="preserve"
-      width={22}
-      height={22}
+      width={size}
+      height={size}
       version="1.1"
       style={{
         shapeRendering: 'geometricPrecision',

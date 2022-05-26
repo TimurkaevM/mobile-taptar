@@ -27,8 +27,6 @@ const AddTagsHeader = ({
 }) => {
   const dispatch = useDispatch();
 
-  console.log(materialText);
-
   const currentTime = new Date();
   const currentYear = currentTime.getFullYear();
 

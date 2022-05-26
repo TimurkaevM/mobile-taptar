@@ -48,7 +48,7 @@ function ContributionMediasRoutes() {
             focused ? (
               <MaterialFocusedIcon color={color} />
             ) : (
-              <MaterialIcon color={color} />
+              <MaterialIcon size={22} color={color} />
             ),
         }}
       />
@@ -61,7 +61,7 @@ function ContributionMediasRoutes() {
             focused ? (
               <PhotoFocusedIcon color={color} />
             ) : (
-              <PhotoIcon color={color} />
+              <PhotoIcon size={22} color={color} />
             ),
         }}
       />
@@ -74,7 +74,7 @@ function ContributionMediasRoutes() {
             focused ? (
               <DocumentFocusedIcon color={color} />
             ) : (
-              <DocumentIcon color={color} />
+              <DocumentIcon size={22} color={color} />
             ),
         }}
       />
@@ -87,7 +87,7 @@ function ContributionMediasRoutes() {
             focused ? (
               <VideoFocusedIcon color={color} />
             ) : (
-              <VideoIcon color={color} />
+              <VideoIcon size={22} color={color} />
             ),
         }}
       />
