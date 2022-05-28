@@ -28,7 +28,7 @@ const DocumentList = ({ navigate }) => {
             }}
             onPress={() => navigate('ChangeTagsScreen', { item: item })}
           >
-            <DocumentItemIcon />
+            <DocumentItemIcon width={100} height={100} color="#fff" />
           </Pressable>
         </View>
         <Text

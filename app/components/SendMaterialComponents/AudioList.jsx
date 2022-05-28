@@ -29,8 +29,8 @@ const AudioList = ({ navigate }) => {
             }}
             onPress={() => navigate('ChangeTagsScreen', { item: item })}
           >
-            <AudioTopItemIcon />
-            <AudioBottomItemIcon />
+            <AudioTopItemIcon width={90} height={55} color="#fff" />
+            <AudioBottomItemIcon width={200} height={50} color="#fff" />
           </Pressable>
         </View>
         <Text

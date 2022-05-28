@@ -1,13 +1,13 @@
 import React from 'react';
 import Svg, { Path, G } from 'react-native-svg';
 
-const AudioTopItemIcon = () => {
+const AudioTopItemIcon = ({ width, height, color }) => {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
       space="preserve"
-      width={90}
-      height={55}
+      width={width}
+      height={height}
       style={{
         marginBottom: 10,
       }}
@@ -18,14 +18,14 @@ const AudioTopItemIcon = () => {
     >
       <G id="Слой_x0020_1">
         <Path
-          fill="#fff"
+          fill={color}
           fillRule="nonzero"
           d="M46.16 0c-0,0 -0,0 -0,0 -1.99,0 -3.97,0.53 -5.72,1.54 -0.31,0.18 -0.59,0.38 -0.86,0.62l-16.22 14.17 -10.98 0c-6.83,0 -12.38,5.55 -12.38,12.38l0 14.68c0,6.83 5.55,12.38 12.38,12.38l10.98 0 16.22 14.17c0.26,0.23 0.55,0.44 0.86,0.61 1.75,1.01 3.73,1.54 5.72,1.54 6.32,0 11.46,-5.14 11.46,-11.46l0 -49.18c0,-6.32 -5.14,-11.46 -11.46,-11.46zm-0 5.42c3.15,0 6.04,2.52 6.04,6.03l0 49.18c0,3.52 -2.89,6.04 -6.04,6.04 -1,0 -2.03,-0.26 -3.01,-0.82l-17.76 -15.51 -13.01 -0c-3.84,0 -6.95,-3.11 -6.95,-6.96l0 -14.68c0,-3.84 3.11,-6.96 6.95,-6.96l13.01 0 17.76 -15.51c0.97,-0.56 2,-0.82 3.01,-0.82z"
         />
         <Path
           fill="none"
           fillRule="nonzero"
-          stroke="#fff"
+          stroke={color}
           strokeWidth="4.46"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -35,7 +35,7 @@ const AudioTopItemIcon = () => {
         <Path
           fill="none"
           fillRule="nonzero"
-          stroke="#fff"
+          stroke={color}
           strokeWidth="4.85"
           strokeLinecap="round"
           strokeLinejoin="round"

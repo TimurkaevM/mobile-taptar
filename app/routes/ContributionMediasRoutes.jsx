@@ -15,9 +15,12 @@ import PhotoFocusedIcon from '../SvgIcons/ContributionIcons/PhotoFocusedIcon';
 import PhotoIcon from '../SvgIcons/ContributionIcons/PhotoIcon';
 import DocumentFocusedIcon from '../SvgIcons/ContributionIcons/DocumentFocusedIcon';
 import DocumentIcon from '../SvgIcons/ContributionIcons/DocumentIcon';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 function ContributionMediasRoutes() {
   const Tab = createMaterialTopTabNavigator();
+
+  const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : 0;
 
   return (
     <Tab.Navigator
@@ -29,6 +32,7 @@ function ContributionMediasRoutes() {
         tabBarStyle: {
           backgroundColor: '#f5f5f5',
           borderWidth: 0,
+          marginTop: STATUS_BAR_HEIGHT,
         },
         tabBarItemStyle: {
           flexDirection: 'row',
