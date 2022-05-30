@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,15 +17,17 @@ import VideoIcon from '../SvgIcons/ContributionIcons/VideoIcon';
 import DocumentIcon from '../SvgIcons/ContributionIcons/DocumentIcon';
 import AudioIcon from '../SvgIcons/ContributionIcons/AudioIcon';
 
-const ContributionMaterialScreen = () => {
+const ContributionMaterialScreen = ({ navigation }) => {
   const materials = useSelector((state) => state.contribution.readyMaterial);
   const loading = useSelector((state) => state.contribution.loading);
+
+  const { navigate } = navigation;
 
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     dispatch(getReadyMaterial());
-  }, [dispatch]);
+  }, []);
 
   const renderMaterial = ({ item }) => {
     const title = item.title === null ? '' : item.title;
@@ -32,7 +35,10 @@ const ContributionMaterialScreen = () => {
     const types = item?.info?.types;
 
     return (
-      <View style={styles.card}>
+      <TouchableOpacity
+        onPress={() => navigate('MaterialInfoScreen', { id: item.id })}
+        style={styles.card}
+      >
         <Text style={styles.cardTitle} numberOfLines={1}>
           {title}
         </Text>
@@ -62,7 +68,7 @@ const ContributionMaterialScreen = () => {
             <MaterialIcon size={125} color="#bed1e6" />
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 

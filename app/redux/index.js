@@ -12,7 +12,8 @@ import application from './ducks/application';
 import historianCabinet from './ducks/historianCabinet';
 import historianSend from './ducks/historianSend';
 import incomingMaterials from './ducks/incomingMaterials';
-import approver from './ducks/approver';
+import cabinetMaterial from './ducks/cabinetMaterial';
+import showFileCabinet from './ducks/showFileCabinet';
 
 const logger = createLogger({
   diff: true,
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
   contacts,
   application,
   messages,
-  // incomingMaterials,
+  cabinetMaterial,
+  showFileCabinet,
   // historianCabinet,
   // historianSend,
   // approver,

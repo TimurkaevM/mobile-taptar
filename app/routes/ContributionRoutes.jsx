@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import AddTagsScreen from '../screens/AddTagsScreen';
+import FileInfoScreen from '../screens/FileInfoScreen';
+import FileTagsScreen from '../screens/FileTagsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-import ImageBrowserScreen from '../screens/ImageBrowserScreen';
+import MaterialInfoScreen from '../screens/MaterialInfoScreen';
 import ContributionMediasRoutes from './ContributionMediasRoutes';
 
 const Stack = createStackNavigator();
@@ -21,14 +22,21 @@ function ContributionRoutes() {
       />
       <Stack.Screen
         name="MaterialInfoScreen"
-        component={ImageBrowserScreen}
+        component={MaterialInfoScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="FileTagsScreen"
+        component={FileTagsScreen}
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
         name="FileInfoScreen"
-        component={AddTagsScreen}
+        component={FileInfoScreen}
         options={{
           headerShown: false,
         }}

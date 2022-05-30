@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +13,8 @@ import { getAudio } from '../redux/ducks/contribution';
 import AudioTopItemIcon from '../SvgIcons/SendMaterialIcons/AudioTopItemIcon';
 import AudioBottomItemIcon from '../SvgIcons/SendMaterialIcons/AudioBottomItemIcon';
 
-const ContributionAudioScreen = () => {
+const ContributionAudioScreen = ({ navigation }) => {
+  const { navigate } = navigation;
   const dispatch = useDispatch();
 
   const audios = useSelector((state) => state.contribution.audio);
@@ -27,10 +29,13 @@ const ContributionAudioScreen = () => {
 
     return (
       <View style={styles.card}>
-        <View style={styles.cardMedia}>
+        <TouchableOpacity
+          onPress={() => navigate('FileInfoScreen', { id: item.file_id })}
+          style={styles.cardMedia}
+        >
           <AudioTopItemIcon width={110} height={75} color="#4686CC" />
           <AudioBottomItemIcon width={300} height={70} color="#4686CC" />
-        </View>
+        </TouchableOpacity>
         <Text style={styles.cardTitle} numberOfLines={1}>
           {title}
         </Text>
