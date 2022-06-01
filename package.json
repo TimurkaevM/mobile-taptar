@@ -54,7 +54,8 @@
     "redux": "^4.1.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.1",
-    "unimodules-permissions-interface": "^6.1.0"
+    "unimodules-permissions-interface": "^6.1.0",
+    "expo-updates": "~0.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
