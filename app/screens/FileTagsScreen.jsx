@@ -1,43 +1,21 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import InputInfoBox from '../components/FileTagsComponents/InputInfoBox';
 import CommentClient from '../components/FileTagsComponents/CommentClient';
 import TagsInformation from '../components/FileTagsComponents/TagsInformation';
 import TagsCenturies from '../components/FileTagsComponents/TagsCenturies';
 import AddTagsHeader from '../components/FileTagsComponents/AddTagsHeader';
 import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
-import MediaBox from '../components/FileTagsComponents/MediaBox';
 import MaterialText from '../components/FileTagsComponents/MaterialText';
+import MediaBoxFile from '../components/FileTagsComponents/MediaBoxFile';
+import TagsCredibility from '../components/FileTagsComponents/TagsCredibility';
 
 const FileTagsScreen = (props) => {
-  const { navigate, goBack } = props.navigation;
+  const { goBack } = props.navigation;
 
   const { params } = props.route;
 
   const item = params.item;
-
-  const [title, setTitle] = useState(item.title === null ? '' : item.title);
-  const [year, setYear] = useState(item.year === null ? '' : item.year);
-  const [author, setAuthor] = useState(item.author === null ? '' : item.author);
-  const [location, setLocation] = useState(
-    item.location === null ? '' : item.location,
-  );
-
-  const [comment, setComment] = useState(
-    item.comment === null ? '' : item.comment,
-  );
-
-  //теги
-  const [informationClient, setInformationClient] = useState(
-    item.tags_information,
-  );
-  const [centuryClient, setCenturyClient] = useState(item.tags_century);
-
-  const [nameError, setNameError] = useState(null);
-  const [yearError, setYearError] = useState(null);
-  const [authorError, setAuthorError] = useState(null);
-  const [commentError, setCommentError] = useState(null);
-  const [textError, setTextError] = useState(null);
 
   return (
     <>
@@ -46,35 +24,27 @@ const FileTagsScreen = (props) => {
       <View style={styles.centeredView}>
         <ScrollView>
           <InputInfoBox
-            setNameError={setNameError}
-            setAuthorError={setAuthorError}
-            setYearError={setYearError}
-            nameError={nameError}
-            authorError={authorError}
-            yearError={yearError}
-            title={title}
-            year={year}
-            location={location}
-            author={author}
-            setTitle={setTitle}
-            setAuthor={setAuthor}
-            setYear={setYear}
-            setLocation={setLocation}
+            title={item.title}
+            year={item.year}
+            location={item.location}
+            author={item.author}
           />
           {item.type === 'text' ? (
-            <MaterialText textError={textError} setTextError={setTextError} />
+            <MaterialText />
           ) : (
-            <MediaBox item={item} />
+            <MediaBoxFile item={item} />
           )}
-          <CommentClient comment={comment} setComment={setComment} />
-          <TagsInformation
-            informationClient={informationClient}
-            setInformationClient={setInformationClient}
-          />
-          <TagsCenturies
-            centuryClient={centuryClient}
-            setCenturyClient={setCenturyClient}
-          />
+          {item.comment && <CommentClient comment={item.comment} />}
+          <TagsCredibility credibility={item.tags_credibility} />
+          {item.tags_information.length || item.tags_century.length ? (
+            <Text
+              style={{ paddingHorizontal: 20, marginBottom: 30, fontSize: 18 }}
+            >
+              Добавленные:
+            </Text>
+          ) : null}
+          <TagsInformation informationClient={item.tags_information} />
+          <TagsCenturies centuryClient={item.tags_century} />
         </ScrollView>
       </View>
     </>

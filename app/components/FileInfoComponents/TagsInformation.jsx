@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 const TagsInformation = () => {
   const file = useSelector((state) => state.showFileCabinet.file);
 
+  if (!file?.tags_information?.length) return null;
+
   return (
     <View style={styles.inputTitleContainer}>
       <Text>Тип/Принадлежность:</Text>

@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 const TagsCenturies = () => {
   const file = useSelector((state) => state.showFileCabinet.file);
 
+  if (!file?.tags_century?.length) return null;
+
   return (
     <View style={styles.inputTitleContainer}>
       <Text>Период/Век:</Text>

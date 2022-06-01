@@ -27,7 +27,7 @@ const ContributionMaterialScreen = ({ navigation }) => {
 
   React.useEffect(() => {
     dispatch(getReadyMaterial());
-  }, []);
+  }, [dispatch]);
 
   const renderMaterial = ({ item }) => {
     const title = item.title === null ? '' : item.title;

@@ -5,13 +5,15 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDocument } from '../redux/ducks/contribution';
 import DocumentItemIcon from '../SvgIcons/SendMaterialIcons/DocumentItemIcon';
 
-const ContributionDocumentScreen = () => {
+const ContributionDocumentScreen = ({ navigation }) => {
+  const { navigate } = navigation;
   const dispatch = useDispatch();
 
   const documents = useSelector((state) => state.contribution.document);
@@ -26,9 +28,12 @@ const ContributionDocumentScreen = () => {
 
     return (
       <View style={styles.card}>
-        <View style={styles.cardMedia}>
+        <TouchableOpacity
+          onPress={() => navigate('FileInfoScreen', { id: item.file_id })}
+          style={styles.cardMedia}
+        >
           <DocumentItemIcon width={170} height={170} color="#4686CC" />
-        </View>
+        </TouchableOpacity>
         <Text style={styles.cardTitle} numberOfLines={1}>
           {title}
         </Text>

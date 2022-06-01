@@ -6,12 +6,15 @@ import {
   Dimensions,
   FlatList,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPhoto } from '../redux/ducks/contribution';
 
-const ContributionPhotoScreen = () => {
+const ContributionPhotoScreen = ({ navigation }) => {
+  const { navigate } = navigation;
+
   const dispatch = useDispatch();
 
   const photos = useSelector((state) => state.contribution.photo);
@@ -26,14 +29,17 @@ const ContributionPhotoScreen = () => {
 
     return (
       <View style={styles.card}>
-        <View style={styles.cardMedia}>
+        <TouchableOpacity
+          onPress={() => navigate('FileInfoScreen', { id: item.file_id })}
+          style={styles.cardMedia}
+        >
           <Image
             style={styles.cardItem}
             source={{
               uri: `https://api.taptar.ru/storage/${item.path_to_file}`,
             }}
           />
-        </View>
+        </TouchableOpacity>
         <Text style={styles.cardTitle} numberOfLines={1}>
           {title}
         </Text>

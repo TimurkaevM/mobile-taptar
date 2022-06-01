@@ -1,18 +1,13 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import AddInformation from './AddInformation';
-import { useSelector } from 'react-redux';
 
-const TagsCredibility = () => {
-  const file = useSelector((state) => state.showFileCabinet.file);
-
-  if (!file.tags_credibility) return null;
-
+const TagsCredibility = ({ credibility }) => {
   return (
     <View style={styles.inputTitleContainer}>
       <Text style={styles.textStyle}>Достоверность:</Text>
       <View style={styles.flexTags}>
-        {file.tags_credibility.map((item) => {
+        {credibility.map((item) => {
           const backgroundColor = '#4686cc';
           const color = 'white';
 

@@ -5,13 +5,16 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getVideo } from '../redux/ducks/contribution';
 import { Video } from 'expo-av';
 
-const ContributionVideoScreen = () => {
+const ContributionVideoScreen = ({ navigation }) => {
+  const { navigate } = navigation;
+
   const dispatch = useDispatch();
 
   const videos = useSelector((state) => state.contribution.video);
@@ -26,7 +29,10 @@ const ContributionVideoScreen = () => {
 
     return (
       <View style={styles.card}>
-        <View style={styles.cardMedia}>
+        <TouchableOpacity
+          onPress={() => navigate('FileInfoScreen', { id: item.file_id })}
+          style={styles.cardMedia}
+        >
           <Video
             style={styles.cardItem}
             source={{
@@ -35,7 +41,7 @@ const ContributionVideoScreen = () => {
             useNativeControls={false}
             resizeMode="contain"
           />
-        </View>
+        </TouchableOpacity>
         <Text style={styles.cardTitle} numberOfLines={1}>
           {title}
         </Text>

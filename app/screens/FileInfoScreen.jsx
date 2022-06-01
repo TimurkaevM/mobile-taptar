@@ -44,17 +44,17 @@ const AddTagsScreen = (props) => {
         <ScrollView>
           <InputInfoBox />
           <MediaBoxFile />
-          {file.comment && <CommentClient />}
+          {file?.comment && <CommentClient />}
           <TagsCredibility />
-          {file.tags_information.length || file.tags_century.length ? (
+          {file?.tags_information?.length || file?.tags_century?.length ? (
             <Text
               style={{ paddingHorizontal: 20, marginBottom: 30, fontSize: 18 }}
             >
               Добавленные:
             </Text>
           ) : null}
-          {file.tags_information.length ? <TagsInformation /> : null}
-          {file.tags_century.length ? <TagsCenturies /> : null}
+          <TagsInformation />
+          <TagsCenturies />
         </ScrollView>
       </View>
     </>

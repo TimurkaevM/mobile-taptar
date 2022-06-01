@@ -1,11 +1,8 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
 
-const CommentClient = ({ comment, setComment }) => {
+const CommentClient = ({ comment }) => {
   const handleChangeComment = (event) => {
-    if (commentError) {
-      setCommentError(null);
-    }
     return;
   };
 
@@ -31,7 +28,6 @@ const CommentClient = ({ comment, setComment }) => {
         value={comment}
         placeholder="Введите комментарий..."
         onChange={handleChangeComment}
-        onChangeText={setComment}
       />
     </View>
   );

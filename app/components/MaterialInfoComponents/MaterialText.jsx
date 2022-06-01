@@ -35,7 +35,7 @@ const MaterialText = ({ navigate }) => {
         name="title"
         value={text.text}
         placeholder="Введите текст"
-        onChange={handleChangeText}
+        // onChange={handleChangeText}
       />
       {text.text ? (
         <TouchableOpacity
@@ -61,7 +61,7 @@ const MaterialText = ({ navigate }) => {
               color: '#fff',
             }}
           >
-            'Добавить принадлежности'
+            Открыть
           </Text>
         </TouchableOpacity>
       ) : null}
