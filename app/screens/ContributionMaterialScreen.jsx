@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getReadyMaterial } from '../redux/ducks/contribution';
+import { getReadyMaterial } from '../redux/ducks/contributionMaterial';
 import moment from 'moment';
 import MaterialIcon from '../SvgIcons/ContributionIcons/MaterialIcon';
 import PhotoIcon from '../SvgIcons/ContributionIcons/PhotoIcon';
@@ -18,16 +18,17 @@ import DocumentIcon from '../SvgIcons/ContributionIcons/DocumentIcon';
 import AudioIcon from '../SvgIcons/ContributionIcons/AudioIcon';
 
 const ContributionMaterialScreen = ({ navigation }) => {
-  const materials = useSelector((state) => state.contribution.readyMaterial);
-  const loading = useSelector((state) => state.contribution.loading);
+  const materials = useSelector((state) => state.contributionMaterial.readyMaterial);
+  const loading = useSelector((state) => state.contributionMaterial.loading);
+  const error = useSelector((state) => state.contributionMaterial.error);
 
   const { navigate } = navigation;
 
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    dispatch(getReadyMaterial());
-  }, [dispatch]);
+  // React.useEffect(() => {
+  //   dispatch(getReadyMaterial());
+  // }, [dispatch]);
 
   const renderMaterial = ({ item }) => {
     const title = item.title === null ? '' : item.title;
@@ -78,6 +79,10 @@ const ContributionMaterialScreen = ({ navigation }) => {
         <ActivityIndicator size={50} color="#4686cc" />
       </View>
     );
+  }
+
+  if(error) {
+    return <Text>`${error}`</Text>
   }
 
   return (

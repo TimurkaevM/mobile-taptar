@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getVideo } from '../redux/ducks/contribution';
+import { getVideo } from '../redux/ducks/contributionVideo';
 import { Video } from 'expo-av';
 
 const ContributionVideoScreen = ({ navigation }) => {
@@ -17,12 +17,12 @@ const ContributionVideoScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
 
-  const videos = useSelector((state) => state.contribution.video);
-  const loading = useSelector((state) => state.contribution.loading);
+  const videos = useSelector((state) => state.contributionVideo.video);
+  const loading = useSelector((state) => state.contributionVideo.loading);
 
-  React.useEffect(() => {
-    dispatch(getVideo());
-  }, [dispatch]);
+  // React.useEffect(() => {
+  //   dispatch(getVideo());
+  // }, [dispatch]);
 
   const renderItem = ({ item }) => {
     const title = item.title === null ? '' : item.title;

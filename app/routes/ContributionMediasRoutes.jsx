@@ -16,11 +16,27 @@ import PhotoIcon from '../SvgIcons/ContributionIcons/PhotoIcon';
 import DocumentFocusedIcon from '../SvgIcons/ContributionIcons/DocumentFocusedIcon';
 import DocumentIcon from '../SvgIcons/ContributionIcons/DocumentIcon';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { useDispatch } from 'react-redux';
+import { getReadyMaterial } from '../redux/ducks/contributionMaterial';
+import { getPhoto } from '../redux/ducks/contributionPhoto';
+import { getDocument } from '../redux/ducks/contributionDocument';
+import { getVideo } from '../redux/ducks/contributionVideo';
+import { getAudio } from '../redux/ducks/contributionAudio';
 
 function ContributionMediasRoutes() {
   const Tab = createMaterialTopTabNavigator();
 
   const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : 0;
+
+  const dispatch = useDispatch();
+  
+  React.useEffect(() => {
+  dispatch(getReadyMaterial());
+  dispatch(getPhoto());
+  dispatch(getVideo());
+  dispatch(getDocument());
+  dispatch(getAudio());
+}, [dispatch]);
 
   return (
     <Tab.Navigator

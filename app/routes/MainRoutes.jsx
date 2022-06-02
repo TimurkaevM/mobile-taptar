@@ -14,6 +14,7 @@ import ChatFocusedIcon from '../SvgIcons/MainroutesIcons/ChatFocusedIcon';
 import ChatIcon from '../SvgIcons/MainroutesIcons/ChatIcon';
 import ProfileFocusedIcon from '../SvgIcons/MainroutesIcons/ProfileFocusedIcon';
 import ProfileIcon from '../SvgIcons/MainroutesIcons/ProfileIcon';
+import ContributionMediasRoutes from './ContributionMediasRoutes';
 
 function MainRoutes() {
   const Tab = createMaterialBottomTabNavigator();
@@ -49,7 +50,7 @@ function MainRoutes() {
       />
       <Tab.Screen
         name="ContributionRoutes"
-        component={ContributionRoutes}
+        component={ContributionMediasRoutes}
         options={{
           tabBarLabel: 'Мой кабинет',
           tabBarColor: '#4686cc',

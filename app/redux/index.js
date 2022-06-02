@@ -6,7 +6,11 @@ import tags from './ducks/tags';
 import user from './ducks/user';
 import contacts from './ducks/contacts';
 import messages from './ducks/messages';
-import contribution from './ducks/contribution';
+import contributionAudio from './ducks/contributionAudio';
+import contributionDocument from './ducks/contributionDocument';
+import contributionMaterial from './ducks/contributionMaterial';
+import contributionPhoto from './ducks/contributionPhoto';
+import contributionVideo from './ducks/contributionVideo';
 import workshop from './ducks/workshop';
 import application from './ducks/application';
 import historianCabinet from './ducks/historianCabinet';
@@ -24,7 +28,11 @@ const rootReducer = combineReducers({
   workshop,
   files,
   user,
-  contribution,
+  contributionAudio,
+  contributionDocument,
+  contributionMaterial,
+  contributionPhoto,
+  contributionVideo,
   tags,
   contacts,
   application,

@@ -3,6 +3,8 @@ import React from 'react';
 import AddInformation from './AddInformation';
 
 const TagsCredibility = ({ credibility }) => {
+
+  console.log(credibility)
   return (
     <View style={styles.inputTitleContainer}>
       <Text style={styles.textStyle}>Достоверность:</Text>

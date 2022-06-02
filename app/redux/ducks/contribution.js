@@ -15,6 +15,7 @@ export const SHOW_START = 'material/show/load/start';
 export const SHOW_SUCCESS = 'material/show/load/success';
 export const READY_START = 'material/ready/load/start';
 export const READY_SUCCESS = 'material/ready/load/success';
+export const READY_ERROR = 'material/ready/load/error';
 
 const initialState = {
   material: [],
@@ -26,7 +27,7 @@ const initialState = {
   showMaterial: {},
   loading: false,
   showLoading: false,
-  error: '',
+  error: null,
 };
 
 export default function contribution(state = initialState, action) {
@@ -64,6 +65,13 @@ export default function contribution(state = initialState, action) {
         loading: false,
         readyMaterial: action.payload.message,
       };
+
+      case READY_ERROR:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,
+        };  
 
     case MATERIAL_START:
       return {
@@ -186,6 +194,10 @@ export const getReadyMaterial = () => {
       }
     } catch (e) {
       console.error(e);
+      dispatch({
+        type: READY_ERROR,
+        payload: e.response.data.message,
+      })
     }
   };
 };

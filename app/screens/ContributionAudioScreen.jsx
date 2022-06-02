@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAudio } from '../redux/ducks/contribution';
+import { getAudio } from '../redux/ducks/contributionAudio';
 import AudioTopItemIcon from '../SvgIcons/SendMaterialIcons/AudioTopItemIcon';
 import AudioBottomItemIcon from '../SvgIcons/SendMaterialIcons/AudioBottomItemIcon';
 
@@ -17,12 +17,12 @@ const ContributionAudioScreen = ({ navigation }) => {
   const { navigate } = navigation;
   const dispatch = useDispatch();
 
-  const audios = useSelector((state) => state.contribution.audio);
-  const loading = useSelector((state) => state.contribution.loading);
+  const audios = useSelector((state) => state.contributionAudio.audio);
+  const loading = useSelector((state) => state.contributionAudio.loading);
 
-  React.useEffect(() => {
-    dispatch(getAudio());
-  }, [dispatch]);
+  // React.useEffect(() => {
+  //   dispatch(getAudio());
+  // }, [dispatch]);
 
   const renderItem = ({ item }) => {
     const title = item.title === null ? '' : item.title;

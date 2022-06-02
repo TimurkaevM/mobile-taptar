@@ -10,19 +10,19 @@ import {
 } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPhoto } from '../redux/ducks/contribution';
+import { getPhoto } from '../redux/ducks/contributionPhoto';
 
 const ContributionPhotoScreen = ({ navigation }) => {
   const { navigate } = navigation;
 
   const dispatch = useDispatch();
 
-  const photos = useSelector((state) => state.contribution.photo);
-  const loading = useSelector((state) => state.contribution.loading);
+  const photos = useSelector((state) => state.contributionPhoto.photo);
+  const loading = useSelector((state) => state.contributionPhoto.loading);
 
-  React.useEffect(() => {
-    dispatch(getPhoto());
-  }, [dispatch]);
+  // React.useEffect(() => {
+  //   dispatch(getPhoto());
+  // }, [dispatch]);
 
   const renderImage = ({ item }) => {
     const title = item.title === null ? '' : item.title;

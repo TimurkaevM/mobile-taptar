@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import MainRoutes from './MainRoutes';
 import { auth } from '../redux/ducks/user';
 import EntranceRoutes from './EntranceRoutes';
+import ContributionMediasRoutes from './ContributionMediasRoutes';
 
 export default function AppRoutes() {
   const isAuth = useSelector((state) => state.user.isAuth);
@@ -18,7 +19,8 @@ export default function AppRoutes() {
   let routes;
 
   if (isAuth && !user.length) {
-    routes = <MainRoutes />;
+    // routes = <MainRoutes />;
+    routes = <ContributionMediasRoutes />;
   } else {
     routes = <EntranceRoutes />;
   }
