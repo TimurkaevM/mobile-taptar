@@ -19,8 +19,8 @@ export default function AppRoutes() {
   let routes;
 
   if (isAuth && !user.length) {
-    // routes = <MainRoutes />;
-    routes = <ContributionMediasRoutes />;
+    routes = <MainRoutes />;
+    // routes = <ContributionMediasRoutes />;
   } else {
     routes = <EntranceRoutes />;
   }

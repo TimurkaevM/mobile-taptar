@@ -23,7 +23,14 @@ const MASTER__REMOVE__START = 'master/remove/start';
 const MASTER__REMOVE__SUCCESS = 'master/remove/success';
 
 const initialState = {
-  currentUser: {},
+  currentUser: {
+    id: null,
+    name: '',
+    email: '',
+    role: '',
+    permissions: [],
+    avatar: '',
+  },
   isAuth: false,
   loading: false,
   loadingAuth: false,
@@ -46,7 +53,14 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        currentUser: decodeLogin,
+        currentUser: {
+          id: decodeLogin.user.id,
+          name: decodeLogin.user.name,
+          email: decodeLogin.user.email,
+          role: decodeLogin.role[0],
+          permissions: decodeLogin.permissions,
+          avatar: decodeLogin.user.avatar,
+        },
         isAuth: true,
       };
 
@@ -69,7 +83,14 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         loadingAuth: false,
-        currentUser: decodeAuth,
+        currentUser: {
+          id: decodeAuth.user.id,
+          name: decodeAuth.user.name,
+          email: decodeAuth.user.email,
+          role: decodeAuth.role[0],
+          permissions: decodeAuth.permissions,
+          avatar: decodeAuth.user.avatar,
+        },
         isAuth: true,
       };
 
@@ -91,7 +112,14 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        currentUser: decodeCreate,
+        currentUser: {
+          id: decodeCreate.user.id,
+          name: decodeCreate.user.name,
+          email: decodeCreate.user.email,
+          role: decodeCreate.role[0],
+          permissions: decodeCreate.permissions,
+          avatar: decodeCreate.user.avatar,
+        },
         isAuth: true,
       };
 
@@ -106,7 +134,14 @@ export default function user(state = initialState, action) {
       AsyncStorage.removeItem('token');
       return {
         ...state,
-        currentUser: {},
+        currentUser: {
+          id: null,
+          name: '',
+          email: '',
+          role: '',
+          permissions: [],
+          avatar: '',
+        },
         isAuth: false,
       };
 
@@ -264,23 +299,6 @@ export const ChangeError = () => {
     type: CHANGE_ERROR,
   };
 };
-
-//saga
-// export const loginUserStart = () => {
-//   return { type: LOGIN_START };
-// };
-
-// export const loginUserSuccess = (data) => {
-//   return { type: LOGIN_SUCCESS, payload: data };
-// };
-
-// export const loginUserFailed = (error) => {
-//   return { type: LOGIN_ERROR, payload: error };
-// };
-
-// export const login = (email, password) => {
-//   return { type: POST_LOGIN, email, password };
-// };
 
 export const getMasterRole = () => {
   return (dispatch) => {

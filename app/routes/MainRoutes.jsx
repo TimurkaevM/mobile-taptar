@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Messenger from '../screens/ChatScreen';
 import SendMaterial from './SendMaterialRoutes';
-import Profile from '../screens/ProfileScreen';
 import { useDispatch } from 'react-redux';
 import { getAllTags, getCauses } from '../redux/ducks/tags';
 import ContributionRoutes from './ContributionRoutes';
@@ -15,6 +14,7 @@ import ChatIcon from '../SvgIcons/MainroutesIcons/ChatIcon';
 import ProfileFocusedIcon from '../SvgIcons/MainroutesIcons/ProfileFocusedIcon';
 import ProfileIcon from '../SvgIcons/MainroutesIcons/ProfileIcon';
 import ContributionMediasRoutes from './ContributionMediasRoutes';
+import ProfileRoutes from './ProfileRoutes';
 
 function MainRoutes() {
   const Tab = createMaterialBottomTabNavigator();
@@ -50,7 +50,7 @@ function MainRoutes() {
       />
       <Tab.Screen
         name="ContributionRoutes"
-        component={ContributionMediasRoutes}
+        component={ContributionRoutes}
         options={{
           tabBarLabel: 'Мой кабинет',
           tabBarColor: '#4686cc',
@@ -79,11 +79,11 @@ function MainRoutes() {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="ProfileRoutes"
+        component={ProfileRoutes}
         options={{
           tabBarColor: '#4686cc',
-          tabBarLabel: 'Главная',
+          tabBarLabel: 'Профиль',
           tabBarIcon: ({ focused, color }) =>
             focused ? (
               <ProfileFocusedIcon color={color} />
