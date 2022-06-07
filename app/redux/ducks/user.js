@@ -15,12 +15,15 @@ export const CREATE_ERROR = 'user/create/error';
 export const LOGOUT = 'user/logout';
 export const CHANGE_ERROR = 'error/change';
 
-const MASTER__CHECK__START = 'master/check/start';
-const MASTER__CHECK__SUCCESS = 'master/check/success';
-const MASTER__ADD__START = 'master/add/start';
-const MASTER__ADD__SUCCESS = 'master/add/success';
-const MASTER__REMOVE__START = 'master/remove/start';
-const MASTER__REMOVE__SUCCESS = 'master/remove/success';
+const PROFILE__CHANGE__START = 'profile/change/start';
+const PROFILE__CHANGE__SUCCESS = 'profile/change/success';
+
+const PASS__CHANGE__START = 'pass/change/start';
+const PASS__CHANGE__SUCCESS = 'pass/change/success';
+
+const AVATAR__ADD__START = 'avatar/add/start';
+const AVATAR__ADD__SUCCESS = 'avatar/add/success';
+const AVATAR__ADD__PROGRESS = 'change/progress/avatar';
 
 const initialState = {
   currentUser: {
@@ -34,7 +37,6 @@ const initialState = {
   isAuth: false,
   loading: false,
   loadingAuth: false,
-  master: false,
   message: '',
   error: '',
 };
@@ -130,6 +132,35 @@ export default function user(state = initialState, action) {
         error: action.payload,
       };
 
+      case PROFILE__CHANGE__SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          currentUser: {
+            ...state.currentUser,
+            name: action.payload.name,
+            email: action.payload.email,
+          },
+          message: action.data,
+        };
+
+        case AVATAR__ADD__START:
+          return {
+            ...state,
+            loading: true,
+          };
+    
+        case AVATAR__ADD__SUCCESS:
+          return {
+            ...state,
+            loading: false,
+            currentUser: {
+              ...state.currentUser,
+              avatar: action.payload.message,
+            },
+            message: action.payload.message,
+          };
+
     case LOGOUT:
       AsyncStorage.removeItem('token');
       return {
@@ -149,47 +180,6 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         error: null,
-      };
-
-    case MASTER__CHECK__START:
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case MASTER__CHECK__SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        master: action.payload.message,
-      };
-
-    case MASTER__ADD__START:
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case MASTER__ADD__SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        master: true,
-        message: action.payload.message,
-      };
-
-    case MASTER__REMOVE__START:
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case MASTER__REMOVE__SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        master: false,
-        message: action.payload.message,
       };
 
     default:
@@ -288,6 +278,116 @@ export const login = (email, password) => {
   };
 };
 
+export const changeUserProfile = (name, email) => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: PROFILE__CHANGE__START });
+
+      if (value !== null) {
+        const response = await api.post(
+          '/user/profile',
+          {
+            name,
+            email,
+          },
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
+        dispatch({
+          type: PROFILE__CHANGE__SUCCESS,
+          data: response.data,
+          payload: {name, email},
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};
+
+export const changeUserPass = (newPass, checkPass, oldPass) => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: PASS__CHANGE__START });
+
+      if (value !== null) {
+        const response = await api.post(
+          '/user/profile/password',
+          {
+            password: newPass,
+            password_confirmation: checkPass,
+            old_password: oldPass,
+          },
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
+        dispatch({
+          type: PASS__CHANGE__SUCCESS,
+          data: response.data,
+        });
+        console.log(response.data)
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};
+
+export const addAvatar = (file) => {
+  const form = new FormData();
+  form.append('photo', {
+    uri: file.uri,
+    name: file.name,
+    type: file.type,
+  });
+
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: AVATAR__ADD__START });
+
+      if (value !== null) {
+        const response = await api.post('/user/profile/upload/avatar', form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${value}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            const totalLength = progressEvent.lengthComputable
+              ? progressEvent.total
+              : progressEvent.target.getResponseHeader('content-length') ||
+                progressEvent.target.getResponseHeader(
+                  'x-decompressed-content-length',
+                );
+            if (totalLength) {
+              let progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength,
+              );
+              dispatch({
+                type: AVATAR__ADD__PROGRESS,
+                payload: progress,
+              });
+            }
+          },
+        });
+        dispatch({
+          type: AVATAR__ADD__SUCCESS,
+          payload: response.data,
+        });
+      }
+    } catch (e) {
+      console.log(e.response);
+    }
+  };
+};
+
 export const userLogOut = () => {
   return {
     type: LOGOUT,
@@ -300,71 +400,3 @@ export const ChangeError = () => {
   };
 };
 
-export const getMasterRole = () => {
-  return (dispatch) => {
-    dispatch({
-      type: MASTER__CHECK__START,
-    });
-
-    api
-      .get('/user/settings/role-master/check ', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        dispatch({
-          type: MASTER__CHECK__SUCCESS,
-          payload: data,
-        });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
-};
-
-export const addMasterRole = () => {
-  return (dispatch) => {
-    dispatch({
-      type: MASTER__ADD__START,
-    });
-
-    api
-      .get('/user/settings/role-master/add', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        dispatch({
-          type: MASTER__ADD__SUCCESS,
-          payload: data,
-        });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
-};
-
-export const deleteMasterRole = () => {
-  return (dispatch) => {
-    dispatch({
-      type: MASTER__REMOVE__START,
-    });
-
-    api
-      .get('/user/settings/role-master/remove', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        dispatch({
-          type: MASTER__REMOVE__SUCCESS,
-          payload: data,
-        });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
-};

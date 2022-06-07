@@ -120,6 +120,7 @@ const AddTagsHeader = ({
   const onPressClose = () => {
     if (materialText) {
       dispatch(cleanStateTags());
+      navigate('Main');
       return;
     }
     if (files.group) {

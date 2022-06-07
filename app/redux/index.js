@@ -11,7 +11,6 @@ import contributionDocument from './ducks/contributionDocument';
 import contributionMaterial from './ducks/contributionMaterial';
 import contributionPhoto from './ducks/contributionPhoto';
 import contributionVideo from './ducks/contributionVideo';
-import workshop from './ducks/workshop';
 import application from './ducks/application';
 import historianCabinet from './ducks/historianCabinet';
 import historianSend from './ducks/historianSend';
@@ -25,7 +24,6 @@ const logger = createLogger({
 });
 
 const rootReducer = combineReducers({
-  workshop,
   files,
   user,
   contributionAudio,
@@ -41,7 +39,6 @@ const rootReducer = combineReducers({
   showFileCabinet,
   // historianCabinet,
   // historianSend,
-  // approver,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk, logger));
