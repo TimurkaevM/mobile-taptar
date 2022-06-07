@@ -1,5 +1,13 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { addAvatar, changeUserProfile } from '../redux/ducks/user';
 import color from '../misc/color';
@@ -9,12 +17,12 @@ import PassChangeModal from '../components/ProfileChangeComponents/PassChangeMod
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 
-function ProfileChangeScreen({navigation}) {
+function ProfileChangeScreen({ navigation }) {
   const { navigate } = navigation;
 
   const dispatch = useDispatch();
 
-  const currentUser = useSelector(state => state.user.currentUser);
+  const currentUser = useSelector((state) => state.user.currentUser);
 
   const [name, setName] = React.useState(currentUser.name);
   const [email, setEmail] = React.useState(currentUser.email);
@@ -47,7 +55,7 @@ function ProfileChangeScreen({navigation}) {
     return;
   };
 
-  console.log(currentUser)
+  console.log(currentUser);
 
   const pickPhoto = async () => {
     let result = await DocumentPicker.getDocumentAsync({
@@ -105,48 +113,46 @@ function ProfileChangeScreen({navigation}) {
 
   const pressOpenModal = () => {
     dispatch(openPassModal());
-  }
+  };
 
   const pressChangeProfile = () => {
-    dispatch(changeUserProfile(name, email))
-  }
+    dispatch(changeUserProfile(name, email));
+  };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={pickPhoto} style={styles.avatarContainer}>
         {currentUser.avatar ? (
-      <Image
-      style={styles.avatar}
-      source={{
-        uri: `https://api.taptar.ru/storage/avatars/${currentUser.avatar}`,
-      }}
-    />
-        ) : (
-          null
-        )}
+          <Image
+            style={styles.avatar}
+            source={{
+              uri: `https://api.taptar.ru/storage/avatars/${currentUser.avatar}`,
+            }}
+          />
+        ) : null}
         <View style={styles.addIcon}>
-            <AvatarAddIcon />
-          </View>
+          <AvatarAddIcon />
+        </View>
       </TouchableOpacity>
       <View style={styles.infoContainer}>
         <Text style={styles.title}>ФИО</Text>
         <TextInput
-        style={styles.subTitle}        
-        type="name"
-        name="currentName"
-        value={name}
-        onChangeText={setName}
-      />
+          style={styles.subTitle}
+          type="name"
+          name="currentName"
+          value={name}
+          onChangeText={setName}
+        />
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.title}>Почта</Text>
         <TextInput
-        style={styles.subTitle}        
-        type="email"
-        name="currentEmail"
-        value={email}
-        onChangeText={setEmail}
-      />
+          style={styles.subTitle}
+          type="email"
+          name="currentEmail"
+          value={email}
+          onChangeText={setEmail}
+        />
       </View>
 
       <TouchableOpacity onPress={pressOpenModal} style={styles.btnPass}>
@@ -183,12 +189,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#a3c4df',
   },
   avatar: {
-    opacity: .6,
+    opacity: 0.6,
     zIndex: 1,
     borderRadius: 150,
     width: '100%',
     height: '100%',
-    resizeMode: 'cover'
+    resizeMode: 'cover',
   },
   addIcon: {
     position: 'absolute',
@@ -199,7 +205,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: color.APP_BG
+    borderColor: color.APP_BG,
   },
   infoContainer: {
     marginTop: 20,
@@ -208,7 +214,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 14,
-    color: '#9b9b9b'
+    color: '#9b9b9b',
   },
   subTitle: {
     marginTop: 10,
@@ -220,7 +226,7 @@ const styles = StyleSheet.create({
   btnSave: {
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderRadius:20,
+    borderRadius: 20,
     marginTop: 28,
     justifyContent: 'center',
     alignItems: 'center',
@@ -234,6 +240,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
     padding: 5,
   },
-})
+});
 
 export default ProfileChangeScreen;

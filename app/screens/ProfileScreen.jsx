@@ -1,32 +1,39 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import AvatarIcon from '../SvgIcons/AvatarIcon/AvatarIcon';
 import { userLogOut } from '../redux/ducks/user';
 
-function ProfileScreen({navigation}) {
+function ProfileScreen({ navigation }) {
   const { navigate } = navigation;
 
   const dispatch = useDispatch();
 
-  const currentUser = useSelector(state => state.user.currentUser);
+  const currentUser = useSelector((state) => state.user.currentUser);
 
-  console.log(currentUser)
+  console.log(currentUser);
 
   const pressLogOut = () => {
     dispatch(userLogOut());
-  }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
         {currentUser.avatar ? (
-      <Image
-      style={styles.avatar}
-      source={{
-        uri: `https://api.taptar.ru/storage/avatars/${currentUser.avatar}`,
-      }}
-    />
+          <Image
+            style={styles.avatar}
+            source={{
+              uri: `https://api.taptar.ru/storage/avatars/${currentUser.avatar}`,
+            }}
+          />
         ) : (
           <AvatarIcon />
         )}
@@ -51,7 +58,10 @@ function ProfileScreen({navigation}) {
       </View>
 
       <View style={styles.buttons}>
-        <TouchableOpacity onPress={() => navigate('ProfileChangeScreen')} style={[styles.btn, {marginRight: 20,}]}>
+        <TouchableOpacity
+          onPress={() => navigate('ProfileChangeScreen')}
+          style={[styles.btn, { marginRight: 20 }]}
+        >
           <Text style={styles.btnText}>Редактировать</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={pressLogOut} style={styles.btn}>
@@ -83,7 +93,7 @@ const styles = StyleSheet.create({
     borderRadius: 150,
     width: '100%',
     height: '100%',
-    resizeMode: 'cover'
+    resizeMode: 'cover',
   },
   infoContainer: {
     marginTop: 20,
@@ -92,7 +102,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 14,
-    color: '#9b9b9b'
+    color: '#9b9b9b',
   },
   subTitle: {
     marginTop: 10,
@@ -108,9 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  btnText: {
-
-  },
-})
+  btnText: {},
+});
 
 export default ProfileScreen;

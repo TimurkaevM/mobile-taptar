@@ -16,8 +16,8 @@ const Stack = createStackNavigator();
 
 function ContributionRoutes() {
   const dispatch = useDispatch();
-  
-    React.useEffect(() => {
+
+  React.useEffect(() => {
     dispatch(getReadyMaterial());
     dispatch(getPhoto());
     dispatch(getVideo());

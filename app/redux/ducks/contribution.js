@@ -66,12 +66,12 @@ export default function contribution(state = initialState, action) {
         readyMaterial: action.payload.message,
       };
 
-      case READY_ERROR:
-        return {
-          ...state,
-          loading: false,
-          error: action.payload,
-        };  
+    case READY_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
 
     case MATERIAL_START:
       return {
@@ -197,7 +197,7 @@ export const getReadyMaterial = () => {
       dispatch({
         type: READY_ERROR,
         payload: e.response.data.message,
-      })
+      });
     }
   };
 };

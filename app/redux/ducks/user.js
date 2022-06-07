@@ -132,34 +132,34 @@ export default function user(state = initialState, action) {
         error: action.payload,
       };
 
-      case PROFILE__CHANGE__SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          currentUser: {
-            ...state.currentUser,
-            name: action.payload.name,
-            email: action.payload.email,
-          },
-          message: action.data,
-        };
+    case PROFILE__CHANGE__SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentUser: {
+          ...state.currentUser,
+          name: action.payload.name,
+          email: action.payload.email,
+        },
+        message: action.data,
+      };
 
-        case AVATAR__ADD__START:
-          return {
-            ...state,
-            loading: true,
-          };
-    
-        case AVATAR__ADD__SUCCESS:
-          return {
-            ...state,
-            loading: false,
-            currentUser: {
-              ...state.currentUser,
-              avatar: action.payload.message,
-            },
-            message: action.payload.message,
-          };
+    case AVATAR__ADD__START:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case AVATAR__ADD__SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentUser: {
+          ...state.currentUser,
+          avatar: action.payload.message,
+        },
+        message: action.payload.message,
+      };
 
     case LOGOUT:
       AsyncStorage.removeItem('token');
@@ -299,7 +299,7 @@ export const changeUserProfile = (name, email) => {
         dispatch({
           type: PROFILE__CHANGE__SUCCESS,
           data: response.data,
-          payload: {name, email},
+          payload: { name, email },
         });
       }
     } catch (e) {
@@ -331,7 +331,7 @@ export const changeUserPass = (newPass, checkPass, oldPass) => {
           type: PASS__CHANGE__SUCCESS,
           data: response.data,
         });
-        console.log(response.data)
+        console.log(response.data);
       }
     } catch (e) {
       console.error(e);
@@ -399,4 +399,3 @@ export const ChangeError = () => {
     type: CHANGE_ERROR,
   };
 };
-

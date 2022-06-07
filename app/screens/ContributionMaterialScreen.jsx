@@ -18,7 +18,9 @@ import DocumentIcon from '../SvgIcons/ContributionIcons/DocumentIcon';
 import AudioIcon from '../SvgIcons/ContributionIcons/AudioIcon';
 
 const ContributionMaterialScreen = ({ navigation }) => {
-  const materials = useSelector((state) => state.contributionMaterial.readyMaterial);
+  const materials = useSelector(
+    (state) => state.contributionMaterial.readyMaterial,
+  );
   const loading = useSelector((state) => state.contributionMaterial.loading);
   const error = useSelector((state) => state.contributionMaterial.error);
 
@@ -81,8 +83,8 @@ const ContributionMaterialScreen = ({ navigation }) => {
     );
   }
 
-  if(error) {
-    return <Text>`${error}`</Text>
+  if (error) {
+    return <Text>`${error}`</Text>;
   }
 
   return (

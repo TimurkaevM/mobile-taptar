@@ -29,14 +29,14 @@ function ContributionMediasRoutes() {
   const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : 0;
 
   const dispatch = useDispatch();
-  
+
   React.useEffect(() => {
-  dispatch(getReadyMaterial());
-  dispatch(getPhoto());
-  dispatch(getVideo());
-  dispatch(getDocument());
-  dispatch(getAudio());
-}, [dispatch]);
+    dispatch(getReadyMaterial());
+    dispatch(getPhoto());
+    dispatch(getVideo());
+    dispatch(getDocument());
+    dispatch(getAudio());
+  }, [dispatch]);
 
   return (
     <Tab.Navigator

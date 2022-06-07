@@ -32,17 +32,17 @@ export default function application(state = initialState, action) {
         },
       };
 
-      case PASS_MODAL_OPEN:
-        return {
-          ...state,
-          passModal: true,
-        };
-  
-      case PASS_MODAL_CLOSE:
-        return {
-          ...state,
-          passModal: false,
-        };
+    case PASS_MODAL_OPEN:
+      return {
+        ...state,
+        passModal: true,
+      };
+
+    case PASS_MODAL_CLOSE:
+      return {
+        ...state,
+        passModal: false,
+      };
 
     default:
       return state;
