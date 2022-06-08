@@ -10,6 +10,7 @@ const initialState = {
 
 const CONTACTS_LOAD_START = 'contacts/load/start';
 const CONTACTS_LOAD_SUCCESS = 'contacts/load/success';
+const CONTACTS_LOAD_ERROR = 'contacts/load/error';
 
 export default function contacts(state = initialState, action) {
   switch (action.type) {
@@ -92,23 +93,29 @@ export default function contacts(state = initialState, action) {
 }
 
 export const loadContacts = () => {
-  return (dispatch) => {
-    dispatch({
-      type: CONTACTS_LOAD_START,
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get('chat')
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({
+        type: CONTACTS_LOAD_START,
+      });
+
+      if (value !== null) {
+        const response = await api.get('chat', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: CONTACTS_LOAD_SUCCESS,
-          payload: data,
+          payload: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
+      }
+    } catch (e) {
+      console.error(e);
+      dispatch({
+        type: CONTACTS_LOAD_ERROR,
       });
+    }
   };
 };
 

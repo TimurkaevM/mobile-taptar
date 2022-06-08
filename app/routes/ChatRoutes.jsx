@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import ProfileChangeScreen from '../screens/ProfileChangeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import ChatScreen from '../screens/ChatScreen';
+import ContactsScreen from '../screens/ContactsScreen';
 
 const Stack = createStackNavigator();
 
@@ -17,14 +17,14 @@ const config = {
   },
 };
 
-function ProfileRoutes() {
+function ChatRoutes() {
   return (
-    <Stack.Navigator initialRouteName="ProfileScreen">
+    <Stack.Navigator initialRouteName="ContactsScreen">
       <Stack.Screen
-        name="ProfileScreen"
-        component={ProfileScreen}
+        name="ContactsScreen"
+        component={ContactsScreen}
         options={{
-          title: 'Профиль',
+          title: 'Контакты',
           headerStyle: {
             backgroundColor: '#fff',
           },
@@ -36,10 +36,10 @@ function ProfileRoutes() {
         }}
       />
       <Stack.Screen
-        name="ProfileChangeScreen"
-        component={ProfileChangeScreen}
+        name="ChatScreen"
+        component={ChatScreen}
         options={{
-          title: 'Редактировать профиль',
+          title: 'Чат',
           headerStyle: {
             backgroundColor: '#fff',
           },
@@ -54,4 +54,4 @@ function ProfileRoutes() {
   );
 }
 
-export default ProfileRoutes;
+export default ChatRoutes;

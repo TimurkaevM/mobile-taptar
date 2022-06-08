@@ -15,6 +15,7 @@ import ProfileFocusedIcon from '../SvgIcons/MainroutesIcons/ProfileFocusedIcon';
 import ProfileIcon from '../SvgIcons/MainroutesIcons/ProfileIcon';
 import ContributionMediasRoutes from './ContributionMediasRoutes';
 import ProfileRoutes from './ProfileRoutes';
+import ChatRoutes from './ChatRoutes';
 
 function MainRoutes() {
   const Tab = createMaterialBottomTabNavigator();
@@ -64,8 +65,8 @@ function MainRoutes() {
         }}
       />
       <Tab.Screen
-        name="Messenger"
-        component={Messenger}
+        name="ChatRoutes"
+        component={ChatRoutes}
         options={{
           tabBarLabel: 'Чат',
           tabBarColor: '#4686cc',
