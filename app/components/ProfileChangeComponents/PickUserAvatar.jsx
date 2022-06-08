@@ -7,7 +7,7 @@ import AvatarAddIcon from '../../SvgIcons/AvatarIcon/AvatarAddIcon';
 import { addAvatar } from '../../redux/ducks/user';
 import color from '../../misc/color';
 
-function UserAvatar() {
+function PickUserAvatar() {
   const dispatch = useDispatch();
 
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -117,4 +117,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserAvatar;
+export default PickUserAvatar;

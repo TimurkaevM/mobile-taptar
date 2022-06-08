@@ -1,21 +1,35 @@
+import { api } from '../../api/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const initialState = {
   contacts: [],
+  countNewChat: 0,
   loading: false,
   filter: '',
 };
 
+const CONTACTS_LOAD_START = 'contacts/load/start';
+const CONTACTS_LOAD_SUCCESS = 'contacts/load/success';
+
 export default function contacts(state = initialState, action) {
   switch (action.type) {
-    case 'contacts/load/start':
+    case CONTACTS_LOAD_START:
       return {
         ...state,
         loading: true,
       };
 
-    case 'contacts/load/success':
+    case CONTACTS_LOAD_SUCCESS:
       return {
         ...state,
-        contacts: action.payload,
+        contacts: action.payload.message,
+        loading: false,
+      };
+
+    case 'count/load/success':
+      return {
+        ...state,
+        countNewChat: action.payload.message,
         loading: false,
       };
 
@@ -24,6 +38,54 @@ export default function contacts(state = initialState, action) {
         ...state,
         filter: action.payload,
       };
+
+    case 'minus/messages':
+      return {
+        ...state,
+        contacts: state.contacts.map((contact) => {
+          if (contact.id === action.payload) {
+            return {
+              ...contact,
+              count_new_messages: 0,
+            };
+          }
+
+          return contact;
+        }),
+        countNewChat: state.countNewChat - action.count,
+      };
+
+    case 'plus/messages':
+      return {
+        ...state,
+        contacts: state.contacts.map((contact) => {
+          if (contact.id === action.payload.roomId) {
+            return {
+              ...contact,
+              count_new_messages: contact.count_new_messages + 1,
+            };
+          }
+
+          return contact;
+        }),
+        countNewChat: state.countNewChat + 1,
+      };
+
+    case 'contact/delete/start':
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case 'contact/delete/success':
+      return {
+        ...state,
+        contacts: state.contacts.filter(
+          (contact) => contact.id !== action.payload,
+        ),
+        loading: false,
+      };
+
     default:
       return state;
   }
@@ -32,16 +94,41 @@ export default function contacts(state = initialState, action) {
 export const loadContacts = () => {
   return (dispatch) => {
     dispatch({
-      type: 'contacts/load/start',
+      type: CONTACTS_LOAD_START,
     });
 
-    fetch('https://api.intocode.ru:8001/api/contacts')
-      .then((response) => response.json())
-      .then((json) => {
+    api
+      .get('chat')
+      .then((response) => response.data)
+      .then((data) => {
         dispatch({
-          type: 'contacts/load/success',
-          payload: json,
+          type: CONTACTS_LOAD_SUCCESS,
+          payload: data,
         });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+};
+
+export const loadCountNewChat = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'count/load/start',
+    });
+
+    api
+      .get('/chat/new/count')
+      .then((response) => response.data)
+      .then((data) => {
+        dispatch({
+          type: 'count/load/success',
+          payload: data,
+        });
+      })
+      .catch((e) => {
+        console.error(e);
       });
   };
 };
@@ -50,5 +137,42 @@ export const setFilter = (e) => {
   return {
     type: 'filter/text',
     payload: e,
+  };
+};
+
+export const minusCountMessages = (id, count) => {
+  return {
+    type: 'minus/messages',
+    payload: id,
+    count,
+  };
+};
+
+export const plusCountMessages = (data) => {
+  return {
+    type: 'plus/messages',
+    payload: data,
+  };
+};
+
+export const removingContact = (roomId) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'contact/delete/start',
+    });
+
+    api
+      .delete(`/chat/${roomId}`)
+      .then((response) => response.data)
+      .then((data) => {
+        dispatch({
+          type: 'contact/delete/success',
+          payload: roomId,
+          data,
+        });
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 };

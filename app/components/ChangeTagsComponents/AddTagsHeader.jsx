@@ -38,7 +38,7 @@ const AddTagsHeader = ({
   const text = useSelector((state) => state.files.materials.text);
 
   const onSuccess = () => {
-    if (!text.text) {
+    if (!text.text && item.type === 'text') {
       return setTextError('Текст не может быть пустым');
     }
     if (!title) {

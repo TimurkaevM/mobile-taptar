@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import PassChangeModal from '../components/ProfileChangeComponents/PassChangeModal';
-import UserAvatar from '../components/ProfileChangeComponents/UserAvatar';
+import PickUserAvatar from '../components/ProfileChangeComponents/PickUserAvatar';
 import ProfileTextInputs from '../components/ProfileChangeComponents/ProfileTextInputs';
 import BtnOpenModal from '../components/ProfileChangeComponents/BtnOpenModal';
 import BtnSaveChanges from '../components/ProfileChangeComponents/BtnSaveChanges';
@@ -20,7 +20,7 @@ function ProfileChangeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <UserAvatar />
+      <PickUserAvatar />
       <ProfileTextInputs
         name={name}
         email={email}
