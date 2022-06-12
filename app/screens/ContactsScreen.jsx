@@ -7,16 +7,18 @@ import {
   Dimensions,
   FlatList,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadContacts } from '../redux/ducks/contacts';
+import AvatarIcon from '../SvgIcons/AvatarIcon/AvatarIcon';
 
-function ContactsScreen() {
+function ContactsScreen({ navigation }) {
+  const { navigate } = navigation;
+
   const dispatch = useDispatch();
 
-  const contacts = useSelector(
-    (state) => state.contacts.contacts,
-  );
+  const contacts = useSelector((state) => state.contacts.contacts);
   const loading = useSelector((state) => state.contacts.loading);
 
   useEffect(() => {
@@ -24,16 +26,32 @@ function ContactsScreen() {
   }, [dispatch]);
 
   const renderContact = ({ item }) => {
-    const title = item.title === null ? '' : item.title;
-
-    const types = item?.info?.types;
-
+    const { avatar, title, count_new_messages } = item;
     return (
       <TouchableOpacity
         onPress={() => navigate('ChatScreen', { id: item.id })}
         style={styles.contact}
       >
-       <Text>{item.title}</Text>
+        <View style={styles.contactInfo}>
+          <View style={styles.avatarContainer}>
+            {avatar ? (
+              <Image
+                style={styles.avatar}
+                source={{
+                  uri: `https://api.taptar.ru/storage/avatars/${avatar}`,
+                }}
+              />
+            ) : (
+              <AvatarIcon color="#fff" />
+            )}
+          </View>
+          <Text style={styles.title} numberOfLines={1}>
+            {title}
+          </Text>
+        </View>
+        {count_new_messages ? (
+          <Text style={styles.count}>+{count_new_messages}</Text>
+        ) : null}
       </TouchableOpacity>
     );
   };
@@ -47,7 +65,7 @@ function ContactsScreen() {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center' }}>
+    <View style={{ flex: 1, backgroundColor: '#fafafa', alignItems: 'center' }}>
       <FlatList
         data={contacts}
         renderItem={renderContact}
@@ -64,6 +82,38 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+
+  contact: {
+    width: width,
+    marginBottom: 2,
+    backgroundColor: '#f5f5f5',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
+  contactInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: width - 200,
+  },
+  avatarContainer: {
+    width: 70,
+    height: 70,
+    backgroundColor: '#BED1E6',
+    borderRadius: 70,
+    padding: 2,
+    marginRight: 15,
+  },
+  avatar: {
+    borderRadius: 70,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  title: {},
+  count: {},
 });
 
 export default ContactsScreen;

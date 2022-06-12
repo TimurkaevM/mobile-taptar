@@ -13,15 +13,19 @@ const initialState = {
   filter: '',
 };
 
+const MESSAGES_LOAD_START = 'messages/load/start';
+const MESSAGES_LOAD_SUCCESS = 'messages/load/success';
+const MESSAGES_LOAD_ERROR = 'messages/load/error';
+
 export default function messages(state = initialState, action) {
   switch (action.type) {
-    case 'messages/load/start':
+    case MESSAGES_LOAD_START:
       return {
         ...state,
         loading: true,
         messages: [],
       };
-    case 'messages/load/success':
+    case MESSAGES_LOAD_SUCCESS:
       // scrollMessages();
       return {
         ...state,
@@ -111,25 +115,30 @@ export const resetFilterMessage = () => {
 
 // Санк для подгрузки сообщений
 export const loadMessages = (id) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'messages/load/start',
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get(`chat/${id}`)
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({
+        type: MESSAGES_LOAD_START,
+      });
+
+      if (value !== null) {
+        const response = await api.get(`chat/${id}`, {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
-          type: 'messages/load/success',
-          payload: data,
+          type: MESSAGES_LOAD_SUCCESS,
+          payload: response.data,
           id: id,
         });
-        // scrollMessages();
-      })
-      .catch((e) => {
-        console.error(e);
+      }
+    } catch (e) {
+      console.error(e);
+      dispatch({
+        type: MESSAGES_LOAD_SUCCESS,
       });
+    }
   };
 };
 

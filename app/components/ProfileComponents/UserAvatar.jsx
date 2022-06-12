@@ -16,7 +16,7 @@ function UserAvatar() {
           }}
         />
       ) : (
-        <AvatarIcon />
+        <AvatarIcon color="#BED1E6" />
       )}
     </View>
   );

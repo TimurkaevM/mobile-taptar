@@ -38,6 +38,7 @@ const initialState = {
   loading: false,
   loadingAuth: false,
   message: '',
+  token: null,
   error: '',
 };
 
@@ -55,6 +56,7 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         loading: false,
+        token: action.payload.access_token,
         currentUser: {
           id: decodeLogin.user.id,
           name: decodeLogin.user.name,
@@ -85,6 +87,7 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         loadingAuth: false,
+        token: action.payload.access_token,
         currentUser: {
           id: decodeAuth.user.id,
           name: decodeAuth.user.name,
@@ -114,6 +117,7 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         loading: false,
+        token: action.payload.access_token,
         currentUser: {
           id: decodeCreate.user.id,
           name: decodeCreate.user.name,
@@ -174,6 +178,7 @@ export default function user(state = initialState, action) {
           avatar: '',
         },
         isAuth: false,
+        token: null,
       };
 
     case CHANGE_ERROR:
@@ -383,7 +388,7 @@ export const addAvatar = (file) => {
         });
       }
     } catch (e) {
-      console.log(e.response);
+      console.log(e.response.data);
     }
   };
 };
