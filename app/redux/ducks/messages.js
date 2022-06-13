@@ -16,6 +16,8 @@ const initialState = {
 const MESSAGES_LOAD_START = 'messages/load/start';
 const MESSAGES_LOAD_SUCCESS = 'messages/load/success';
 const MESSAGES_LOAD_ERROR = 'messages/load/error';
+const DELETE_MESSAGE_START = 'messages/delete/start';
+const DELETE_MESSAGE_SUCCESS = 'messages/delete/success';
 
 export default function messages(state = initialState, action) {
   switch (action.type) {
@@ -73,7 +75,7 @@ export default function messages(state = initialState, action) {
         loadingMessage: false,
       };
 
-    case 'messages/delete/success':
+    case DELETE_MESSAGE_SUCCESS:
       return {
         ...state,
         messages: state.messages.filter(
@@ -225,24 +227,30 @@ export const savedIncomingMassage = (message) => {
 
 // Санк для удаления сообщения
 export const removingMessage = (roomId, messageId) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'messages/delete/start',
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .delete(`/chat/${roomId}/message/${messageId}`)
-      .then((response) => response.data)
-      .then((data) => {
-        dispatch({
-          type: 'messages/delete/success',
-          payload: messageId,
-          data,
-        });
-      })
-      .catch((e) => {
-        console.error(e);
+      dispatch({
+        type: DELETE_MESSAGE_START,
       });
+
+      if (value !== null) {
+        const response = await api.delete(
+          `/chat/${roomId}/message/${messageId}`,
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
+        dispatch({
+          type: DELETE_MESSAGE_SUCCESS,
+          payload: messageId,
+          data: response.data,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 

@@ -3,11 +3,19 @@ const initialState = {
     open: false,
     item: null,
   },
+  deleteMessageModal: {
+    open: false,
+    roomId: null,
+    id: null,
+  },
   passModal: false,
 };
 
 const SEND_OPEN_MODAL_DELETE = 'send/open/modal/delete';
 const SEND_CLOSE_MODAL_DELETE = 'send/close/modal/delete';
+
+const MESSAGE_OPEN_MODAL_DELETE = 'message/open/modal/delete';
+const MESSAGE_CLOSE_MODAL_DELETE = 'message/close/modal/delete';
 
 const PASS_MODAL_OPEN = 'pass/modal/open';
 const PASS_MODAL_CLOSE = 'pass/modal/close';
@@ -29,6 +37,26 @@ export default function application(state = initialState, action) {
         sendModalDelete: {
           open: false,
           item: null,
+        },
+      };
+
+    case MESSAGE_OPEN_MODAL_DELETE:
+      return {
+        ...state,
+        deleteMessageModal: {
+          open: true,
+          roomId: action.roomId,
+          id: action.id,
+        },
+      };
+
+    case MESSAGE_CLOSE_MODAL_DELETE:
+      return {
+        ...state,
+        deleteMessageModal: {
+          open: false,
+          roomId: null,
+          id: null,
         },
       };
 
@@ -59,6 +87,20 @@ export const openSendModalDelete = (item) => {
 export const closeSendModalDelete = () => {
   return {
     type: SEND_CLOSE_MODAL_DELETE,
+  };
+};
+
+export const openMessageModalDelete = (roomId, id) => {
+  return {
+    type: MESSAGE_OPEN_MODAL_DELETE,
+    roomId,
+    id,
+  };
+};
+
+export const closeMessageModalDelete = () => {
+  return {
+    type: MESSAGE_CLOSE_MODAL_DELETE,
   };
 };
 

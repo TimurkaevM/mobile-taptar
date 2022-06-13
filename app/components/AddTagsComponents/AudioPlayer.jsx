@@ -117,7 +117,7 @@ export default function AudioPlayer({ path }) {
           <Text>{currentPosition ? currentPosition : renderCurrentTime()}</Text>
         </View>
         <Slider
-          style={{ width: width - 100, height: 40 }}
+          style={{ width: width - 130, height: 40 }}
           minimumValue={0}
           maximumValue={1}
           value={calculateSeebBar()}

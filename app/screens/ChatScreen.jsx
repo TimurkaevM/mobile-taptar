@@ -1,19 +1,16 @@
 import React, { useEffect } from 'react';
 import {
   View,
-  Text,
   ActivityIndicator,
   StyleSheet,
   Dimensions,
   FlatList,
-  TouchableOpacity,
-  Image,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadMessages } from '../redux/ducks/messages';
-import moment from 'moment';
-import 'moment/locale/ru';
-import color from '../misc/color';
+import DeleteMessageModal from '../components/ChatComponents/DeleteMessageModal';
+import MessageText from '../components/ChatComponents/MessageText';
+import MessageFile from '../components/ChatComponents/MessageFile';
 
 function ChatScreen({ route }) {
   const { params } = route;
@@ -34,35 +31,23 @@ function ChatScreen({ route }) {
   }, [dispatch, params.id]);
 
   const renderMessages = ({ item, index }) => {
-    const { message, user_id, created_at, type } = item;
+    const { user_id, type } = item;
     const isUserProfile = currentUserId === user_id;
 
-    return (
-      <View
-        style={[
-          isUserProfile ? styles.messageOutGoing : styles.messageInComing,
-          { marginTop: index === 0 ? 10 : 0 },
-        ]}
-      >
-        <View
-          style={
-            isUserProfile ? styles.messageContentOut : styles.messageContentIn
-          }
-        >
-          <Text style={styles.messageText} numberOfLines={1}>
-            {message}
-          </Text>
-        </View>
-        <Text
-          style={[
-            styles.messageDate,
-            { textAlign: isUserProfile ? 'right' : 'left' },
-          ]}
-          numberOfLines={1}
-        >
-          {moment(created_at).locale('ru').format('LT')}
-        </Text>
-      </View>
+    return type === 'text' ? (
+      <MessageText
+        roomId={params.id}
+        index={index}
+        item={item}
+        isUserProfile={isUserProfile}
+      />
+    ) : (
+      <MessageFile
+        roomId={params.id}
+        index={index}
+        item={item}
+        isUserProfile={isUserProfile}
+      />
     );
   };
 
@@ -76,7 +61,7 @@ function ChatScreen({ route }) {
 
   return (
     <>
-      <View style={{ flex: 5.2, backgroundColor: '#fafafa' }}>
+      <View style={{ flex: 5.2, backgroundColor: '#fff' }}>
         <FlatList
           data={messages}
           renderItem={renderMessages}
@@ -84,6 +69,7 @@ function ChatScreen({ route }) {
         />
       </View>
       <View style={{ flex: 0.8, backgroundColor: '#fff' }}></View>
+      <DeleteMessageModal />
     </>
   );
 }
@@ -94,57 +80,6 @@ const styles = StyleSheet.create({
   preloader: {
     flex: 1,
     justifyContent: 'center',
-  },
-  avatarContainer: {
-    width: 70,
-    height: 70,
-    backgroundColor: '#BED1E6',
-    borderRadius: 70,
-    padding: 2,
-    marginRight: 15,
-  },
-  avatar: {
-    borderRadius: 70,
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-  messageOutGoing: {
-    alignSelf: 'flex-end',
-    maxWidth: width - 90,
-    marginBottom: 18,
-    marginRight: 10,
-  },
-  messageInComing: {
-    alignSelf: 'flex-start',
-    maxWidth: width - 90,
-    marginBottom: 18,
-    marginLeft: 10,
-  },
-  messageContentOut: {
-    backgroundColor: color.FONT_LIGHT,
-    paddingHorizontal: 25,
-    paddingVertical: 15,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
-    marginBottom: 5,
-  },
-  messageContentIn: {
-    backgroundColor: color.MAIN_COLOR,
-    paddingHorizontal: 25,
-    paddingVertical: 15,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    marginBottom: 5,
-  },
-  messageText: {
-    color: color.APP_BG,
-  },
-  messageDate: {
-    color: '#616161',
-    fontSize: 12,
   },
 });
 
