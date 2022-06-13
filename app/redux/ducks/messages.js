@@ -18,6 +18,13 @@ const MESSAGES_LOAD_SUCCESS = 'messages/load/success';
 const MESSAGES_LOAD_ERROR = 'messages/load/error';
 const DELETE_MESSAGE_START = 'messages/delete/start';
 const DELETE_MESSAGE_SUCCESS = 'messages/delete/success';
+const MESSAGES_ADDING_START = 'messages/adding/start';
+const MESSAGES_ADDING_SUCCESS = 'messages/adding/success';
+const MESSAGES_ADDING_ERROR = 'messages/adding/error';
+const INCOMING_SAVED_START = 'incomingMessages/saved/start';
+const INCOMING_SAVED_SUCCESS = 'incomingMessages/saved/success';
+const INCOMING_SAVED_ERROR = 'incomingMessages/saved/error';
+const OUTGOING_SAVED_SUCCESS = 'messages/saved/success';
 
 export default function messages(state = initialState, action) {
   switch (action.type) {
@@ -37,15 +44,20 @@ export default function messages(state = initialState, action) {
         materials: action.payload.message.material,
         loading: false,
       };
-    case 'messages/adding/start':
+    case MESSAGES_ADDING_START:
       return {
         ...state,
         loadingMessage: true,
       };
-    case 'messages/adding/success':
+    case MESSAGES_ADDING_SUCCESS:
       return {
         ...state,
         info: action.payload.message,
+        loadingMessage: false,
+      };
+    case MESSAGES_ADDING_ERROR:
+      return {
+        ...state,
         loadingMessage: false,
       };
 
@@ -55,7 +67,7 @@ export default function messages(state = initialState, action) {
         loadingMessage: true,
       };
 
-    case 'messages/saved/success':
+    case OUTGOING_SAVED_SUCCESS:
       return {
         ...state,
         messages:
@@ -65,7 +77,7 @@ export default function messages(state = initialState, action) {
         loadingMessage: false,
       };
 
-    case 'incomingMessages/saved/success':
+    case INCOMING_SAVED_SUCCESS:
       return {
         ...state,
         messages:
@@ -145,30 +157,36 @@ export const loadMessages = (id) => {
 };
 
 export const addingMassage = (myId, contactId, type, content) => {
-  const tempId = Math.random();
-  return (dispatch) => {
-    dispatch({
-      type: 'messages/adding/start',
-      payload: { myId, contactId, type, content, tempId: tempId },
-    });
-    api
-      .post(`chat/${contactId}`, {
-        myId: myId,
-        contactId: contactId,
-        type: 'text',
-        text: content,
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        // scrollMessages();
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: MESSAGES_ADDING_START });
+
+      if (value !== null) {
+        const response = await api.post(
+          `chat/${contactId}`,
+          {
+            myId: myId,
+            contactId: contactId,
+            type,
+            text: content,
+          },
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
         dispatch({
-          type: 'messages/adding/success',
-          payload: { ...data, tempId: tempId },
+          type: MESSAGES_ADDING_SUCCESS,
+          payload: { ...response.data },
         });
-      })
-      .catch((error) => {
-        console.error(error);
+      }
+    } catch (e) {
+      console.error(e);
+      dispatch({
+        type: MESSAGES_ADDING_ERROR,
       });
+    }
   };
 };
 
@@ -197,31 +215,39 @@ export const addingMaterialFile = (roomId, fileId) => {
 export const savedMassage = (data) => {
   // scrollMessages();
   return {
-    type: 'messages/saved/success',
+    type: OUTGOING_SAVED_SUCCESS,
     payload: data,
   };
 };
 
 export const savedIncomingMassage = (message) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'incomingMessages/saved/start',
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get(`/chat/${message.room_id}/message/${message.data.id}/read`)
-      .then((response) => response.data)
-      .then((data) => {
-        dispatch({
-          type: 'incomingMessages/saved/success',
-          payload: message,
-          data,
-        });
-        // scrollMessages();
-      })
-      .catch((e) => {
-        console.error(e);
+      dispatch({
+        type: INCOMING_SAVED_START,
       });
+
+      if (value !== null) {
+        const response = await api.get(
+          `/chat/${message.room_id}/message/${message.data.id}/read`,
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
+        dispatch({
+          type: INCOMING_SAVED_SUCCESS,
+          payload: message,
+          data: response.data,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+      dispatch({
+        type: INCOMING_SAVED_ERROR,
+      });
+    }
   };
 };
 
