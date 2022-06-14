@@ -8,7 +8,7 @@ import AudioPlayer from '../AddTagsComponents/AudioPlayer';
 import PdfReader from '../AddTagsComponents/PdfReader';
 import { Video } from 'expo-av';
 
-const MessageFile = ({ item, isUserProfile, index, roomId }) => {
+const MessageFile = ({ item, isUserProfile, index, roomId, lastItemIndex }) => {
   const { message, created_at, type, id } = item;
 
   let mediaItem = null;
@@ -62,8 +62,9 @@ const MessageFile = ({ item, isUserProfile, index, roomId }) => {
     <View
       style={[
         isUserProfile ? styles.messageOutGoing : styles.messageInComing,
-        { marginTop: index === 0 ? 20 : 0 },
+        { marginTop: index === lastItemIndex ? 20 : 0 },
       ]}
+      // onLayout={object => setItemHeights([...itemHeights, object.nativeEvent.layout.height])}
     >
       <View
         style={

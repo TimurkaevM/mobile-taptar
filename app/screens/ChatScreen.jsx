@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   ActivityIndicator,
@@ -16,11 +16,9 @@ import DeleteMessageModal from '../components/ChatComponents/DeleteMessageModal'
 import MessageText from '../components/ChatComponents/MessageText';
 import MessageFile from '../components/ChatComponents/MessageFile';
 import MessageSend from '../components/ChatComponents/MessageSend';
-// import Echo from 'laravel-echo';
-// import socketio from 'socket.io-client';
-// import Socketio from 'socket.io-client';
-import Echo from 'laravel-echo/dist/echo';
-import Socketio from 'socket.io-client/dist/socket.io';
+import Echo from 'laravel-echo';
+import socketio from 'socket.io-client';
+import ChatModal from '../components/ChatComponents/ChatModal';
 
 function ChatScreen({ route }) {
   const { params } = route;
@@ -34,10 +32,14 @@ function ChatScreen({ route }) {
   const messages = useSelector((state) => state.messages.messages);
   const loading = useSelector((state) => state.messages.loading);
 
+  const [flatList, setFlatList] = useState(null);
+
+  const lastItemIndex = messages.length - 1;
+
   let echo = new Echo({
     broadcaster: 'socket.io',
     host: 'https://api.taptar.ru',
-    client: Socketio,
+    client: socketio,
     auth: {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -45,38 +47,20 @@ function ChatScreen({ route }) {
     },
   });
 
-  // echo.private(`room.${params.id}`).listen('.message.send', function (e) {
-  //   // Функция которая сработает, когда другой пользователь отправить нам чат, все данные в аргументе "e" будут
-  //   if (e.data.user_id !== currentUserId)
-  //     return dispatch(savedIncomingMassage(e));
-  //   console.log(e);
-  //   return dispatch(savedMassage(e));
-  // });
-
   useEffect(() => {
     if (params.id !== undefined) {
       dispatch(loadMessages(params.id));
-
-      // echo.private(`room.${params.id}`).listen('.message.send', function (e) {
-      //   // Функция которая сработает, когда другой пользователь отправить нам чат, все данные в аргументе "e" будут
-      //   if (e.data.user_id !== currentUserId)
-      //     return dispatch(savedIncomingMassage(e));
-      //   console.log(e);
-      //   return dispatch(savedMassage(e));
-      // });
     }
-    // return () => {
-    //   echo.leave(`room.${params.id}`);
-    // };
   }, [dispatch, params.id]);
 
   useEffect(() => {
-    // sessionStorage.setItem('test', params.id);
     echo.private(`room.${params.id}`).listen('.message.send', function (e) {
-      // Функция которая сработает, когда другой пользователь отправить нам чат, все данные в аргументе "e" будут
-      if (e.data.user_id !== currentUserId)
+      if (flatList != null) {
+        flatList.scrollToIndex({ animate: true, index: 0 });
+      }
+      if (e.data.user_id !== currentUserId) {
         return dispatch(savedIncomingMassage(e));
-      console.log(e);
+      }
       return dispatch(savedMassage(e));
     });
 
@@ -95,6 +79,7 @@ function ChatScreen({ route }) {
         index={index}
         item={item}
         isUserProfile={isUserProfile}
+        lastItemIndex={lastItemIndex}
       />
     ) : (
       <MessageFile
@@ -102,6 +87,7 @@ function ChatScreen({ route }) {
         index={index}
         item={item}
         isUserProfile={isUserProfile}
+        lastItemIndex={lastItemIndex}
       />
     );
   };
@@ -116,15 +102,21 @@ function ChatScreen({ route }) {
 
   return (
     <>
-      <View style={{ flex: 1, backgroundColor: '#fff' }}>
+      <View
+        style={{ flex: 1, backgroundColor: '#fff', flexDirection: 'column' }}
+      >
         <FlatList
+          inverted={-1}
           data={messages}
+          extraData={messages}
           renderItem={renderMessages}
           keyExtractor={(item) => item.id.toString()}
+          ref={setFlatList}
         />
       </View>
       <MessageSend contactId={params.id} />
       <DeleteMessageModal />
+      <ChatModal contactId={params.id} />
     </>
   );
 }

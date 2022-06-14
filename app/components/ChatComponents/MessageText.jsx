@@ -5,14 +5,14 @@ import 'moment/locale/ru';
 import DeleteBtn from './DeleteBtn';
 import color from '../../misc/color';
 
-const MessageText = ({ item, isUserProfile, index, roomId }) => {
+const MessageText = ({ item, isUserProfile, index, roomId, lastItemIndex }) => {
   const { message, created_at, id } = item;
 
   return (
     <View
       style={[
         isUserProfile ? styles.messageOutGoing : styles.messageInComing,
-        { marginTop: index === 0 ? 20 : 0 },
+        { marginTop: index === lastItemIndex ? 20 : 0 },
       ]}
     >
       <View
@@ -21,9 +21,7 @@ const MessageText = ({ item, isUserProfile, index, roomId }) => {
         }
       >
         {isUserProfile ? <DeleteBtn id={id} roomId={roomId} /> : null}
-        <Text style={styles.messageText} numberOfLines={1}>
-          {message}
-        </Text>
+        <Text style={styles.messageText}>{message}</Text>
       </View>
       <Text
         style={[

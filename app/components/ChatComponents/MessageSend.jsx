@@ -4,13 +4,14 @@ import PickFileIcon from '../../SvgIcons/ChatIcons/PickFileIcon';
 import color from '../../misc/color';
 import MessageInput from './MessageInput';
 import SendMessageBtn from './SendMessageBtn';
+import SendFileBtn from './SendFileBtn';
 
 const MessageSend = ({ contactId }) => {
   const [message, setMessage] = React.useState('');
 
   return (
     <View style={styles.container}>
-      <PickFileIcon />
+      <SendFileBtn />
       <MessageInput message={message} setMessage={setMessage} />
       <SendMessageBtn
         contactId={contactId}

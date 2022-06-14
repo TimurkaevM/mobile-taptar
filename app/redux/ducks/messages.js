@@ -1,4 +1,3 @@
-// import { scrollMessages } from '../../components/History/Content/Messenger/addition';
 import { api } from '../../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -25,6 +24,9 @@ const INCOMING_SAVED_START = 'incomingMessages/saved/start';
 const INCOMING_SAVED_SUCCESS = 'incomingMessages/saved/success';
 const INCOMING_SAVED_ERROR = 'incomingMessages/saved/error';
 const OUTGOING_SAVED_SUCCESS = 'messages/saved/success';
+const FILE_POST_START = 'chat/files/post/start';
+const FILE_POST_SUCCESS = 'chat/files/post/success';
+const FILE_POST_ERROR = 'chat/files/post/error';
 
 export default function messages(state = initialState, action) {
   switch (action.type) {
@@ -35,10 +37,9 @@ export default function messages(state = initialState, action) {
         messages: [],
       };
     case MESSAGES_LOAD_SUCCESS:
-      // scrollMessages();
       return {
         ...state,
-        messages: action.payload.message.messages,
+        messages: action.payload.message.messages.reverse(),
         room: action.payload.message.room,
         companions: action.payload.message.companions,
         materials: action.payload.message.material,
@@ -61,18 +62,12 @@ export default function messages(state = initialState, action) {
         loadingMessage: false,
       };
 
-    case 'messages/saved/start':
-      return {
-        ...state,
-        loadingMessage: true,
-      };
-
     case OUTGOING_SAVED_SUCCESS:
       return {
         ...state,
         messages:
           action.payload.room_id === state.room.id
-            ? [...state.messages, action.payload.data]
+            ? [action.payload.data, ...state.messages]
             : state.messages,
         loadingMessage: false,
       };
@@ -82,7 +77,7 @@ export default function messages(state = initialState, action) {
         ...state,
         messages:
           action.payload.room_id === state.room.id
-            ? [...state.messages, action.payload.data]
+            ? [action.payload.data, ...state.messages]
             : state.messages,
         loadingMessage: false,
       };
@@ -94,16 +89,16 @@ export default function messages(state = initialState, action) {
           (message) => message.id !== action.payload,
         ),
       };
-    case 'messages/search/filtered':
-      return {
-        ...state,
-        filter: action.payload,
-      };
-    case 'messages/search/reset':
-      return {
-        ...state,
-        filter: '',
-      };
+    // case 'messages/search/filtered':
+    //   return {
+    //     ...state,
+    //     filter: action.payload,
+    //   };
+    // case 'messages/search/reset':
+    //   return {
+    //     ...state,
+    //     filter: '',
+    //   };
 
     default:
       return state;
@@ -150,7 +145,7 @@ export const loadMessages = (id) => {
     } catch (e) {
       console.error(e);
       dispatch({
-        type: MESSAGES_LOAD_SUCCESS,
+        type: MESSAGES_LOAD_ERROR,
       });
     }
   };
@@ -283,42 +278,55 @@ export const removingMessage = (roomId, messageId) => {
 //Отправка файла
 export const addFile = (file, format, id) => {
   const form = new FormData();
-  form.append('file', file);
+
+  form.append('file', {
+    uri: file.uri,
+    name: file.name,
+    type: file.type,
+  });
   form.append('type', format);
 
-  return (dispatch) => {
-    dispatch({ type: 'files/post/start', file, format });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .post(`/chat/${id}/upload`, form, {
-        onUploadProgress: (progressEvent) => {
-          const totalLength = progressEvent.lengthComputable
-            ? progressEvent.total
-            : progressEvent.target.getResponseHeader('content-length') ||
-              progressEvent.target.getResponseHeader(
-                'x-decompressed-content-length',
+      dispatch({ type: FILE_POST_START });
+
+      if (value !== null) {
+        const response = await api.post(`/chat/${id}/upload`, form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${value}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            const totalLength = progressEvent.lengthComputable
+              ? progressEvent.total
+              : progressEvent.target.getResponseHeader('content-length') ||
+                progressEvent.target.getResponseHeader(
+                  'x-decompressed-content-length',
+                );
+            if (totalLength) {
+              let progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength,
               );
-          if (totalLength) {
-            let progress = Math.round(
-              (progressEvent.loaded * 100) / totalLength,
-            );
-            dispatch({
-              type: 'change/progress',
-              payload: progress,
-            });
-          }
-        },
-      })
-      .then((response) => response.data)
-      .then((data) => {
+              dispatch({
+                type: 'change/progress',
+                payload: progress,
+              });
+            }
+          },
+        });
         dispatch({
-          type: 'files/post/success',
-          payload: data,
+          type: FILE_POST_SUCCESS,
+          payload: response.data,
           format,
         });
-      })
-      .catch((e) => {
-        console.error(e);
+      }
+    } catch (e) {
+      console.log(e.response);
+      dispatch({
+        type: FILE_POST_ERROR,
       });
+    }
   };
 };
