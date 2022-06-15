@@ -1,8 +1,8 @@
 import React from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { removeFile, removeFiles } from '../../redux/actions/material';
 import { closeSendModalDelete } from '../../redux/ducks/application';
-import { removeFile, removeFiles } from '../../redux/ducks/files';
 
 const DeleteFileModal = () => {
   const dispatch = useDispatch();

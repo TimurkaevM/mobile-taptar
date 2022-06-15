@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setDraftError } from '../../redux/ducks/files';
+import { setDraftError } from '../../redux/actions/material';
 
 export default function MaterialError() {
   const dispatch = useDispatch();

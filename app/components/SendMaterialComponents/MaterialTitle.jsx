@@ -2,7 +2,7 @@ import { View, Text, TextInput } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
-import { changeTitle, setSendError } from '../../redux/ducks/files';
+import { changeTitle, setSendError } from '../../redux/actions/material';
 
 const MaterialTitle = () => {
   const dispatch = useDispatch();

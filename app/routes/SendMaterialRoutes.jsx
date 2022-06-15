@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDraftFiles } from '../redux/ducks/files';
 import AddTagsScreen from '../screens/AddTagsScreen';
 import ChangeTagsScreen from '../screens/ChangeTagsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -8,6 +7,7 @@ import FormSend from '../screens/SendMaterialScreen';
 import ImageBrowserScreen from '../screens/ImageBrowserScreen';
 import AudioListScreen from '../screens/AudioListScreen';
 import PdfReaderScreen from '../screens/PdfReaderScreen';
+import { getDraftFiles } from '../redux/actions/material';
 
 const Stack = createStackNavigator();
 

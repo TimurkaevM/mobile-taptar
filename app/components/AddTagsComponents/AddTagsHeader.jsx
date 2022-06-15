@@ -2,15 +2,15 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import color from '../../misc/color';
 import { useDispatch, useSelector } from 'react-redux';
+import { cleanStateTags } from '../../redux/ducks/userTags';
+import { cleanUploadFiles } from '../../redux/ducks/uploadFiles';
 import {
   removeFile,
   removeFiles,
-  UploadGroupFails,
-  UploadOneFail,
-  UploadTextFail,
-} from '../../redux/ducks/files';
-import { cleanStateTags } from '../../redux/ducks/userTags';
-import { cleanUploadFiles } from '../../redux/ducks/uploadFiles';
+  uploadGroupFiles,
+  uploadOneFile,
+  uploadTextFail,
+} from '../../redux/actions/material';
 
 const AddTagsHeader = ({
   navigate,
@@ -71,7 +71,7 @@ const AddTagsHeader = ({
       dispatch(cleanStateTags());
       dispatch(cleanUploadFiles());
       dispatch(
-        UploadTextFail(
+        uploadTextFail(
           title,
           year,
           author,
@@ -89,7 +89,7 @@ const AddTagsHeader = ({
       dispatch(cleanStateTags());
       dispatch(cleanUploadFiles());
       dispatch(
-        UploadOneFail(
+        uploadOneFile(
           files,
           files.type,
           title,
@@ -107,7 +107,7 @@ const AddTagsHeader = ({
     dispatch(cleanStateTags());
     dispatch(cleanUploadFiles());
     dispatch(
-      UploadGroupFails(
+      uploadGroupFiles(
         files,
         files.type,
         title,

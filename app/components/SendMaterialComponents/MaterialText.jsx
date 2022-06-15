@@ -1,12 +1,12 @@
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
 import {
   changeText,
   clearTextForm,
   deleteDraftText,
-} from '../../redux/ducks/files';
-import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
+} from '../../redux/actions/material';
 
 const MaterialText = ({ navigate }) => {
   const dispatch = useDispatch();

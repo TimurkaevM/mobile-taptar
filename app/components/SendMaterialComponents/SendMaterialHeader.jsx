@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import color from '../../misc/color';
 import { useDispatch, useSelector } from 'react-redux';
-import { postMaterial } from '../../redux/ducks/files';
+import { postMaterial } from '../../redux/actions/material';
 
 const SendMaterialHeader = () => {
   const dispatch = useDispatch();

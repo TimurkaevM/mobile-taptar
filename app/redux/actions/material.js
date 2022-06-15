@@ -1,53 +1,39 @@
 import { api } from '../../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
+  CHANGE_TEXT,
+  CHANGE_TITLE,
   DRAFT_CHANGE_ERROR,
   DRAFT_GET_ERROR,
   DRAFT_GET_START,
   DRAFT_GET_SUCCESS,
+  GROUP_CHANGE_START,
   GROUP_CHANGE_SUCCESS,
+  GROUP_UPLOAD_START,
   GROUP_UPLOAD_SUCCESS,
   MATERIA_POST_ERROR,
   MATERIA_POST_START,
   MATERIA_POST_SUCCESS,
+  ONE_CHANGE_START,
   ONE_CHANGE_SUCCESS,
+  ONE_UPLOAD_START,
   ONE_UPLOAD_SUCCESS,
   REMOVE_FILES_START,
   REMOVE_FILES_SUCCESS,
   REMOVE_FILE_START,
   REMOVE_FILE_SUCCESS,
   SEND_ERROR_CHANGE,
+  TEXT_CHANGE_START,
   TEXT_CHANGE_SUCCESS,
+  TEXT_CLEAR,
+  TEXT_DELETE_START,
+  TEXT_DELETE_SUCCESS,
+  TEXT_UPLOAD_START,
   TEXT_UPLOAD_SUCCESS,
 } from '../ducks/files';
 
-// export const REMOVE_FILE_START = 'file/remove/start';
-// export const REMOVE_FILE_SUCCESS = 'file/remove/success';
-// export const REMOVE_FILES_START = 'files/remove/start';
-// export const REMOVE_FILES_SUCCESS = 'files/remove/success';
-// export const ONE_UPLOAD_START = 'one/upload/start';
-// export const ONE_UPLOAD_SUCCESS = 'one/upload/success';
-// export const GROUP_UPLOAD_START = 'group/upload/start';
-// export const GROUP_UPLOAD_SUCCESS = 'group/upload/success';
-// export const TEXT_UPLOAD_START = 'text/upload/start';
-// export const TEXT_UPLOAD_SUCCESS = 'text/upload/success';
-// export const ONE_CHANGE_START = 'one/change/start';
-// export const ONE_CHANGE_SUCCESS = 'one/change/success';
-// export const GROUP_CHANGE_START = 'group/change/start';
-// export const GROUP_CHANGE_SUCCESS = 'group/change/success';
-// export const TEXT_CHANGE_START = 'text/change/start';
-// export const TEXT_CHANGE_SUCCESS = 'text/change/success';
-// export const DRAFT_GET_START = 'draft/load/start';
-// export const DRAFT_GET_SUCCESS = 'draft/load/success';
-// export const DRAFT_GET_ERROR = 'draft/load/error';
-// export const DRAFT_CHANGE_ERROR = 'draft/change/error';
-// export const MATERIA_POST_START = 'material/post/start';
-// export const MATERIA_POST_SUCCESS = 'material/post/success';
-// export const MATERIA_POST_ERROR = 'material/post/error';
-// export const SEND_ERROR_CHANGE = 'send/error/change';
-
 // Файлы
-export const UploadTextFail = (
+export const uploadTextFail = (
   name,
   year,
   author,
@@ -99,7 +85,7 @@ export const UploadTextFail = (
   };
 };
 
-export const UploadOneFail = (
+export const uploadOneFile = (
   file,
   format,
   name,
@@ -152,7 +138,7 @@ export const UploadOneFail = (
   };
 };
 
-export const UploadGroupFails = (
+export const uploadGroupFiles = (
   file,
   format,
   name,
@@ -491,5 +477,50 @@ export const postMaterial = (title, text, photo, document, video, audio) => {
 export const setSendError = () => {
   return {
     type: SEND_ERROR_CHANGE,
+  };
+};
+
+// Тексты
+export const changeTitle = (value) => {
+  return {
+    type: CHANGE_TITLE,
+    payload: value,
+  };
+};
+
+export const changeText = (value) => {
+  return {
+    type: CHANGE_TEXT,
+    payload: value,
+  };
+};
+
+//Удаление текста с сервера
+
+export const deleteDraftText = (id) => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: TEXT_DELETE_START });
+
+      if (value !== null) {
+        const response = await api.delete(`/user/draft/text/${id}`, {
+          headers: { Authorization: `Bearer ${value}` },
+        });
+        dispatch({
+          type: TEXT_DELETE_SUCCESS,
+          payload: response.data,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};
+
+export const clearTextForm = () => {
+  return {
+    type: TEXT_CLEAR,
   };
 };
