@@ -19,9 +19,12 @@ import MessageSend from '../components/ChatComponents/MessageSend';
 import Echo from 'laravel-echo';
 import socketio from 'socket.io-client';
 import ChatModal from '../components/ChatComponents/ChatModal';
+import ChatHeader from '../components/ChatComponents/ChatHeader';
+import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 
-function ChatScreen({ route }) {
+function ChatScreen({ route, navigation }) {
   const { params } = route;
+  const { goBack } = navigation;
 
   const dispatch = useDispatch();
 
@@ -102,6 +105,8 @@ function ChatScreen({ route }) {
 
   return (
     <>
+      <StatusBarPlaceHolder />
+      <ChatHeader goBack={goBack} />
       <View
         style={{ flex: 1, backgroundColor: '#fff', flexDirection: 'column' }}
       >

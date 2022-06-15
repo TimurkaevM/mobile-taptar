@@ -70,6 +70,7 @@ const VideoList = ({
           marginBottom: 10,
           borderColor: '#000',
           alignItems: 'center',
+          marginHorizontal: 20,
         }}
       >
         <VideoListIcon />
@@ -96,7 +97,6 @@ const VideoList = ({
 
 const styles = StyleSheet.create({
   inputTitleContainer: {
-    paddingHorizontal: 20,
     marginTop: 10,
   },
   mediaBox: {

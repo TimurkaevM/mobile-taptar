@@ -70,6 +70,7 @@ const AudioList = ({
           marginBottom: 10,
           borderColor: '#000',
           alignItems: 'center',
+          marginHorizontal: 20,
         }}
       >
         <AudioListIcon />
@@ -96,7 +97,6 @@ const AudioList = ({
 
 const styles = StyleSheet.create({
   inputTitleContainer: {
-    paddingHorizontal: 20,
     marginTop: 10,
   },
   mediaBoxBlue: {

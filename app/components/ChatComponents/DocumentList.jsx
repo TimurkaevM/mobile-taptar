@@ -68,6 +68,7 @@ const DocumentList = ({
           marginBottom: 10,
           borderColor: '#000',
           alignItems: 'center',
+          marginHorizontal: 20,
         }}
       >
         <DocumentListIcon />
@@ -94,7 +95,6 @@ const DocumentList = ({
 
 const styles = StyleSheet.create({
   inputTitleContainer: {
-    paddingHorizontal: 20,
     marginTop: 10,
   },
   mediaBoxBlue: {

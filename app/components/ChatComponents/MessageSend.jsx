@@ -1,7 +1,5 @@
 import { View, StyleSheet, Dimensions } from 'react-native';
 import React from 'react';
-import PickFileIcon from '../../SvgIcons/ChatIcons/PickFileIcon';
-import color from '../../misc/color';
 import MessageInput from './MessageInput';
 import SendMessageBtn from './SendMessageBtn';
 import SendFileBtn from './SendFileBtn';
@@ -31,8 +29,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-around',
-    borderTopWidth: 1,
-    borderTopColor: color.MAIN_COLOR,
+    borderTopWidth: 0.6,
+    borderTopColor: '#878787',
   },
 });
 

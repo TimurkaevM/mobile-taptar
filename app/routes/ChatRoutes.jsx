@@ -39,15 +39,7 @@ function ChatRoutes() {
         name="ChatScreen"
         component={ChatScreen}
         options={{
-          title: 'Чат',
-          headerStyle: {
-            backgroundColor: '#fff',
-          },
-          headerTintColor: '#4686cc',
-          transitionSpec: {
-            open: config,
-            close: config,
-          },
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

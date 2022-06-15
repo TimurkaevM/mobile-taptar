@@ -74,6 +74,7 @@ const ImageList = ({
           marginBottom: 10,
           alignItems: 'center',
           borderColor: '#000',
+          marginHorizontal: 20,
         }}
       >
         <ImageListIcon />
@@ -100,7 +101,7 @@ const ImageList = ({
 
 const styles = StyleSheet.create({
   inputTitleContainer: {
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     marginTop: 10,
   },
   mediaBox: {
