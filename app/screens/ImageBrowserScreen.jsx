@@ -7,7 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { MediaType } from 'expo-media-library';
-import { postFail, postFilesGroup } from '../redux/ducks/files';
+import { postFail, postFilesGroup } from '../redux/ducks/uploadFiles';
 
 const ForceInset = {
   top: 'never',

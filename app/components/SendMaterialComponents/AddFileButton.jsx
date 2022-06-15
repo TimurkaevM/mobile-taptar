@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as DocumentPicker from 'expo-document-picker';
 import { useDispatch } from 'react-redux';
 import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
-import { postFailDocument } from '../../redux/ducks/files';
+import { postFailDocument } from '../../redux/ducks/uploadFiles';
 import ImageAddBtnIcon from '../../SvgIcons/SendMaterialIcons/ImageAddBtnIcon';
 import DocumentAddBtnIcon from '../../SvgIcons/SendMaterialIcons/DocumentAddBtnIcon';
 import VideoAddBtnIcon from '../../SvgIcons/SendMaterialIcons/VideoAddBtnIcon';

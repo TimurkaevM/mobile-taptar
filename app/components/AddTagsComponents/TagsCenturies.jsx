@@ -1,13 +1,13 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import AddInformation from './AddInformation';
-import { addedCenturies, removeCenturies } from '../../redux/ducks/files';
+import { addedCenturies, removeCenturies } from '../../redux/ducks/userTags';
 import { useDispatch, useSelector } from 'react-redux';
 
 const TagsCenturies = () => {
   const dispatch = useDispatch();
 
-  const centuriesClient = useSelector((state) => state.files.tags_century);
+  const centuriesClient = useSelector((state) => state.userTags.tags_century);
   const centuries = useSelector((state) => state.tags.centuries);
 
   const pressChangeCenturies = (tag, check) => {

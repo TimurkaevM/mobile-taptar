@@ -1,59 +1,71 @@
 import { api } from '../../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getGroupFiles } from '../helper/helper';
+// import { DRAFT_CHANGE_ERROR, DRAFT_GET_ERROR, DRAFT_GET_START, DRAFT_GET_SUCCESS, GROUP_CHANGE_SUCCESS, GROUP_UPLOAD_SUCCESS, MATERIA_POST_ERROR, MATERIA_POST_START, MATERIA_POST_SUCCESS, ONE_CHANGE_SUCCESS, ONE_UPLOAD_SUCCESS, REMOVE_FILES_START, REMOVE_FILES_SUCCESS, REMOVE_FILE_START, REMOVE_FILE_SUCCESS, SEND_ERROR_CHANGE, TEXT_CHANGE_SUCCESS, TEXT_UPLOAD_SUCCESS } from '../actions/material';
 
-const REMOVE_FILE_START = 'file/remove/start';
-const REMOVE_FILE_SUCCESS = 'file/remove/success';
+// const REMOVE_FILE_START = 'file/remove/start';
+// const REMOVE_FILE_SUCCESS = 'file/remove/success';
 
-const REMOVE_FILES_START = 'files/remove/start';
-const REMOVE_FILES_SUCCESS = 'files/remove/success';
+// const REMOVE_FILES_START = 'files/remove/start';
+// const REMOVE_FILES_SUCCESS = 'files/remove/success';
 
-const ONE_UPLOAD_START = 'one/upload/start';
-const ONE_UPLOAD_SUCCESS = 'one/upload/success';
+// const ONE_UPLOAD_START = 'one/upload/start';
+// const ONE_UPLOAD_SUCCESS = 'one/upload/success';
 
-const GROUP_UPLOAD_START = 'group/upload/start';
-const GROUP_UPLOAD_SUCCESS = 'group/upload/success';
+// const GROUP_UPLOAD_START = 'group/upload/start';
+// const GROUP_UPLOAD_SUCCESS = 'group/upload/success';
 
-const TEXT_UPLOAD_START = 'text/upload/start';
-const TEXT_UPLOAD_SUCCESS = 'text/upload/success';
+// const TEXT_UPLOAD_START = 'text/upload/start';
+// const TEXT_UPLOAD_SUCCESS = 'text/upload/success';
 
-const ONE_CHANGE_START = 'one/change/start';
-const ONE_CHANGE_SUCCESS = 'one/change/success';
+// const ONE_CHANGE_START = 'one/change/start';
+// const ONE_CHANGE_SUCCESS = 'one/change/success';
 
-const GROUP_CHANGE_START = 'group/change/start';
-const GROUP_CHANGE_SUCCESS = 'group/change/success';
+// const GROUP_CHANGE_START = 'group/change/start';
+// const GROUP_CHANGE_SUCCESS = 'group/change/success';
 
-const TEXT_CHANGE_START = 'text/change/start';
-const TEXT_CHANGE_SUCCESS = 'text/change/success';
+// const TEXT_CHANGE_START = 'text/change/start';
+// const TEXT_CHANGE_SUCCESS = 'text/change/success';
 
-const DRAFT_GET_START = 'draft/load/start';
-const DRAFT_GET_SUCCESS = 'draft/load/success';
-const DRAFT_GET_ERROR = 'draft/load/error';
-const DRAFT_CHANGE_ERROR = 'draft/change/error';
+// const DRAFT_GET_START = 'draft/load/start';
+// const DRAFT_GET_SUCCESS = 'draft/load/success';
+// const DRAFT_GET_ERROR = 'draft/load/error';
+// const DRAFT_CHANGE_ERROR = 'draft/change/error';
 
-const MATERIA_POST_START = 'material/post/start';
-const MATERIA_POST_SUCCESS = 'material/post/success';
-const MATERIA_POST_ERROR = 'material/post/error';
-const SEND_ERROR_CHANGE = 'send/error/change';
+// const MATERIA_POST_START = 'material/post/start';
+// const MATERIA_POST_SUCCESS = 'material/post/success';
+// const MATERIA_POST_ERROR = 'material/post/error';
+// const SEND_ERROR_CHANGE = 'send/error/change';
 
-const CLEAN_TAGS = 'clean/tags';
+export const REMOVE_FILE_START = 'file/remove/start';
+export const REMOVE_FILE_SUCCESS = 'file/remove/success';
+export const REMOVE_FILES_START = 'files/remove/start';
+export const REMOVE_FILES_SUCCESS = 'files/remove/success';
+export const ONE_UPLOAD_START = 'one/upload/start';
+export const ONE_UPLOAD_SUCCESS = 'one/upload/success';
+export const GROUP_UPLOAD_START = 'group/upload/start';
+export const GROUP_UPLOAD_SUCCESS = 'group/upload/success';
+export const TEXT_UPLOAD_START = 'text/upload/start';
+export const TEXT_UPLOAD_SUCCESS = 'text/upload/success';
+export const ONE_CHANGE_START = 'one/change/start';
+export const ONE_CHANGE_SUCCESS = 'one/change/success';
+export const GROUP_CHANGE_START = 'group/change/start';
+export const GROUP_CHANGE_SUCCESS = 'group/change/success';
+export const TEXT_CHANGE_START = 'text/change/start';
+export const TEXT_CHANGE_SUCCESS = 'text/change/success';
+export const DRAFT_GET_START = 'draft/load/start';
+export const DRAFT_GET_SUCCESS = 'draft/load/success';
+export const DRAFT_GET_ERROR = 'draft/load/error';
+export const DRAFT_CHANGE_ERROR = 'draft/change/error';
+export const MATERIA_POST_START = 'material/post/start';
+export const MATERIA_POST_SUCCESS = 'material/post/success';
+export const MATERIA_POST_ERROR = 'material/post/error';
+export const SEND_ERROR_CHANGE = 'send/error/change';
 
 const initialState = {
   loading: false,
-  progress: 0,
-  loadingFiles: false,
-  title: '',
-  year: '',
-  author: '',
-  location: '',
-  comment: '',
-  tags_century: [],
-  tags_information: [],
-
   sendError: false,
   draftError: false,
-
-  files: {},
-
   materials: {
     title: '',
 
@@ -131,66 +143,6 @@ export default function files(state = initialState, action) {
         },
       };
 
-    //Изменение тегов
-    case 'tag/centuries/change':
-      return {
-        ...state,
-        tags_century: [...state.tags_century, action.payload],
-      };
-
-    case 'tag/types/change':
-      return {
-        ...state,
-        tags_information: [...state.tags_information, action.payload],
-      };
-
-    case 'tag/centuries/remove':
-      return {
-        ...state,
-        tags_century: state.tags_century.filter(
-          (century) => century.id !== action.payload,
-        ),
-      };
-
-    case 'tag/types/remove':
-      return {
-        ...state,
-        tags_information: state.tags_information.filter(
-          (type) => type.id !== action.payload,
-        ),
-      };
-
-    // Изменение текста
-    case 'tag/title/change':
-      return {
-        ...state,
-        title: action.payload,
-      };
-
-    case 'tag/place/change':
-      return {
-        ...state,
-        location: action.payload,
-      };
-
-    case 'tag/year/change':
-      return {
-        ...state,
-        year: action.payload,
-      };
-
-    case 'tag/author/change':
-      return {
-        ...state,
-        author: action.payload,
-      };
-
-    case 'tag/comment/change':
-      return {
-        ...state,
-        comment: action.payload,
-      };
-
     //Добавление текста
     case TEXT_UPLOAD_SUCCESS:
       return {
@@ -240,25 +192,7 @@ export default function files(state = initialState, action) {
           },
         },
       };
-    //отправка файла на сервер
-    case 'file/post/start':
-      return {
-        ...state,
-        loading: true,
-      };
 
-    case 'file/post/success':
-      return {
-        ...state,
-        loading: false,
-        materials: {
-          ...state.materials,
-          [action.format]: {
-            ...state.materials[action.format],
-            one: [action.payload.message],
-          },
-        },
-      };
     //Удаление файла
     case 'file/delete/success':
       if (action.amount === 'one') {
@@ -380,32 +314,9 @@ export default function files(state = initialState, action) {
 
       return state;
 
-    //очистка files
-    case CLEAN_TAGS:
-      return {
-        ...state,
-        files: {},
-        title: '',
-        year: '',
-        author: '',
-        location: '',
-        comment: '',
-        tags_century: [],
-        tags_information: [],
-        sendError: false,
-      };
-
     case REMOVE_FILE_START:
       return {
         ...state,
-        files: {},
-        title: '',
-        year: '',
-        author: '',
-        location: '',
-        comment: '',
-        tags_century: [],
-        tags_information: [],
       };
 
     case REMOVE_FILE_SUCCESS:
@@ -425,14 +336,6 @@ export default function files(state = initialState, action) {
     case REMOVE_FILES_START:
       return {
         ...state,
-        files: {},
-        title: '',
-        year: '',
-        author: '',
-        location: '',
-        comment: '',
-        tags_century: [],
-        tags_information: [],
       };
 
     case REMOVE_FILES_SUCCESS:
@@ -542,20 +445,6 @@ export default function files(state = initialState, action) {
         },
       };
 
-    case 'files/post/start':
-      return {
-        ...state,
-        loadingFiles: true,
-      };
-
-    case 'files/post/success':
-      return {
-        ...state,
-        loadingFiles: false,
-        files: action.payload.message,
-        progress: 0,
-      };
-
     case DRAFT_GET_START:
       return {
         ...state,
@@ -563,39 +452,6 @@ export default function files(state = initialState, action) {
       };
 
     case DRAFT_GET_SUCCESS:
-      function getGroupFiles(arr) {
-        const result = [];
-        const object = {};
-
-        for (let i = 0; i < arr.length; i++) {
-          if (!result.includes(arr[i].group_uid)) {
-            result.push(arr[i].group_uid);
-          }
-        }
-
-        for (let i = 0; i < result.length; i++) {
-          object[result[i]] = {
-            group_uid: '',
-            type: '',
-            files: [],
-          };
-        }
-
-        for (let i = 0; i < arr.length; i++) {
-          object[arr[i].group_uid].group_uid = arr[i].group_uid;
-          object[arr[i].group_uid].tags_century = arr[i].tags_century;
-          object[arr[i].group_uid].type = arr[i].type;
-          object[arr[i].group_uid].title = arr[i].title;
-          object[arr[i].group_uid].author = arr[i].author;
-          object[arr[i].group_uid].location = arr[i].location;
-          object[arr[i].group_uid].tags_information = arr[i].tags_information;
-          object[arr[i].group_uid].comment = arr[i].comment;
-          object[arr[i].group_uid].year = arr[i].year;
-          object[arr[i].group_uid].files.push(arr[i]);
-        }
-        return Object.values(object);
-      }
-
       return {
         ...state,
         loading: false,
@@ -661,12 +517,6 @@ export default function files(state = initialState, action) {
         draftError: false,
       };
 
-    case 'change/progress':
-      return {
-        ...state,
-        progress: action.payload,
-      };
-
     case MATERIA_POST_START:
       return {
         ...state,
@@ -679,14 +529,6 @@ export default function files(state = initialState, action) {
         loading: false,
         progress: 0,
         loadingFiles: false,
-        title: '',
-        year: '',
-        author: '',
-        location: '',
-        comment: '',
-        tags_century: [],
-        tags_information: [],
-
         files: {},
 
         materials: {
@@ -736,74 +578,10 @@ export default function files(state = initialState, action) {
   }
 }
 
-// Тэги
-export const addedCenturies = (value) => {
-  return {
-    type: 'tag/centuries/change',
-    payload: value,
-  };
-};
-
-export const addedTypes = (value) => {
-  return {
-    type: 'tag/types/change',
-    payload: value,
-  };
-};
-
-export const removeCenturies = (id) => {
-  return {
-    type: 'tag/centuries/remove',
-    payload: id,
-  };
-};
-
-export const removeTypes = (id) => {
-  return {
-    type: 'tag/types/remove',
-    payload: id,
-  };
-};
-
 // Тексты
 export const changeTitle = (value) => {
   return {
     type: 'title/change',
-    payload: value,
-  };
-};
-
-export const changeTitleTag = (value) => {
-  return {
-    type: 'tag/title/change',
-    payload: value,
-  };
-};
-
-export const changePlaceTag = (value) => {
-  return {
-    type: 'tag/place/change',
-    payload: value,
-  };
-};
-
-export const changeYearTag = (value) => {
-  return {
-    type: 'tag/year/change',
-    payload: value,
-  };
-};
-
-export const changeAuthorTag = (value) => {
-  return {
-    type: 'tag/author/change',
-    payload: value,
-  };
-};
-
-export const changeCommentTag = (value) => {
-  return {
-    type: 'tag/comment/change',
     payload: value,
   };
 };
@@ -845,646 +623,481 @@ export const clearTextForm = () => {
   };
 };
 
-// Файлы
-export const UploadTextFail = (
-  name,
-  year,
-  author,
-  place,
-  comment,
-  centuries,
-  types,
-  file,
-) => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
+// // Файлы
+// export const UploadTextFail = (
+//   name,
+//   year,
+//   author,
+//   place,
+//   comment,
+//   centuries,
+//   types,
+//   file,
+// ) => {
+//   return async (dispatch) => {
+//     try {
+//       const value = await AsyncStorage.getItem('token');
 
-      dispatch({ type: TEXT_UPLOAD_START });
+//       dispatch({ type: TEXT_UPLOAD_START });
 
-      if (value !== null) {
-        const response = await api.post(
-          'user/draft/text',
-          {
-            text: file,
-            title: name,
-            year,
-            author,
-            location: place,
-            comment,
-            tags_century: centuries,
-            tags_information: types,
-          },
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
-        dispatch({
-          type: TEXT_UPLOAD_SUCCESS,
-          data: response.data,
-          payload: file,
-          name,
-          year,
-          author,
-          place,
-          comment,
-          centuries,
-          types,
-        });
-      }
-    } catch (e) {
-      console.error(e.response.data);
-    }
-  };
-};
+//       if (value !== null) {
+//         const response = await api.post(
+//           'user/draft/text',
+//           {
+//             text: file,
+//             title: name,
+//             year,
+//             author,
+//             location: place,
+//             comment,
+//             tags_century: centuries,
+//             tags_information: types,
+//           },
+//           {
+//             headers: { Authorization: `Bearer ${value}` },
+//           },
+//         );
+//         dispatch({
+//           type: TEXT_UPLOAD_SUCCESS,
+//           data: response.data,
+//           payload: file,
+//           name,
+//           year,
+//           author,
+//           place,
+//           comment,
+//           centuries,
+//           types,
+//         });
+//       }
+//     } catch (e) {
+//       console.error(e.response.data);
+//     }
+//   };
+// };
 
-export const UploadOneFail = (
-  file,
-  format,
-  name,
-  year,
-  author,
-  place,
-  comment,
-  centuries,
-  types,
-) => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
+// export const UploadOneFail = (
+//   file,
+//   format,
+//   name,
+//   year,
+//   author,
+//   place,
+//   comment,
+//   centuries,
+//   types,
+// ) => {
+//   return async (dispatch) => {
+//     try {
+//       const value = await AsyncStorage.getItem('token');
 
-      dispatch({ type: ONE_UPLOAD_START });
+//       dispatch({ type: ONE_UPLOAD_START });
 
-      if (value !== null) {
-        const response = await api.post(
-          `user/draft/edit/file/${file.id}`,
-          {
-            title: name,
-            year,
-            author,
-            location: place,
-            comment,
-            tags_century: centuries,
-            tags_information: types,
-          },
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
-        dispatch({
-          type: ONE_UPLOAD_SUCCESS,
-          data: response.data,
-          payload: file,
-          format,
-          name,
-          year,
-          author,
-          place,
-          comment,
-          centuries,
-          types,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-};
+//       if (value !== null) {
+//         const response = await api.post(
+//           `user/draft/edit/file/${file.id}`,
+//           {
+//             title: name,
+//             year,
+//             author,
+//             location: place,
+//             comment,
+//             tags_century: centuries,
+//             tags_information: types,
+//           },
+//           {
+//             headers: { Authorization: `Bearer ${value}` },
+//           },
+//         );
+//         dispatch({
+//           type: ONE_UPLOAD_SUCCESS,
+//           data: response.data,
+//           payload: file,
+//           format,
+//           name,
+//           year,
+//           author,
+//           place,
+//           comment,
+//           centuries,
+//           types,
+//         });
+//       }
+//     } catch (e) {
+//       console.error(e);
+//     }
+//   };
+// };
 
-export const UploadGroupFails = (
-  file,
-  format,
-  name,
-  year,
-  author,
-  place,
-  comment,
-  centuries,
-  types,
-) => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
+// export const UploadGroupFails = (
+//   file,
+//   format,
+//   name,
+//   year,
+//   author,
+//   place,
+//   comment,
+//   centuries,
+//   types,
+// ) => {
+//   return async (dispatch) => {
+//     try {
+//       const value = await AsyncStorage.getItem('token');
 
-      dispatch({ type: GROUP_UPLOAD_START });
+//       dispatch({ type: GROUP_UPLOAD_START });
 
-      if (value !== null) {
-        const response = await api.post(
-          `user/draft/edit/group/${file.group}`,
-          {
-            title: name,
-            year,
-            author,
-            location: place,
-            comment,
-            tags_century: centuries,
-            tags_information: types,
-          },
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
-        dispatch({
-          type: GROUP_UPLOAD_SUCCESS,
-          data: response.data,
-          payload: file,
-          format,
-          name,
-          year,
-          author,
-          place,
-          comment,
-          centuries,
-          types,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-};
+//       if (value !== null) {
+//         const response = await api.post(
+//           `user/draft/edit/group/${file.group}`,
+//           {
+//             title: name,
+//             year,
+//             author,
+//             location: place,
+//             comment,
+//             tags_century: centuries,
+//             tags_information: types,
+//           },
+//           {
+//             headers: { Authorization: `Bearer ${value}` },
+//           },
+//         );
+//         dispatch({
+//           type: GROUP_UPLOAD_SUCCESS,
+//           data: response.data,
+//           payload: file,
+//           format,
+//           name,
+//           year,
+//           author,
+//           place,
+//           comment,
+//           centuries,
+//           types,
+//         });
+//       }
+//     } catch (e) {
+//       console.error(e);
+//     }
+//   };
+// };
 
-export const cleanStateTags = () => {
-  return {
-    type: CLEAN_TAGS,
-  };
-};
+// export const deleteOneFail = (id, format, amount, groupId) => {
+//   return (dispatch) => {
+//     dispatch({
+//       type: 'file/delete/start',
+//       payload: id,
+//       format,
+//       amount,
+//       groupId,
+//     });
 
-export const deleteOneFail = (id, format, amount, groupId) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'file/delete/start',
-      payload: id,
-      format,
-      amount,
-      groupId,
-    });
+//     api
+//       .delete(`/user/draft/file/${id}`, {
+//         headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
+//       })
+//       .then((response) => response.data)
+//       .then((data) => {
+//         dispatch({
+//           type: 'file/delete/success',
+//           payload: data,
+//           id,
+//           format,
+//           amount,
+//           groupId,
+//         });
+//       })
+//       .catch((e) => {
+//         console.error(e);
+//       });
+//   };
+// };
 
-    api
-      .delete(`/user/draft/file/${id}`, {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        dispatch({
-          type: 'file/delete/success',
-          payload: data,
-          id,
-          format,
-          amount,
-          groupId,
-        });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
-};
+// export const removeFiles = (files) => {
+//   return async (dispatch) => {
+//     try {
+//       const value = await AsyncStorage.getItem('token');
 
-export const removeFiles = (files) => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
+//       dispatch({
+//         type: REMOVE_FILES_START,
+//       });
 
-      dispatch({
-        type: REMOVE_FILES_START,
-      });
+//       if (value !== null) {
+//         const response = await api.delete(
+//           `/user/draft/group/${files.group_uid}`,
+//           {
+//             headers: { Authorization: `Bearer ${value}` },
+//           },
+//         );
+//         dispatch({
+//           type: REMOVE_FILES_SUCCESS,
+//           payload: files,
+//           data: response.data,
+//         });
+//       }
+//     } catch (e) {
+//       console.error(e);
+//     }
+//   };
+// };
 
-      if (value !== null) {
-        const response = await api.delete(
-          `/user/draft/group/${files.group_uid}`,
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
-        dispatch({
-          type: REMOVE_FILES_SUCCESS,
-          payload: files,
-          data: response.data,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-};
+// export const removeFile = (file) => {
+//   return async (dispatch) => {
+//     try {
+//       const value = await AsyncStorage.getItem('token');
 
-export const removeFile = (file) => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
+//       dispatch({
+//         type: REMOVE_FILE_START,
+//       });
 
-      dispatch({
-        type: REMOVE_FILE_START,
-      });
+//       if (value !== null) {
+//         const response = await api.delete(`/user/draft/file/${file.id}`, {
+//           headers: { Authorization: `Bearer ${value}` },
+//         });
+//         dispatch({
+//           type: REMOVE_FILE_SUCCESS,
+//           payload: file,
+//           data: response.data,
+//         });
+//       }
+//     } catch (e) {
+//       console.error(e);
+//     }
+//   };
+// };
 
-      if (value !== null) {
-        const response = await api.delete(`/user/draft/file/${file.id}`, {
-          headers: { Authorization: `Bearer ${value}` },
-        });
-        dispatch({
-          type: REMOVE_FILE_SUCCESS,
-          payload: file,
-          data: response.data,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-};
+// export const getDraftFiles = () => {
+//   return async (dispatch) => {
+//     try {
+//       const value = await AsyncStorage.getItem('token');
 
-export const postFail = (file, format) => {
-  const form = new FormData();
-  form.append('file', {
-    uri: file[0].uri,
-    name: file[0].filename,
-    type: 'image/jpeg',
-  });
-  form.append('type', format);
+//       dispatch({
+//         type: DRAFT_GET_START,
+//       });
 
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
+//       if (value !== null) {
+//         const response = await api.get('user/drafts', {
+//           headers: { Authorization: `Bearer ${value}` },
+//         });
+//         dispatch({
+//           type: DRAFT_GET_SUCCESS,
+//           payload: response.data,
+//         });
+//       }
+//     } catch (e) {
+//       console.error(e);
+//       dispatch({
+//         type: DRAFT_GET_ERROR,
+//       });
+//     }
+//   };
+// };
 
-      dispatch({ type: 'files/post/start', file, format, value, form });
+// export const setDraftError = () => {
+//   return {
+//     type: DRAFT_CHANGE_ERROR,
+//   };
+// };
 
-      if (value !== null) {
-        const response = await api.post('/user/draft/file', form, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${value}`,
-          },
-          onUploadProgress: (progressEvent) => {
-            const totalLength = progressEvent.lengthComputable
-              ? progressEvent.total
-              : progressEvent.target.getResponseHeader('content-length') ||
-                progressEvent.target.getResponseHeader(
-                  'x-decompressed-content-length',
-                );
-            if (totalLength) {
-              let progress = Math.round(
-                (progressEvent.loaded * 100) / totalLength,
-              );
-              dispatch({
-                type: 'change/progress',
-                payload: progress,
-              });
-            }
-          },
-        });
-        dispatch({
-          type: 'files/post/success',
-          payload: response.data,
-          format,
-        });
-      }
-    } catch (e) {
-      console.log(e.response);
-    }
-  };
-};
+// //Изменение принадлежностей файлов
 
-export const postFailDocument = (file, format) => {
-  const form = new FormData();
-  form.append('file', {
-    uri: file.uri,
-    name: file.name,
-    type: file.type,
-  });
-  form.append('type', format);
+// export const changeTextFile = (
+//   file,
+//   name,
+//   year,
+//   author,
+//   place,
+//   comment,
+//   centuries,
+//   types,
+// ) => {
+//   return async (dispatch) => {
+//     try {
+//       const value = await AsyncStorage.getItem('token');
 
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
+//       dispatch({ type: TEXT_CHANGE_START });
 
-      dispatch({ type: 'files/post/start', file, format, value, form });
+//       if (value !== null) {
+//         const response = await api.post(
+//           `/user/draft/edit/text/${file.id}`,
+//           {
+//             text: file.text,
+//             title: name,
+//             year,
+//             author,
+//             location: place,
+//             comment,
+//             tags_century: centuries,
+//             tags_information: types,
+//           },
+//           {
+//             headers: { Authorization: `Bearer ${value}` },
+//           },
+//         );
+//         dispatch({
+//           type: TEXT_CHANGE_SUCCESS,
+//           data: response.data,
+//           name,
+//           year,
+//           author,
+//           place,
+//           comment,
+//           centuries,
+//           types,
+//         });
+//       }
+//     } catch (e) {
+//       console.error(e);
+//     }
+//   };
+// };
 
-      if (value !== null) {
-        const response = await api.post('/user/draft/file', form, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${value}`,
-          },
-          onUploadProgress: (progressEvent) => {
-            const totalLength = progressEvent.lengthComputable
-              ? progressEvent.total
-              : progressEvent.target.getResponseHeader('content-length') ||
-                progressEvent.target.getResponseHeader(
-                  'x-decompressed-content-length',
-                );
-            if (totalLength) {
-              let progress = Math.round(
-                (progressEvent.loaded * 100) / totalLength,
-              );
-              dispatch({
-                type: 'change/progress',
-                payload: progress,
-              });
-            }
-          },
-        });
-        dispatch({
-          type: 'files/post/success',
-          payload: response.data,
-          format,
-        });
-      }
-    } catch (e) {
-      console.log(e.response);
-    }
-  };
-};
+// export const changeOneFile = (
+//   id,
+//   format,
+//   name,
+//   year,
+//   author,
+//   place,
+//   comment,
+//   centuries,
+//   types,
+// ) => {
+//   return async (dispatch) => {
+//     try {
+//       const value = await AsyncStorage.getItem('token');
 
-export const postFilesGroup = (files, format, causes) => {
-  const form = new FormData();
-  form.append('type', format);
-  for (let i = 0; i < files.length; i++) {
-    form.append(`files[${i}]`, {
-      uri: files[i].uri,
-      name: files[i].filename,
-      type: 'image/jpeg',
-    });
-  }
+//       dispatch({ type: ONE_CHANGE_START });
 
-  for (let i = 0; i < causes.length; i++) {
-    form.append(`causes[${i}]`, causes[i]);
-  }
+//       if (value !== null) {
+//         const response = await api.post(
+//           `/user/draft/edit/file/${id}`,
+//           {
+//             title: name,
+//             year,
+//             author,
+//             location: place,
+//             comment,
+//             tags_century: centuries,
+//             tags_information: types,
+//           },
+//           {
+//             headers: { Authorization: `Bearer ${value}` },
+//           },
+//         );
+//         dispatch({
+//           type: ONE_CHANGE_SUCCESS,
+//           data: response.data,
+//           name,
+//           year,
+//           author,
+//           place,
+//           comment,
+//           centuries,
+//           types,
+//           format,
+//           id,
+//         });
+//       }
+//     } catch (e) {
+//       console.error(e);
+//     }
+//   };
+// };
 
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
+// export const changeGroupFiles = (
+//   format,
+//   group,
+//   name,
+//   year,
+//   author,
+//   place,
+//   comment,
+//   centuries,
+//   types,
+// ) => {
+//   return async (dispatch) => {
+//     try {
+//       const value = await AsyncStorage.getItem('token');
 
-      dispatch({ type: 'files/post/start', files, format, causes });
+//       dispatch({ type: GROUP_CHANGE_START });
 
-      if (value !== null) {
-        const response = await api.post('/user/draft/group', form, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${value}`,
-          },
-          onUploadProgress: (progressEvent) => {
-            const totalLength = progressEvent.lengthComputable
-              ? progressEvent.total
-              : progressEvent.target.getResponseHeader('content-length') ||
-                progressEvent.target.getResponseHeader(
-                  'x-decompressed-content-length',
-                );
-            if (totalLength) {
-              let progress = Math.round(
-                (progressEvent.loaded * 100) / totalLength,
-              );
-              dispatch({
-                type: 'change/progress',
-                payload: progress,
-              });
-            }
-          },
-        });
-        dispatch({
-          type: 'files/post/success',
-          payload: response.data,
-          format,
-        });
-      }
-    } catch (e) {
-      console.log(e.response);
-    }
-  };
-};
+//       if (value !== null) {
+//         const response = await api.post(
+//           `/user/draft/edit/group/${group}`,
+//           {
+//             title: name,
+//             year,
+//             author,
+//             location: place,
+//             comment,
+//             tags_century: centuries,
+//             tags_information: types,
+//           },
+//           {
+//             headers: { Authorization: `Bearer ${value}` },
+//           },
+//         );
+//         dispatch({
+//           type: GROUP_CHANGE_SUCCESS,
+//           data: response.data,
+//           name,
+//           year,
+//           author,
+//           place,
+//           comment,
+//           centuries,
+//           types,
+//           group,
+//           format,
+//         });
+//       }
+//     } catch (e) {
+//       console.error(e);
+//     }
+//   };
+// };
 
-export const getDraftFiles = () => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
+// // api/user/add/material/send
 
-      dispatch({
-        type: DRAFT_GET_START,
-      });
+// export const postMaterial = (title, text, photo, document, video, audio) => {
+//   return async (dispatch) => {
+//     try {
+//       const value = await AsyncStorage.getItem('token');
 
-      if (value !== null) {
-        const response = await api.get('user/drafts', {
-          headers: { Authorization: `Bearer ${value}` },
-        });
-        dispatch({
-          type: DRAFT_GET_SUCCESS,
-          payload: response.data,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-      dispatch({
-        type: DRAFT_GET_ERROR,
-      });
-    }
-  };
-};
+//       dispatch({ type: MATERIA_POST_START });
 
-export const setDraftError = () => {
-  return {
-    type: DRAFT_CHANGE_ERROR,
-  };
-};
+//       if (value !== null) {
+//         const response = await api.post(
+//           '/user/contribution/material/send',
+//           {
+//             title,
+//             text,
+//             photo,
+//             document,
+//             audio,
+//             video,
+//           },
+//           {
+//             headers: { Authorization: `Bearer ${value}` },
+//           },
+//         );
+//         dispatch({
+//           type: MATERIA_POST_SUCCESS,
+//           data: response.data,
+//         });
+//       }
+//     } catch (e) {
+//       console.error(e);
+//       dispatch({
+//         type: MATERIA_POST_ERROR,
+//       });
+//     }
+//   };
+// };
 
-//Изменение принадлежностей файлов
-
-export const changeTextFile = (
-  file,
-  name,
-  year,
-  author,
-  place,
-  comment,
-  centuries,
-  types,
-) => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-
-      dispatch({ type: TEXT_CHANGE_START });
-
-      if (value !== null) {
-        const response = await api.post(
-          `/user/draft/edit/text/${file.id}`,
-          {
-            text: file.text,
-            title: name,
-            year,
-            author,
-            location: place,
-            comment,
-            tags_century: centuries,
-            tags_information: types,
-          },
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
-        dispatch({
-          type: TEXT_CHANGE_SUCCESS,
-          data: response.data,
-          name,
-          year,
-          author,
-          place,
-          comment,
-          centuries,
-          types,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-};
-
-export const changeOneFile = (
-  id,
-  format,
-  name,
-  year,
-  author,
-  place,
-  comment,
-  centuries,
-  types,
-) => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-
-      dispatch({ type: ONE_CHANGE_START });
-
-      if (value !== null) {
-        const response = await api.post(
-          `/user/draft/edit/file/${id}`,
-          {
-            title: name,
-            year,
-            author,
-            location: place,
-            comment,
-            tags_century: centuries,
-            tags_information: types,
-          },
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
-        dispatch({
-          type: ONE_CHANGE_SUCCESS,
-          data: response.data,
-          name,
-          year,
-          author,
-          place,
-          comment,
-          centuries,
-          types,
-          format,
-          id,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-};
-
-export const changeGroupFiles = (
-  format,
-  group,
-  name,
-  year,
-  author,
-  place,
-  comment,
-  centuries,
-  types,
-) => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-
-      dispatch({ type: GROUP_CHANGE_START });
-
-      if (value !== null) {
-        const response = await api.post(
-          `/user/draft/edit/group/${group}`,
-          {
-            title: name,
-            year,
-            author,
-            location: place,
-            comment,
-            tags_century: centuries,
-            tags_information: types,
-          },
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
-        dispatch({
-          type: GROUP_CHANGE_SUCCESS,
-          data: response.data,
-          name,
-          year,
-          author,
-          place,
-          comment,
-          centuries,
-          types,
-          group,
-          format,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-};
-
-// api/user/add/material/send
-
-export const postMaterial = (title, text, photo, document, video, audio) => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-
-      dispatch({ type: MATERIA_POST_START });
-
-      if (value !== null) {
-        const response = await api.post(
-          '/user/contribution/material/send',
-          {
-            title,
-            text,
-            photo,
-            document,
-            audio,
-            video,
-          },
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
-        dispatch({
-          type: MATERIA_POST_SUCCESS,
-          data: response.data,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-      dispatch({
-        type: MATERIA_POST_ERROR,
-      });
-    }
-  };
-};
-
-export const setSendError = () => {
-  return {
-    type: SEND_ERROR_CHANGE,
-  };
-};
+// export const setSendError = () => {
+//   return {
+//     type: SEND_ERROR_CHANGE,
+//   };
+// };

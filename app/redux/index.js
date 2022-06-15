@@ -17,6 +17,8 @@ import historianSend from './ducks/historianSend';
 import incomingMaterials from './ducks/incomingMaterials';
 import cabinetMaterial from './ducks/cabinetMaterial';
 import showFileCabinet from './ducks/showFileCabinet';
+import userTags from './ducks/userTags';
+import uploadFiles from './ducks/uploadFiles';
 
 const logger = createLogger({
   diff: true,
@@ -26,12 +28,14 @@ const logger = createLogger({
 const rootReducer = combineReducers({
   files,
   user,
+  uploadFiles,
   contributionAudio,
   contributionDocument,
   contributionMaterial,
   contributionPhoto,
   contributionVideo,
   tags,
+  userTags,
   contacts,
   application,
   messages,

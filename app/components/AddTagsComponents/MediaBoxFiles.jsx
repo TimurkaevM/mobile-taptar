@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import DeleteBtn from './DeleteBtn';
 
 const MediaBoxFiles = () => {
-  const files = useSelector((state) => state.files.files);
+  const files = useSelector((state) => state.uploadFiles.files);
 
   const renderItems = ({ item }) => {
     let mediaItem = null;

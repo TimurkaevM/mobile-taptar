@@ -6,7 +6,7 @@ import AudioPlayer from './AudioPlayer';
 import { useSelector } from 'react-redux';
 
 const MediaBoxFile = () => {
-  const files = useSelector((state) => state.files.files);
+  const files = useSelector((state) => state.uploadFiles.files);
 
   let mediaItem = null;
 

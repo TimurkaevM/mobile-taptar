@@ -6,8 +6,8 @@ import {
   changeGroupFiles,
   changeOneFile,
   changeTextFile,
-  cleanStateTags,
 } from '../../redux/ducks/files';
+import { cleanStateTags } from '../../redux/ducks/userTags';
 
 const AddTagsHeader = ({
   navigate,

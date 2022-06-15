@@ -17,8 +17,8 @@ const AddTagsScreen = (props) => {
 
   const text = params?.type;
 
-  const progress = useSelector((state) => state.files.progress);
-  const loadingFiles = useSelector((state) => state.files.loadingFiles);
+  const progress = useSelector((state) => state.uploadFiles.progress);
+  const loading = useSelector((state) => state.uploadFiles.loading);
 
   const [nameError, setNameError] = useState(null);
   const [yearError, setYearError] = useState(null);
@@ -26,7 +26,7 @@ const AddTagsScreen = (props) => {
   const [commentError, setCommentError] = useState(null);
   const [textError, setTextError] = useState(null);
 
-  if (loadingFiles)
+  if (loading)
     return (
       <Text
         style={{

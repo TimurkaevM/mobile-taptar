@@ -6,7 +6,7 @@ import {
   changePlaceTag,
   changeTitleTag,
   changeYearTag,
-} from '../../redux/ducks/files';
+} from '../../redux/ducks/userTags';
 
 const InputInfoBox = ({
   setNameError,
@@ -18,10 +18,10 @@ const InputInfoBox = ({
 }) => {
   const dispatch = useDispatch();
 
-  const title = useSelector((state) => state.files.title);
-  const year = useSelector((state) => state.files.year);
-  const location = useSelector((state) => state.files.location);
-  const author = useSelector((state) => state.files.author);
+  const title = useSelector((state) => state.userTags.title);
+  const year = useSelector((state) => state.userTags.year);
+  const location = useSelector((state) => state.userTags.location);
+  const author = useSelector((state) => state.userTags.author);
 
   const handleChangeTitle = (event) => {
     if (nameError) {

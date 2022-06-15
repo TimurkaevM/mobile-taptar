@@ -3,13 +3,14 @@ import React from 'react';
 import color from '../../misc/color';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  cleanStateTags,
   removeFile,
   removeFiles,
   UploadGroupFails,
   UploadOneFail,
   UploadTextFail,
 } from '../../redux/ducks/files';
+import { cleanStateTags } from '../../redux/ducks/userTags';
+import { cleanUploadFiles } from '../../redux/ducks/uploadFiles';
 
 const AddTagsHeader = ({
   navigate,
@@ -30,14 +31,14 @@ const AddTagsHeader = ({
   const currentTime = new Date();
   const currentYear = currentTime.getFullYear();
 
-  const files = useSelector((state) => state.files.files);
-  const title = useSelector((state) => state.files.title);
-  const year = useSelector((state) => state.files.year);
-  const location = useSelector((state) => state.files.location);
-  const comment = useSelector((state) => state.files.comment);
-  const centuriesClient = useSelector((state) => state.files.tags_century);
-  const typesClient = useSelector((state) => state.files.tags_information);
-  const author = useSelector((state) => state.files.author);
+  const files = useSelector((state) => state.uploadFiles.files);
+  const title = useSelector((state) => state.userTags.title);
+  const year = useSelector((state) => state.userTags.year);
+  const location = useSelector((state) => state.userTags.location);
+  const comment = useSelector((state) => state.userTags.comment);
+  const centuriesClient = useSelector((state) => state.userTags.tags_century);
+  const typesClient = useSelector((state) => state.userTags.tags_information);
+  const author = useSelector((state) => state.userTags.author);
   const text = useSelector((state) => state.files.materials.text);
 
   const onSuccess = () => {
@@ -68,6 +69,7 @@ const AddTagsHeader = ({
     if (materialText) {
       navigate('Main');
       dispatch(cleanStateTags());
+      dispatch(cleanUploadFiles());
       dispatch(
         UploadTextFail(
           title,
@@ -85,6 +87,7 @@ const AddTagsHeader = ({
     if (!files.group) {
       navigate('Main');
       dispatch(cleanStateTags());
+      dispatch(cleanUploadFiles());
       dispatch(
         UploadOneFail(
           files,
@@ -102,6 +105,7 @@ const AddTagsHeader = ({
     }
     navigate('Main');
     dispatch(cleanStateTags());
+    dispatch(cleanUploadFiles());
     dispatch(
       UploadGroupFails(
         files,
@@ -120,11 +124,13 @@ const AddTagsHeader = ({
   const onPressClose = () => {
     if (materialText) {
       dispatch(cleanStateTags());
+      dispatch(cleanUploadFiles());
       navigate('Main');
       return;
     }
     if (files.group) {
       dispatch(cleanStateTags());
+      dispatch(cleanUploadFiles());
       dispatch(
         removeFiles({
           files: files.files,
@@ -136,6 +142,7 @@ const AddTagsHeader = ({
       return;
     }
     dispatch(cleanStateTags());
+    dispatch(cleanUploadFiles());
     dispatch(removeFile(files));
     navigate('Main');
   };

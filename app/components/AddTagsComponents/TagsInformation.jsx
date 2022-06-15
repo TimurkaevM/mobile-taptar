@@ -1,14 +1,14 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import AddInformation from './AddInformation';
-import { addedTypes, removeTypes } from '../../redux/ducks/files';
+import { addedTypes, removeTypes } from '../../redux/ducks/userTags';
 import { useDispatch, useSelector } from 'react-redux';
 
 const TagsInformation = () => {
   const dispatch = useDispatch();
 
   const types = useSelector((state) => state.tags.types);
-  const typesClient = useSelector((state) => state.files.tags_information);
+  const typesClient = useSelector((state) => state.userTags.tags_information);
 
   const pressChangeInformation = (tag, check) => {
     if (check) return dispatch(removeTypes(tag.id));

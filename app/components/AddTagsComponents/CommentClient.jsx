@@ -1,12 +1,12 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeCommentTag } from '../../redux/ducks/files';
+import { changeCommentTag } from '../../redux/ducks/userTags';
 
 const CommentClient = ({ setCommentError, commentError }) => {
   const dispatch = useDispatch();
 
-  const comment = useSelector((state) => state.files.comment);
+  const comment = useSelector((state) => state.userTags.comment);
 
   const handleChangeComment = (event) => {
     if (commentError) {
