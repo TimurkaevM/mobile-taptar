@@ -27,6 +27,9 @@ const OUTGOING_SAVED_SUCCESS = 'messages/saved/success';
 const FILE_POST_START = 'chat/files/post/start';
 const FILE_POST_SUCCESS = 'chat/files/post/success';
 const FILE_POST_ERROR = 'chat/files/post/error';
+const MATERIAL_ADDING_START = 'material/adding/start';
+const MATERIAL_ADDING_SUCCESS = 'material/adding/success';
+const MATERIAL_ADDING_ERROR = 'material/adding/error';
 
 export default function messages(state = initialState, action) {
   switch (action.type) {
@@ -89,38 +92,11 @@ export default function messages(state = initialState, action) {
           (message) => message.id !== action.payload,
         ),
       };
-    // case 'messages/search/filtered':
-    //   return {
-    //     ...state,
-    //     filter: action.payload,
-    //   };
-    // case 'messages/search/reset':
-    //   return {
-    //     ...state,
-    //     filter: '',
-    //   };
 
     default:
       return state;
   }
 }
-
-// тут экшн креэйторы
-
-export const setFilterMessage = (value) => {
-  return {
-    type: 'messages/search/filtered',
-    payload: value,
-  };
-};
-
-export const resetFilterMessage = () => {
-  return {
-    type: 'messages/search/reset',
-  };
-};
-
-// тут санки
 
 // Санк для подгрузки сообщений
 export const loadMessages = (id) => {
@@ -186,29 +162,35 @@ export const addingMassage = (myId, contactId, type, content) => {
 };
 
 export const addingMaterialFile = (roomId, fileId) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'material/adding/start',
-      payload: { roomId, fileId },
-    });
-    api
-      .post(`/chat/${roomId}/material/${fileId}`, {})
-      .then((response) => response.data)
-      .then((data) => {
-        // scrollMessages();
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: MATERIAL_ADDING_START });
+
+      if (value !== null) {
+        const response = await api.post(
+          `/chat/${roomId}/material/${fileId}`,
+          {},
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
         dispatch({
-          type: 'material/adding/success',
-          payload: data,
+          type: MATERIAL_ADDING_SUCCESS,
+          payload: response.data,
         });
-      })
-      .catch((error) => {
-        console.error(error);
+      }
+    } catch (e) {
+      console.error(e);
+      dispatch({
+        type: MATERIAL_ADDING_ERROR,
       });
+    }
   };
 };
 
 export const savedMassage = (data) => {
-  // scrollMessages();
   return {
     type: OUTGOING_SAVED_SUCCESS,
     payload: data,
