@@ -20,17 +20,25 @@ import MaterialError from '../components/SendMaterialComponents/MaterialError';
 function SendMaterialScreen(props) {
   const { navigate, push } = props.navigation;
 
-  const loading = useSelector((state) => state.files.loading);
-  const draftError = useSelector((state) => state.files.draftError);
-  const photo = useSelector((state) => state.files.materials.photo.one);
-  const video = useSelector((state) => state.files.materials.video.one);
-  const audio = useSelector((state) => state.files.materials.audio.one);
-  const document = useSelector((state) => state.files.materials.document.one);
-  const videos = useSelector((state) => state.files.materials.video.group);
-  const photos = useSelector((state) => state.files.materials.photo.group);
-  const audios = useSelector((state) => state.files.materials.audio.group);
+  const loading = useSelector((state) => state.sendMaterial.loading);
+  const draftError = useSelector((state) => state.sendMaterial.draftError);
+  const photo = useSelector((state) => state.sendMaterial.materials.photo.one);
+  const video = useSelector((state) => state.sendMaterial.materials.video.one);
+  const audio = useSelector((state) => state.sendMaterial.materials.audio.one);
+  const document = useSelector(
+    (state) => state.sendMaterial.materials.document.one,
+  );
+  const videos = useSelector(
+    (state) => state.sendMaterial.materials.video.group,
+  );
+  const photos = useSelector(
+    (state) => state.sendMaterial.materials.photo.group,
+  );
+  const audios = useSelector(
+    (state) => state.sendMaterial.materials.audio.group,
+  );
   const documents = useSelector(
-    (state) => state.files.materials.document.group,
+    (state) => state.sendMaterial.materials.document.group,
   );
 
   if (loading) {

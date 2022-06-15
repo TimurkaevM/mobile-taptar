@@ -30,7 +30,7 @@ import {
   TEXT_DELETE_SUCCESS,
   TEXT_UPLOAD_START,
   TEXT_UPLOAD_SUCCESS,
-} from '../ducks/files';
+} from '../ducks/sendMaterial';
 
 // Файлы
 export const uploadTextFail = (

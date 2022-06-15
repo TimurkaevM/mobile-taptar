@@ -880,7 +880,7 @@ export default function historianSend(state = initialState, action) {
         ...state,
         files: {
           ...state.files,
-          files: state.files.files.map((file) => {
+          files: state.sendMaterial.files.map((file) => {
             if (file.id === action.payload.id) {
               return {
                 ...action.payload,

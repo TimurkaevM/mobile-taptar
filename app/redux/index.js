@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-import files from './ducks/files';
+import sendMaterial from './ducks/sendMaterial';
 import tags from './ducks/tags';
 import user from './ducks/user';
 import contacts from './ducks/contacts';
@@ -26,7 +26,7 @@ const logger = createLogger({
 });
 
 const rootReducer = combineReducers({
-  files,
+  sendMaterial,
   user,
   uploadFiles,
   contributionAudio,

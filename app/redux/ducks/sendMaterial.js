@@ -61,7 +61,7 @@ const initialState = {
   },
 };
 
-export default function files(state = initialState, action) {
+export default function sendMaterial(state = initialState, action) {
   switch (action.type) {
     //Изменение заголовка
     case CHANGE_TITLE:

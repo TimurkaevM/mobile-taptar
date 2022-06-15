@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 function SendMaterialRoutes() {
   const dispatch = useDispatch();
 
-  const draftError = useSelector((state) => state.files.draftError);
+  const draftError = useSelector((state) => state.sendMaterial.draftError);
 
   useEffect(() => {
     dispatch(getDraftFiles());

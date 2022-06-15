@@ -8,7 +8,7 @@ import AudioTopItemIcon from '../../SvgIcons/SendMaterialIcons/AudioTopItemIcon'
 import AudioListIcon from '../../SvgIcons/SendMaterialIcons/AudioListIcon';
 
 const AudioList = ({ navigate }) => {
-  const audio = useSelector((state) => state.files.materials.audio.one);
+  const audio = useSelector((state) => state.sendMaterial.materials.audio.one);
 
   const renderAudio = ({ item }) => {
     const title = item.title === null ? '' : item.title;

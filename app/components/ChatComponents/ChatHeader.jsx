@@ -25,7 +25,7 @@ const ChatHeader = ({ goBack }) => {
           <AntDesign name="left" size={24} color="black" />
         </TouchableOpacity>
         <View style={styles.avatarContainer}>
-          {companion.avatar ? (
+          {companion?.avatar ? (
             <Image
               style={styles.avatar}
               source={{
@@ -36,7 +36,7 @@ const ChatHeader = ({ goBack }) => {
             <AvatarIcon color="#fff" />
           )}
         </View>
-        <Text style={styles.title}>{companion.name}</Text>
+        <Text style={styles.title}>{companion?.name}</Text>
       </View>
     </View>
   );

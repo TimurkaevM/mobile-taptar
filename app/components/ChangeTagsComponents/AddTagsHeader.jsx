@@ -35,7 +35,7 @@ const AddTagsHeader = ({
   const currentTime = new Date();
   const currentYear = currentTime.getFullYear();
 
-  const text = useSelector((state) => state.files.materials.text);
+  const text = useSelector((state) => state.sendMaterial.materials.text);
 
   const onSuccess = () => {
     if (!text.text && item.type === 'text') {
@@ -126,7 +126,7 @@ const AddTagsHeader = ({
         </TouchableOpacity>
         <Text>Настройка</Text>
         <TouchableOpacity onPress={onSuccess} style={styles.btn}>
-          <Text style={styles.btnText}>отправить</Text>
+          <Text style={styles.btnText}>изменить</Text>
         </TouchableOpacity>
       </View>
       {nameError && (

@@ -39,7 +39,7 @@ const AddTagsHeader = ({
   const centuriesClient = useSelector((state) => state.userTags.tags_century);
   const typesClient = useSelector((state) => state.userTags.tags_information);
   const author = useSelector((state) => state.userTags.author);
-  const text = useSelector((state) => state.files.materials.text);
+  const text = useSelector((state) => state.sendMaterial.materials.text);
 
   const onSuccess = () => {
     if (!text.text && materialText) {

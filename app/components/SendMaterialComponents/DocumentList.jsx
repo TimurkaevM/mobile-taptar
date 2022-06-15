@@ -7,7 +7,9 @@ import DocumentItemIcon from '../../SvgIcons/SendMaterialIcons/DocumentItemIcon'
 import DocumentListIcon from '../../SvgIcons/SendMaterialIcons/DocumentListIcon';
 
 const DocumentList = ({ navigate }) => {
-  const document = useSelector((state) => state.files.materials.document.one);
+  const document = useSelector(
+    (state) => state.sendMaterial.materials.document.one,
+  );
 
   const renderDocument = ({ item }) => {
     const title = item.title === null ? '' : item.title;

@@ -6,7 +6,9 @@ import { useSelector } from 'react-redux';
 import DeleteBtn from './DeleteBtn';
 
 const ImagesList = ({ navigate }) => {
-  const photos = useSelector((state) => state.files.materials.photo.group);
+  const photos = useSelector(
+    (state) => state.sendMaterial.materials.photo.group,
+  );
 
   const renderImages = ({ item }) => {
     const title = item.title === null ? '' : item.title;

@@ -7,8 +7,8 @@ import { changeTitle, setSendError } from '../../redux/actions/material';
 const MaterialTitle = () => {
   const dispatch = useDispatch();
 
-  const title = useSelector((state) => state.files.materials.title);
-  const sendError = useSelector((state) => state.files.sendError);
+  const title = useSelector((state) => state.sendMaterial.materials.title);
+  const sendError = useSelector((state) => state.sendMaterial.sendError);
 
   const handleChangeTitle = (event) => {
     if (sendError) {

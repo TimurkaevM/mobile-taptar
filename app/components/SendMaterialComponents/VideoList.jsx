@@ -7,7 +7,7 @@ import DeleteBtn from './DeleteBtn';
 import { Video } from 'expo-av';
 
 const VideoList = ({ navigate }) => {
-  const video = useSelector((state) => state.files.materials.video.one);
+  const video = useSelector((state) => state.sendMaterial.materials.video.one);
 
   const renderVideo = ({ item }) => {
     const title = item.title === null ? '' : item.title;

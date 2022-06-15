@@ -11,7 +11,7 @@ import {
 const MaterialText = ({ navigate }) => {
   const dispatch = useDispatch();
 
-  const text = useSelector((state) => state.files.materials.text);
+  const text = useSelector((state) => state.sendMaterial.materials.text);
 
   const handleChangeText = (event) => {
     if (

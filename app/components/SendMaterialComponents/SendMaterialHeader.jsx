@@ -7,8 +7,8 @@ import { postMaterial } from '../../redux/actions/material';
 const SendMaterialHeader = () => {
   const dispatch = useDispatch();
 
-  const materials = useSelector((state) => state.files.materials);
-  const sendError = useSelector((state) => state.files.sendError);
+  const materials = useSelector((state) => state.sendMaterial.materials);
+  const sendError = useSelector((state) => state.sendMaterial.sendError);
 
   const photo =
     materials.photo.one.length || materials.photo.group.length
