@@ -96,7 +96,7 @@ export default function ImageBrowserScreen(props) {
       buttonTextStyle: _textStyle,
       buttonStyle: _buttonStyle,
       onBack: () => {
-        navigate('Main');
+        navigate('SendMaterialScreen');
       },
       onSuccess: (e) => onSuccess(e),
     }),

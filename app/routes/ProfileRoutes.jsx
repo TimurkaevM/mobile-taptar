@@ -35,21 +35,6 @@ function ProfileRoutes() {
           },
         }}
       />
-      <Stack.Screen
-        name="ProfileChangeScreen"
-        component={ProfileChangeScreen}
-        options={{
-          title: 'Редактировать профиль',
-          headerStyle: {
-            backgroundColor: '#fff',
-          },
-          headerTintColor: '#4686cc',
-          transitionSpec: {
-            open: config,
-            close: config,
-          },
-        }}
-      />
     </Stack.Navigator>
   );
 }

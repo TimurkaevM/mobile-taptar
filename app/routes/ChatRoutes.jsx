@@ -35,13 +35,6 @@ function ChatRoutes() {
           },
         }}
       />
-      <Stack.Screen
-        name="ChatScreen"
-        component={ChatScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
     </Stack.Navigator>
   );
 }

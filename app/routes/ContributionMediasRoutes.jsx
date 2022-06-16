@@ -1,4 +1,5 @@
 import React from 'react';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import ContributionAudioScreen from '../screens/ContributionAudioScreen';
 import ContributionVideoScreen from '../screens/ContributionVideoScreen';
@@ -22,11 +23,14 @@ import { getPhoto } from '../redux/ducks/contributionPhoto';
 import { getDocument } from '../redux/ducks/contributionDocument';
 import { getVideo } from '../redux/ducks/contributionVideo';
 import { getAudio } from '../redux/ducks/contributionAudio';
+import { useSelector } from 'react-redux';
 
 function ContributionMediasRoutes() {
   const Tab = createMaterialTopTabNavigator();
 
   const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : 0;
+
+  const loading = useSelector((state) => state.contributionMaterial.loading);
 
   const dispatch = useDispatch();
 
@@ -38,9 +42,18 @@ function ContributionMediasRoutes() {
     dispatch(getAudio());
   }, [dispatch]);
 
+  if (loading) {
+    return (
+      <View style={styles.preloader}>
+        <ActivityIndicator size={50} color="#4686cc" />
+      </View>
+    );
+  }
+
   return (
     <Tab.Navigator
       initialRouteName="ContributionMaterialScreen"
+      backBehavior={'none'}
       screenOptions={{
         tabBarScrollEnabled: true,
         tabBarActiveTintColor: '#7d7d7d',
@@ -127,5 +140,12 @@ function ContributionMediasRoutes() {
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  preloader: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+});
 
 export default ContributionMediasRoutes;

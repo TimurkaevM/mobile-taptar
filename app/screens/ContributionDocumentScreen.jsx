@@ -8,20 +8,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getDocument } from '../redux/ducks/contributionDocument';
+import { useSelector } from 'react-redux';
 import DocumentItemIcon from '../SvgIcons/SendMaterialIcons/DocumentItemIcon';
 
 const ContributionDocumentScreen = ({ navigation }) => {
   const { navigate } = navigation;
-  const dispatch = useDispatch();
 
   const documents = useSelector((state) => state.contributionDocument.document);
   const loading = useSelector((state) => state.contributionDocument.loading);
-
-  // React.useEffect(() => {
-  //   dispatch(getDocument());
-  // }, [dispatch]);
 
   const renderItem = ({ item }) => {
     const title = item.title === null ? '' : item.title;
@@ -108,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ContributionDocumentScreen;
+export default React.memo(ContributionDocumentScreen);

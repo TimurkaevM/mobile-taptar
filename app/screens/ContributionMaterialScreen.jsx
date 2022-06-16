@@ -8,8 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getReadyMaterial } from '../redux/ducks/contributionMaterial';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 import MaterialIcon from '../SvgIcons/ContributionIcons/MaterialIcon';
 import PhotoIcon from '../SvgIcons/ContributionIcons/PhotoIcon';
@@ -25,12 +24,6 @@ const ContributionMaterialScreen = ({ navigation }) => {
   const error = useSelector((state) => state.contributionMaterial.error);
 
   const { navigate } = navigation;
-
-  const dispatch = useDispatch();
-
-  // React.useEffect(() => {
-  //   dispatch(getReadyMaterial());
-  // }, [dispatch]);
 
   const renderMaterial = ({ item }) => {
     const title = item.title === null ? '' : item.title;
@@ -152,4 +145,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ContributionMaterialScreen;
+export default React.memo(ContributionMaterialScreen);

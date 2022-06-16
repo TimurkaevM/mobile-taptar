@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Messenger from '../screens/ChatScreen';
-import SendMaterial from './SendMaterialRoutes';
+import SendMaterialRoute from './SendMaterialRoute';
 import { useDispatch } from 'react-redux';
 import { getAllTags, getCauses } from '../redux/ducks/tags';
 import ContributionRoutes from './ContributionRoutes';
@@ -16,6 +16,9 @@ import ProfileIcon from '../SvgIcons/MainroutesIcons/ProfileIcon';
 import ContributionMediasRoutes from './ContributionMediasRoutes';
 import ProfileRoutes from './ProfileRoutes';
 import ChatRoutes from './ChatRoutes';
+import SendMaterialScreen from '../screens/SendMaterialScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import ContactsScreen from '../screens/ContactsScreen';
 
 function MainRoutes() {
   const Tab = createMaterialBottomTabNavigator();
@@ -29,14 +32,14 @@ function MainRoutes() {
 
   return (
     <Tab.Navigator
-      initialRouteName="SendMaterial"
+      initialRouteName="SendMaterialScreen"
       activeColor="#ffffff"
       shifting={true}
       barStyle={{ backgroundColor: '#4686cc' }}
     >
       <Tab.Screen
-        name="SendMaterial"
-        component={SendMaterial}
+        name="SendMaterialScreen"
+        component={SendMaterialScreen}
         options={{
           title: 'Отправить',
           tabBarLabel: 'Отправить',
@@ -65,8 +68,8 @@ function MainRoutes() {
         }}
       />
       <Tab.Screen
-        name="ChatRoutes"
-        component={ChatRoutes}
+        name="ContactsScreen"
+        component={ContactsScreen}
         options={{
           tabBarLabel: 'Чат',
           tabBarColor: '#4686cc',
@@ -80,8 +83,8 @@ function MainRoutes() {
         }}
       />
       <Tab.Screen
-        name="ProfileRoutes"
-        component={ProfileRoutes}
+        name="ProfileScreen"
+        component={ProfileScreen}
         options={{
           tabBarColor: '#4686cc',
           tabBarLabel: 'Профиль',

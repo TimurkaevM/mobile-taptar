@@ -63,7 +63,7 @@ const AddTagsHeader = ({
       return setAuthorError('В авторе не может быть чисел');
     }
     if (item.type === 'text') {
-      navigate('Main');
+      navigate('SendMaterialScreen');
       dispatch(cleanStateTags());
       dispatch(
         changeTextFile(
@@ -80,7 +80,7 @@ const AddTagsHeader = ({
       return;
     }
     if (!item.group_uid) {
-      navigate('Main');
+      navigate('SendMaterialScreen');
       dispatch(cleanStateTags());
       dispatch(
         changeOneFile(
@@ -97,7 +97,7 @@ const AddTagsHeader = ({
       );
       return;
     }
-    navigate('Main');
+    navigate('SendMaterialScreen');
     dispatch(cleanStateTags());
     dispatch(
       changeGroupFiles(
@@ -115,7 +115,7 @@ const AddTagsHeader = ({
   };
 
   const onPressClose = () => {
-    navigate('Main');
+    navigate('SendMaterialScreen');
   };
 
   return (

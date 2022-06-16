@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, ActivityIndicator, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AddFileButton from '../components/SendMaterialComponents/AddFileButton';
 import DeleteFileModal from '../components/SendMaterialComponents/DeleteFileModal';
 import ImageList from '../components/SendMaterialComponents/ImageList';
@@ -16,9 +16,13 @@ import MaterialText from '../components/SendMaterialComponents/MaterialText';
 import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 import SendMaterialHeader from '../components/SendMaterialComponents/SendMaterialHeader';
 import MaterialError from '../components/SendMaterialComponents/MaterialError';
+import { getAllTags, getCauses } from '../redux/ducks/tags';
+import { getDraftFiles } from '../redux/actions/material';
 
 function SendMaterialScreen(props) {
   const { navigate, push } = props.navigation;
+
+  const dispatch = useDispatch();
 
   const loading = useSelector((state) => state.sendMaterial.loading);
   const draftError = useSelector((state) => state.sendMaterial.draftError);
@@ -40,6 +44,15 @@ function SendMaterialScreen(props) {
   const documents = useSelector(
     (state) => state.sendMaterial.materials.document.group,
   );
+
+  useEffect(() => {
+    dispatch(getDraftFiles());
+  }, [dispatch, draftError]);
+
+  useEffect(() => {
+    dispatch(getAllTags());
+    dispatch(getCauses());
+  }, [dispatch]);
 
   if (loading) {
     return (

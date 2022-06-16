@@ -67,7 +67,7 @@ const AddTagsHeader = ({
       return setAuthorError('В авторе не может быть чисел');
     }
     if (materialText) {
-      navigate('Main');
+      navigate('SendMaterialScreen');
       dispatch(cleanStateTags());
       dispatch(cleanUploadFiles());
       dispatch(
@@ -85,7 +85,7 @@ const AddTagsHeader = ({
       return;
     }
     if (!files.group) {
-      navigate('Main');
+      navigate('SendMaterialScreen');
       dispatch(cleanStateTags());
       dispatch(cleanUploadFiles());
       dispatch(
@@ -103,7 +103,7 @@ const AddTagsHeader = ({
       );
       return;
     }
-    navigate('Main');
+    navigate('SendMaterialScreen');
     dispatch(cleanStateTags());
     dispatch(cleanUploadFiles());
     dispatch(
@@ -125,7 +125,7 @@ const AddTagsHeader = ({
     if (materialText) {
       dispatch(cleanStateTags());
       dispatch(cleanUploadFiles());
-      navigate('Main');
+      navigate('SendMaterialScreen');
       return;
     }
     if (files.group) {
@@ -138,13 +138,13 @@ const AddTagsHeader = ({
           group_uid: files.group,
         }),
       );
-      navigate('Main');
+      navigate('SendMaterialScreen');
       return;
     }
     dispatch(cleanStateTags());
     dispatch(cleanUploadFiles());
     dispatch(removeFile(files));
-    navigate('Main');
+    navigate('SendMaterialScreen');
   };
 
   return (

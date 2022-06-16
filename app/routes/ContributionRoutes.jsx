@@ -34,27 +34,6 @@ function ContributionRoutes() {
           headerShown: false,
         }}
       />
-      <Stack.Screen
-        name="MaterialInfoScreen"
-        component={MaterialInfoScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="FileTagsScreen"
-        component={FileTagsScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="FileInfoScreen"
-        component={FileInfoScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
     </Stack.Navigator>
   );
 }
