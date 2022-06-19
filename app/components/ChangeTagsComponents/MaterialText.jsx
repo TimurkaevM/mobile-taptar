@@ -1,7 +1,7 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeText } from '../../redux/ducks/historianSend';
+import { changeText } from '../../redux/actions/material';
 
 const MaterialText = ({ setTextError, textError }) => {
   const dispatch = useDispatch();

@@ -1,6 +1,3 @@
-import { api } from '../../api/api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 const CENTURIES_CHANGE = 'tag/centuries/change';
 const CENTURIES_REMOVE = 'tag/centuries/remove';
 const INFORMATION_CHANGE = 'tag/types/change';
@@ -11,6 +8,14 @@ const AUTHOR_CHANGE = 'tag/author/change';
 const COMMENT_CHANGE = 'tag/comment/change';
 const YEAR_CHANGE = 'tag/year/change';
 const CLEAN_TAGS = 'clean/tags';
+const BOOKMARK_CHANGE = 'historian/bookmark/change';
+const EFFECTS_ADDED = 'historian/tag/effects/added';
+const EFFECTS_REMOVE = 'historian/tag/effects/remove';
+const EFFECTS_CHANGE = 'historian/tag/effects/change';
+const ALBUMS_ADDED = 'historian/albums/added';
+const ALBUMS_REMOVE = 'historian/albums/remove';
+const CREDIBILITY_ADDED = 'historian/tag/credibility/change';
+const CREDIBILITY_REMOVE = 'historian/tag/credibility/remove';
 
 const initialState = {
   title: '',
@@ -20,6 +25,10 @@ const initialState = {
   comment: '',
   tags_century: [],
   tags_information: [],
+  tags_credibility: [],
+  effects: [],
+  bookmark: false,
+  albums: [],
 };
 
 export default function userTags(state = initialState, action) {
@@ -82,6 +91,65 @@ export default function userTags(state = initialState, action) {
       return {
         ...state,
         comment: action.payload,
+      };
+
+    case BOOKMARK_CHANGE:
+      return {
+        ...state,
+        bookmark: !state.bookmark,
+      };
+
+    case EFFECTS_ADDED:
+      return {
+        ...state,
+        effects: [...state.effects, action.payload],
+      };
+
+    case EFFECTS_CHANGE:
+      return {
+        ...state,
+        effects: state.effects.map((effect) => {
+          if (effect.id === action.payload.id) {
+            return {
+              ...effect,
+              comment: action.payload.comment,
+            };
+          }
+
+          return effect;
+        }),
+      };
+
+    case EFFECTS_REMOVE:
+      return {
+        ...state,
+        effects: state.effects.filter((effect) => effect.id !== action.payload),
+      };
+
+    case CREDIBILITY_ADDED:
+      return {
+        ...state,
+        tags_credibility: [...state.tags_credibility, action.payload],
+      };
+
+    case CREDIBILITY_REMOVE:
+      return {
+        ...state,
+        tags_credibility: state.tags_credibility.filter(
+          (century) => century.id !== action.payload,
+        ),
+      };
+
+    case ALBUMS_ADDED:
+      return {
+        ...state,
+        albums: [...state.albums, action.payload],
+      };
+
+    case ALBUMS_REMOVE:
+      return {
+        ...state,
+        albums: state.albums.filter((album) => album.id !== action.payload),
       };
 
     //очистка files
@@ -163,6 +231,61 @@ export const changeCommentTag = (value) => {
   return {
     type: COMMENT_CHANGE,
     payload: value,
+  };
+};
+
+export const changeBookmarkFile = () => {
+  return {
+    type: BOOKMARK_CHANGE,
+  };
+};
+
+export const addedEffects = (value) => {
+  return {
+    type: EFFECTS_ADDED,
+    payload: value,
+  };
+};
+
+export const changedEffects = (value) => {
+  return {
+    type: EFFECTS_CHANGE,
+    payload: value,
+  };
+};
+
+export const removeEffects = (id) => {
+  return {
+    type: EFFECTS_REMOVE,
+    payload: id,
+  };
+};
+
+export const addAlbumsInSend = (value) => {
+  return {
+    type: ALBUMS_ADDED,
+    payload: value,
+  };
+};
+
+export const removeAlbumsInSend = (id) => {
+  return {
+    type: ALBUMS_REMOVE,
+    payload: id,
+  };
+};
+
+export const addedCredibility = (value) => {
+  return {
+    type: CREDIBILITY_ADDED,
+    payload: value,
+  };
+};
+
+export const removeCredibility = (id) => {
+  return {
+    type: CREDIBILITY_REMOVE,
+    payload: id,
   };
 };
 
