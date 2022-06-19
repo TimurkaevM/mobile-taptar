@@ -8,15 +8,22 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AudioTopItemIcon from '../SvgIcons/SendMaterialIcons/AudioTopItemIcon';
 import AudioBottomItemIcon from '../SvgIcons/SendMaterialIcons/AudioBottomItemIcon';
+import { getAudio } from '../redux/ducks/contributionAudio';
 
 const ContributionAudioScreen = ({ navigation }) => {
   const { navigate } = navigation;
 
+  const dispatch = useDispatch();
+
   const audios = useSelector((state) => state.contributionAudio.audio);
   const loading = useSelector((state) => state.contributionAudio.loading);
+
+  React.useEffect(() => {
+    dispatch(getAudio());
+  }, [dispatch]);
 
   const renderItem = ({ item }) => {
     const title = item.title === null ? '' : item.title;

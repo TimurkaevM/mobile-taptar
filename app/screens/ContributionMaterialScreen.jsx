@@ -8,15 +8,18 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import MaterialIcon from '../SvgIcons/ContributionIcons/MaterialIcon';
 import PhotoIcon from '../SvgIcons/ContributionIcons/PhotoIcon';
 import VideoIcon from '../SvgIcons/ContributionIcons/VideoIcon';
 import DocumentIcon from '../SvgIcons/ContributionIcons/DocumentIcon';
 import AudioIcon from '../SvgIcons/ContributionIcons/AudioIcon';
+import { getReadyMaterial } from '../redux/ducks/contributionMaterial';
 
 const ContributionMaterialScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const materials = useSelector(
     (state) => state.contributionMaterial.readyMaterial,
   );
@@ -24,6 +27,10 @@ const ContributionMaterialScreen = ({ navigation }) => {
   const error = useSelector((state) => state.contributionMaterial.error);
 
   const { navigate } = navigation;
+
+  React.useEffect(() => {
+    dispatch(getReadyMaterial());
+  }, [dispatch]);
 
   const renderMaterial = ({ item }) => {
     const title = item.title === null ? '' : item.title;

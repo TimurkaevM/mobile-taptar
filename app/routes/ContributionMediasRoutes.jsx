@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import ContributionAudioScreen from '../screens/ContributionAudioScreen';
 import ContributionVideoScreen from '../screens/ContributionVideoScreen';
 import ContributionDocumentScreen from '../screens/ContributionDocumentScreen';
@@ -16,68 +15,30 @@ import PhotoFocusedIcon from '../SvgIcons/ContributionIcons/PhotoFocusedIcon';
 import PhotoIcon from '../SvgIcons/ContributionIcons/PhotoIcon';
 import DocumentFocusedIcon from '../SvgIcons/ContributionIcons/DocumentFocusedIcon';
 import DocumentIcon from '../SvgIcons/ContributionIcons/DocumentIcon';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { useDispatch } from 'react-redux';
-import { getReadyMaterial } from '../redux/ducks/contributionMaterial';
-import { getPhoto } from '../redux/ducks/contributionPhoto';
-import { getDocument } from '../redux/ducks/contributionDocument';
-import { getVideo } from '../redux/ducks/contributionVideo';
-import { getAudio } from '../redux/ducks/contributionAudio';
-import { useSelector } from 'react-redux';
 
 function ContributionMediasRoutes() {
-  const Tab = createMaterialTopTabNavigator();
-
-  const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : 0;
-
-  const loading = useSelector((state) => state.contributionMaterial.loading);
-
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(getReadyMaterial());
-    dispatch(getPhoto());
-    dispatch(getVideo());
-    dispatch(getDocument());
-    dispatch(getAudio());
-  }, [dispatch]);
-
-  if (loading) {
-    return (
-      <View style={styles.preloader}>
-        <ActivityIndicator size={50} color="#4686cc" />
-      </View>
-    );
-  }
+  const Drawer = createDrawerNavigator();
 
   return (
-    <Tab.Navigator
+    <Drawer.Navigator
       initialRouteName="ContributionMaterialScreen"
-      backBehavior={'none'}
       screenOptions={{
-        tabBarScrollEnabled: true,
-        tabBarActiveTintColor: '#7d7d7d',
-        tabBarLabelStyle: { fontSize: 14, textTransform: 'capitalize' },
-        tabBarStyle: {
-          backgroundColor: '#f5f5f5',
-          borderWidth: 0,
-          marginTop: STATUS_BAR_HEIGHT,
-        },
-        tabBarItemStyle: {
-          flexDirection: 'row',
-        },
-        tabBarIndicatorStyle: {
-          backgroundColor: '#bed1e6',
-          height: 4,
+        swipeEdgeWidth: 0,
+        swipeEnabled: false,
+        drawerType: 'front',
+        drawerActiveTintColor: '#7d7d7d',
+        drawerActiveBackgroundColor: '#f5f5f5',
+        drawerContentStyle: {
+          backgroundColor: '#fafafa',
         },
       }}
     >
-      <Tab.Screen
+      <Drawer.Screen
         name="ContributionMaterialScreen"
         component={ContributionMaterialScreen}
         options={{
-          tabBarLabel: 'Материал',
-          tabBarIcon: ({ focused, color }) =>
+          title: 'Материал',
+          drawerIcon: ({ focused, color }) =>
             focused ? (
               <MaterialFocusedIcon color={color} />
             ) : (
@@ -85,12 +46,12 @@ function ContributionMediasRoutes() {
             ),
         }}
       />
-      <Tab.Screen
+      <Drawer.Screen
         name="ContributionPhotoScreen"
         component={ContributionPhotoScreen}
         options={{
-          tabBarLabel: 'Фото',
-          tabBarIcon: ({ focused, color }) =>
+          title: 'Фото',
+          drawerIcon: ({ focused, color }) =>
             focused ? (
               <PhotoFocusedIcon color={color} />
             ) : (
@@ -98,12 +59,12 @@ function ContributionMediasRoutes() {
             ),
         }}
       />
-      <Tab.Screen
+      <Drawer.Screen
         name="ContributionDocumentScreen"
         component={ContributionDocumentScreen}
         options={{
-          tabBarLabel: 'документы',
-          tabBarIcon: ({ focused, color }) =>
+          title: 'Документ',
+          drawerIcon: ({ focused, color }) =>
             focused ? (
               <DocumentFocusedIcon color={color} />
             ) : (
@@ -111,12 +72,12 @@ function ContributionMediasRoutes() {
             ),
         }}
       />
-      <Tab.Screen
+      <Drawer.Screen
         name="ContributionVideoScreen"
         component={ContributionVideoScreen}
         options={{
-          tabBarLabel: 'Видео',
-          tabBarIcon: ({ focused, color }) =>
+          title: 'Видео',
+          drawerIcon: ({ focused, color }) =>
             focused ? (
               <VideoFocusedIcon color={color} />
             ) : (
@@ -124,28 +85,21 @@ function ContributionMediasRoutes() {
             ),
         }}
       />
-      <Tab.Screen
+      <Drawer.Screen
         name="ContributionAudioScreen"
         component={ContributionAudioScreen}
         options={{
-          tabBarLabel: 'Аудио',
-          tabBarIcon: ({ focused, color }) =>
+          title: 'Аудио',
+          drawerIcon: ({ focused, color }) =>
             focused ? (
               <AudioFocusedIcon color={color} />
             ) : (
-              <AudioIcon color={color} />
+              <AudioIcon size={22} color={color} />
             ),
         }}
       />
-    </Tab.Navigator>
+    </Drawer.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  preloader: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-});
 
 export default ContributionMediasRoutes;

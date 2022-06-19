@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import Messenger from '../screens/ChatScreen';
-import SendMaterialRoute from './SendMaterialRoute';
 import { useDispatch } from 'react-redux';
 import { getAllTags, getCauses } from '../redux/ducks/tags';
-import ContributionRoutes from './ContributionRoutes';
 import SendFocusedIcon from '../SvgIcons/MainroutesIcons/SendFocusedIcon';
 import SendIcon from '../SvgIcons/MainroutesIcons/SendIcon';
 import ContributionFocusedIcon from '../SvgIcons/MainroutesIcons/ContributionFocusedIcon';
@@ -14,8 +11,6 @@ import ChatIcon from '../SvgIcons/MainroutesIcons/ChatIcon';
 import ProfileFocusedIcon from '../SvgIcons/MainroutesIcons/ProfileFocusedIcon';
 import ProfileIcon from '../SvgIcons/MainroutesIcons/ProfileIcon';
 import ContributionMediasRoutes from './ContributionMediasRoutes';
-import ProfileRoutes from './ProfileRoutes';
-import ChatRoutes from './ChatRoutes';
 import SendMaterialScreen from '../screens/SendMaterialScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ContactsScreen from '../screens/ContactsScreen';
@@ -53,8 +48,8 @@ function MainRoutes() {
         }}
       />
       <Tab.Screen
-        name="ContributionRoutes"
-        component={ContributionRoutes}
+        name="ContributionMediasRoutes"
+        component={ContributionMediasRoutes}
         options={{
           tabBarLabel: 'Мой кабинет',
           tabBarColor: '#4686cc',

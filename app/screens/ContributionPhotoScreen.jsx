@@ -9,13 +9,20 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPhoto } from '../redux/ducks/contributionPhoto';
 
 const ContributionPhotoScreen = ({ navigation }) => {
   const { navigate } = navigation;
 
+  const dispatch = useDispatch();
+
   const photos = useSelector((state) => state.contributionPhoto.photo);
   const loading = useSelector((state) => state.contributionPhoto.loading);
+
+  React.useEffect(() => {
+    dispatch(getPhoto());
+  }, [dispatch]);
 
   const renderImage = ({ item }) => {
     const title = item.title === null ? '' : item.title;

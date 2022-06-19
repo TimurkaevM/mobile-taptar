@@ -164,4 +164,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MessageFile;
+export default React.memo(MessageFile);

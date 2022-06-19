@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import AddTagsScreen from '../screens/AddTagsScreen';
 import ChangeTagsScreen from '../screens/ChangeTagsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import ImageBrowserScreen from '../screens/ImageBrowserScreen';
 import AudioListScreen from '../screens/AudioListScreen';
 import PdfReaderScreen from '../screens/PdfReaderScreen';
-import { getDraftFiles } from '../redux/actions/material';
 import MainRoutes from './MainRoutes';
 import MaterialInfoScreen from '../screens/MaterialInfoScreen';
 import FileTagsScreen from '../screens/FileTagsScreen';

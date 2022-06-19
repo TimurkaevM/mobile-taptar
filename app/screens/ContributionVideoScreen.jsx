@@ -8,14 +8,21 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Video } from 'expo-av';
+import { getVideo } from '../redux/ducks/contributionVideo';
 
 const ContributionVideoScreen = ({ navigation }) => {
   const { navigate } = navigation;
 
+  const dispatch = useDispatch();
+
   const videos = useSelector((state) => state.contributionVideo.video);
   const loading = useSelector((state) => state.contributionVideo.loading);
+
+  React.useEffect(() => {
+    dispatch(getVideo());
+  }, [dispatch]);
 
   const renderItem = ({ item }) => {
     const title = item.title === null ? '' : item.title;
