@@ -7,21 +7,29 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import AddCredibility from './AddCredibility';
 
-const TagsCredibility = ({ setCredibilityError, credibilityError }) => {
+const TagsCredibility = ({
+  setCredibilityError,
+  credibilityError,
+  credibilityClient,
+  setCredibilityClient,
+}) => {
   const dispatch = useDispatch();
 
-  const credibilityClient = useSelector(
-    (state) => state.userTags.tags_credibility,
-  );
   const credibility = useSelector((state) => state.tags.credibility);
 
   const pressChangeCredibility = (tag, check) => {
-    if (check) return dispatch(removeCredibility(tag.id));
+    if (check) {
+      const filteredCredibility = credibilityClient.filter(
+        (item) => item.id !== tag.id,
+      );
+      setCredibilityClient(filteredCredibility);
+      return;
+    }
     if (credibilityError) {
       setCredibilityError(null);
     }
-
-    return dispatch(addedCredibility(tag));
+    const addCredibility = [...credibilityClient, tag];
+    setCredibilityClient(addCredibility);
   };
 
   return (

@@ -215,20 +215,19 @@ export const setDraftError = () => {
 
 //Изменение принадлежностей файлов
 
-export const changeTextFile = (
-  file,
-  format,
-  name,
+export const setTextHistorian = (
+  title,
   year,
   author,
-  place,
+  location,
   comment,
   bookmark,
   albums,
-  information,
-  century,
-  credibility,
-  localEffects,
+  centuryClient,
+  informationClient,
+  text,
+  effects,
+  credibilityClient,
 ) => {
   return async (dispatch) => {
     try {
@@ -238,17 +237,17 @@ export const changeTextFile = (
 
       if (value !== null) {
         const response = await api.post(
-          `/user/draft/edit/text/${file.id}`,
+          `/cabinet/material/send/draft/edit/text/${text.id}`,
           {
-            text: file.text,
-            title: name,
+            text: text.text,
+            title,
             year,
             author,
-            location: place,
+            location,
             comment,
-            tags_century: century,
-            tags_information: information,
-            tags_credibility: credibility,
+            tags_century: centuryClient,
+            tags_information: informationClient,
+            tags_credibility: credibilityClient,
           },
           {
             headers: { Authorization: `Bearer ${value}` },
@@ -257,40 +256,40 @@ export const changeTextFile = (
         dispatch({
           type: TEXT_CHANGE_SUCCESS,
           data: response.data,
-          format,
-          name,
+          title,
           year,
           author,
-          place,
+          location,
           comment,
           bookmark,
           albums,
-          information,
-          century,
-          credibility,
-          localEffects,
+          centuryClient,
+          informationClient,
+          text,
+          effects,
+          credibilityClient,
         });
       }
     } catch (e) {
-      console.error(e);
+      console.error(e.response.data);
     }
   };
 };
 
-export const changeOneFile = (
+export const changeHistorianFile = (
   id,
   format,
-  name,
+  title,
   year,
   author,
-  place,
+  location,
   comment,
   bookmark,
   albums,
-  information,
-  century,
-  credibility,
-  localEffects,
+  centuryClient,
+  informationClient,
+  effects,
+  credibilityClient,
 ) => {
   return async (dispatch) => {
     try {
@@ -300,16 +299,16 @@ export const changeOneFile = (
 
       if (value !== null) {
         const response = await api.post(
-          `/user/draft/edit/file/${id}`,
+          `/cabinet/material/send/draft/edit/file/${id}`,
           {
-            title: name,
+            title,
             year,
             author,
-            location: place,
+            location,
             comment,
-            tags_century: century,
-            tags_information: information,
-            tags_credibility: credibility,
+            tags_century: centuryClient,
+            tags_information: informationClient,
+            tags_credibility: credibilityClient,
           },
           {
             headers: { Authorization: `Bearer ${value}` },
@@ -320,21 +319,21 @@ export const changeOneFile = (
           data: response.data,
           id,
           format,
-          name,
+          title,
           year,
           author,
-          place,
+          location,
           comment,
           bookmark,
           albums,
-          information,
-          century,
-          credibility,
-          localEffects,
+          centuryClient,
+          informationClient,
+          effects,
+          credibilityClient,
         });
       }
     } catch (e) {
-      console.error(e);
+      console.error(e.response);
     }
   };
 };

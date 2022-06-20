@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import MediaBoxFile from './MediaBoxFile';
 import MediaBoxFiles from './MediaBoxFiles';
 

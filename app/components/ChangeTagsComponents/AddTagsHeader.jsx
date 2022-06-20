@@ -8,6 +8,10 @@ import {
   changeOneFile,
   changeTextFile,
 } from '../../redux/actions/material';
+import {
+  changeHistorianFile,
+  setTextHistorian,
+} from '../../redux/actions/historianMaterial';
 
 const AddTagsHeader = ({
   navigate,
@@ -26,6 +30,12 @@ const AddTagsHeader = ({
   location,
   author,
   comment,
+  albums,
+  bookmark,
+  effects,
+  credibilityClient,
+  setCredibilityError,
+  credibilityError,
   centuryClient,
   informationClient,
   item,
@@ -35,10 +45,16 @@ const AddTagsHeader = ({
   const currentTime = new Date();
   const currentYear = currentTime.getFullYear();
 
-  const text = useSelector((state) => state.sendMaterial.materials.text);
+  const userText = useSelector((state) => state.sendMaterial.materials.text);
+  const historianText = useSelector(
+    (state) => state.historianMaterial.materials.text,
+  );
+  const currentUser = useSelector((state) => state.user.currentUser);
 
-  const onSuccess = () => {
-    if (!text.text && item.type === 'text') {
+  const { role } = currentUser;
+
+  const onSuccessUser = () => {
+    if (!userText.text && item.type === 'text') {
       return setTextError('Текст не может быть пустым');
     }
     if (!title) {
@@ -67,7 +83,7 @@ const AddTagsHeader = ({
       dispatch(cleanStateTags());
       dispatch(
         changeTextFile(
-          text,
+          userText,
           title,
           year,
           author,
@@ -114,6 +130,78 @@ const AddTagsHeader = ({
     );
   };
 
+  const onSuccessHistorian = () => {
+    if (!historianText.text && item.type === 'text') {
+      return setTextError('Текст не может быть пустым');
+    }
+    if (!title) {
+      return setNameError('Название не может быть пустым');
+    }
+    if (title.length < 4) {
+      return setNameError('В название не может быть меньше 4 символов');
+    }
+    if (year.length !== 0 && /\D/.test(year)) {
+      return setYearError('Год только числа');
+    }
+    if (year.length !== 0 && +year > currentYear) {
+      return setYearError('Год не может быть больше текущего');
+    }
+    if (author.length !== 0 && author.length < 4) {
+      return setAuthorError('Автор не может быть меньше 4 символов');
+    }
+    if (comment.length !== 0 && comment.length > 200) {
+      return setCommentError('В комментарии не может быть больше 200 символов');
+    }
+    if (author.length !== 0 && /\d/.test(author)) {
+      return setAuthorError('В авторе не может быть чисел');
+    }
+    if (credibilityClient.length === 0) {
+      return setCredibilityError(
+        'Необходимо добавить хотя бы один тег достоверности',
+      );
+    }
+    if (item.type === 'text') {
+      navigate('SendMaterialScreen');
+      dispatch(cleanStateTags());
+      dispatch(
+        setTextHistorian(
+          title,
+          year,
+          author,
+          location,
+          comment,
+          bookmark,
+          albums,
+          centuryClient,
+          informationClient,
+          historianText,
+          effects,
+          credibilityClient,
+        ),
+      );
+      return;
+    }
+    navigate('SendMaterialScreen');
+    dispatch(cleanStateTags());
+    dispatch(
+      changeHistorianFile(
+        item.id,
+        item.type,
+        title,
+        year,
+        author,
+        location,
+        comment,
+        bookmark,
+        albums,
+        centuryClient,
+        informationClient,
+        effects,
+        credibilityClient,
+      ),
+    );
+  };
+
   const onPressClose = () => {
     navigate('SendMaterialScreen');
   };
@@ -125,7 +213,10 @@ const AddTagsHeader = ({
           <Text style={styles.btnText}>отклонить</Text>
         </TouchableOpacity>
         <Text>Настройка</Text>
-        <TouchableOpacity onPress={onSuccess} style={styles.btn}>
+        <TouchableOpacity
+          onPress={role === 'user' ? onSuccessUser : onSuccessHistorian}
+          style={styles.btn}
+        >
           <Text style={styles.btnText}>изменить</Text>
         </TouchableOpacity>
       </View>
@@ -152,6 +243,11 @@ const AddTagsHeader = ({
       {textError && (
         <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
           {textError}
+        </Text>
+      )}
+      {credibilityError && (
+        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
+          {credibilityError}
         </Text>
       )}
     </View>

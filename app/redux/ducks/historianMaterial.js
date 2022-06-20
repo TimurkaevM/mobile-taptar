@@ -127,6 +127,7 @@ export default function historianMaterial(state = initialState, action) {
             effects: action.effects,
             bookmark: action.bookmark,
             albums: action.albums,
+            type: 'text',
           },
         },
       };
@@ -248,16 +249,16 @@ export default function historianMaterial(state = initialState, action) {
           ...state.materials,
           text: {
             ...state.materials.text,
-            title: action.name,
+            title: action.title,
             year: action.year,
             author: action.author,
-            location: action.place,
+            location: action.location,
             comment: action.comment,
-            text: action.localEffects.text,
-            tags_century: action.century,
-            tags_information: action.information,
-            tags_credibility: action.credibility,
-            effects: action.localEffects.effects,
+            text: action.text.text,
+            tags_century: action.centuryClient,
+            tags_information: action.informationClient,
+            tags_credibility: action.credibilityClient,
+            effects: action.effects,
             bookmark: action.bookmark,
             albums: action.albums,
           },
@@ -271,16 +272,33 @@ export default function historianMaterial(state = initialState, action) {
           ...state.materials,
           [action.format]: state.materials[action.format].map((item) => {
             if (item.id === action.id) {
+              return {
+                ...item,
+                processed: true,
+                type: action.format,
+                title: action.title,
+                year: action.year,
+                author: action.author,
+                location: action.location,
+                comment: action.comment,
+                tags_century: action.centuryClient,
+                tags_information: action.informationClient,
+                effects: action.effects,
+                tags_credibility: action.credibilityClient,
+                bookmark: action.bookmark,
+                albums: action.albums,
+              };
               item.processed = true;
-              item.title = action.name;
+              item.type = action.format;
+              item.title = action.title;
               item.year = action.year;
               item.author = action.author;
-              item.location = action.place;
+              item.location = action.location;
               item.comment = action.comment;
-              item.tags_century = action.century;
-              item.tags_information = action.information;
-              item.effects = action.localEffects.effects;
-              item.tags_credibility = action.credibility;
+              item.tags_century = action.centuryClient;
+              item.tags_information = action.informationClient;
+              item.effects = action.effects;
+              item.tags_credibility = action.credibilityClient;
               item.bookmark = action.bookmark;
               item.albums = action.albums;
             }

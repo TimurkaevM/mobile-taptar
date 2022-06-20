@@ -11,6 +11,8 @@ import FileTagsScreen from '../screens/FileTagsScreen';
 import FileInfoScreen from '../screens/FileInfoScreen';
 import ChatScreen from '../screens/ChatScreen';
 import ProfileChangeScreen from '../screens/ProfileChangeScreen';
+import ChangeHistorianTagsScreen from '../screens/ChangeHistorianTagsScreen';
+import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +29,10 @@ const config = {
 };
 
 function ContentRoutes() {
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const { role } = currentUser;
+
   return (
     <Stack.Navigator initialRouteName="MainRoutes">
       <Stack.Screen
@@ -52,7 +58,9 @@ function ContentRoutes() {
       />
       <Stack.Screen
         name="ChangeTagsScreen"
-        component={ChangeTagsScreen}
+        component={
+          role === 'user' ? ChangeTagsScreen : ChangeHistorianTagsScreen
+        }
         options={{
           headerShown: false,
         }}
