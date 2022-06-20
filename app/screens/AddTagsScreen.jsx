@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import InputInfoBox from '../components/AddTagsComponents/InputInfoBox';
 import CommentClient from '../components/AddTagsComponents/CommentClient';
 import TagsInformation from '../components/AddTagsComponents/TagsInformation';
@@ -9,6 +15,7 @@ import AddTagsHeader from '../components/AddTagsComponents/AddTagsHeader';
 import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 import MediaBox from '../components/AddTagsComponents/MediaBox';
 import MaterialText from '../components/AddTagsComponents/MaterialText';
+import TagsCredibility from '../components/AddTagsComponents/TagsCredibility';
 
 const AddTagsScreen = (props) => {
   const { navigate } = props.navigation;
@@ -19,26 +26,34 @@ const AddTagsScreen = (props) => {
 
   const progress = useSelector((state) => state.uploadFiles.progress);
   const loading = useSelector((state) => state.uploadFiles.loading);
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const { role } = currentUser;
 
   const [nameError, setNameError] = useState(null);
   const [yearError, setYearError] = useState(null);
   const [authorError, setAuthorError] = useState(null);
   const [commentError, setCommentError] = useState(null);
   const [textError, setTextError] = useState(null);
+  const [credibilityError, setCredibilityError] = useState(null);
 
   if (loading)
     return (
-      <Text
-        style={{
-          textAlign: 'left',
-          marginBottom: 10,
-          textTransform: 'capitalize',
-          fontWeight: '400',
-          fontSize: 15,
-        }}
-      >
-        {progress}
-      </Text>
+      <View style={styles.preloader}>
+        <ActivityIndicator size={50} color="#4686cc" />
+        <Text
+          style={{
+            textAlign: 'center',
+            marginTop: 10,
+            textTransform: 'capitalize',
+            fontWeight: '400',
+            fontSize: 20,
+            color: '#4686cc',
+          }}
+        >
+          {progress} %
+        </Text>
+      </View>
     );
 
   return (
@@ -56,6 +71,8 @@ const AddTagsScreen = (props) => {
         authorError={authorError}
         commentError={commentError}
         yearError={yearError}
+        credibilityError={credibilityError}
+        setCredibilityError={setCredibilityError}
         materialText={text}
       />
       <View style={styles.centeredView}>
@@ -77,6 +94,12 @@ const AddTagsScreen = (props) => {
             setCommentError={setCommentError}
             commentError={commentError}
           />
+          {role === 'user' ? null : (
+            <TagsCredibility
+              setCredibilityError={setCredibilityError}
+              credibilityError={credibilityError}
+            />
+          )}
           <TagsInformation />
           <TagsCenturies />
         </ScrollView>
@@ -86,48 +109,13 @@ const AddTagsScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  tinyLogo: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
-  },
-
   centeredView: {
     flex: 1,
     backgroundColor: '#fff',
   },
-
-  modalView: {
-    margin: 20,
-    alignItems: 'flex-start',
-  },
-
-  media: {
-    height: 300,
-    overflow: 'hidden',
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-
-  inputTitleContainer: {
-    paddingHorizontal: 20,
-    marginTop: 10,
+  preloader: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });
 

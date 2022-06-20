@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { removeFileHistorian } from '../../redux/actions/historianMaterial';
 import { removeFile, removeFiles } from '../../redux/actions/material';
 import { closeSendModalDelete } from '../../redux/ducks/application';
 
@@ -10,10 +11,13 @@ const DeleteFileModal = () => {
   const modalVisible = useSelector(
     (state) => state.application.sendModalDelete,
   );
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const { role } = currentUser;
 
   const { open, item } = modalVisible;
 
-  const handlePress = () => {
+  const handlePressUser = () => {
     if (item.group_uid) {
       dispatch(removeFiles(item));
       closeModal();
@@ -21,6 +25,11 @@ const DeleteFileModal = () => {
       dispatch(removeFile(item));
       closeModal();
     }
+  };
+
+  const handlePressHistorian = () => {
+    dispatch(removeFileHistorian(item));
+    closeModal();
   };
 
   const closeModal = () => {
@@ -41,7 +50,10 @@ const DeleteFileModal = () => {
         <View style={styles.modalView}>
           <Text style={styles.modalText}>ВЫ УВЕРЕНЫ</Text>
           <View style={styles.btnContainer}>
-            <Pressable style={styles.button} onPress={handlePress}>
+            <Pressable
+              style={styles.button}
+              onPress={role === 'user' ? handlePressUser : handlePressHistorian}
+            >
               <Text style={styles.textStyle}>Да</Text>
             </Pressable>
             <Pressable

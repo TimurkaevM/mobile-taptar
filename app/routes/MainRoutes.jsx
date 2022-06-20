@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAllTags, getCauses } from '../redux/ducks/tags';
 import SendFocusedIcon from '../SvgIcons/MainroutesIcons/SendFocusedIcon';
 import SendIcon from '../SvgIcons/MainroutesIcons/SendIcon';
@@ -12,6 +12,7 @@ import ProfileFocusedIcon from '../SvgIcons/MainroutesIcons/ProfileFocusedIcon';
 import ProfileIcon from '../SvgIcons/MainroutesIcons/ProfileIcon';
 import ContributionMediasRoutes from './ContributionMediasRoutes';
 import SendMaterialScreen from '../screens/SendMaterialScreen';
+import HistorianMaterialScreen from '../screens/HistorianMaterialScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ContactsScreen from '../screens/ContactsScreen';
 
@@ -19,6 +20,10 @@ function MainRoutes() {
   const Tab = createMaterialBottomTabNavigator();
 
   const dispatch = useDispatch();
+
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const { role } = currentUser;
 
   useEffect(() => {
     dispatch(getAllTags());
@@ -34,7 +39,9 @@ function MainRoutes() {
     >
       <Tab.Screen
         name="SendMaterialScreen"
-        component={SendMaterialScreen}
+        component={
+          role === 'user' ? SendMaterialScreen : HistorianMaterialScreen
+        }
         options={{
           title: 'Отправить',
           tabBarLabel: 'Отправить',

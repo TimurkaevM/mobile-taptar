@@ -2,16 +2,13 @@ import { api } from '../../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   CHANGED_IS_MATERIAL,
+  CHANGE_MATERIAL_BOOKMARK,
   CHANGE_TEXT,
   CHANGE_TITLE,
   DRAFT_CHANGE_ERROR,
   DRAFT_GET_ERROR,
   DRAFT_GET_START,
   DRAFT_GET_SUCCESS,
-  GROUP_CHANGE_START,
-  GROUP_CHANGE_SUCCESS,
-  GROUP_UPLOAD_START,
-  GROUP_UPLOAD_SUCCESS,
   MATERIA_POST_ERROR,
   MATERIA_POST_START,
   MATERIA_POST_SUCCESS,
@@ -19,8 +16,6 @@ import {
   ONE_CHANGE_SUCCESS,
   ONE_UPLOAD_START,
   ONE_UPLOAD_SUCCESS,
-  REMOVE_FILES_START,
-  REMOVE_FILES_SUCCESS,
   REMOVE_FILE_START,
   REMOVE_FILE_SUCCESS,
   SEND_ERROR_CHANGE,
@@ -34,15 +29,19 @@ import {
 } from '../ducks/historianMaterial';
 
 // Файлы
-export const uploadTextFail = (
+export const uploadTextHistorian = (
   name,
   year,
   author,
   place,
   comment,
+  bookmark,
+  albums,
   centuries,
   types,
   file,
+  effects,
+  credibility,
 ) => {
   return async (dispatch) => {
     try {
@@ -52,7 +51,7 @@ export const uploadTextFail = (
 
       if (value !== null) {
         const response = await api.post(
-          'user/draft/text',
+          '/cabinet/material/send/draft/text',
           {
             text: file,
             title: name,
@@ -62,6 +61,7 @@ export const uploadTextFail = (
             comment,
             tags_century: centuries,
             tags_information: types,
+            tags_credibility: credibility,
           },
           {
             headers: { Authorization: `Bearer ${value}` },
@@ -76,8 +76,12 @@ export const uploadTextFail = (
           author,
           place,
           comment,
+          bookmark,
+          albums,
           centuries,
           types,
+          effects,
+          credibility,
         });
       }
     } catch (e) {
@@ -86,7 +90,7 @@ export const uploadTextFail = (
   };
 };
 
-export const uploadOneFile = (
+export const uploadFileHistorian = (
   file,
   format,
   name,
@@ -94,8 +98,12 @@ export const uploadOneFile = (
   author,
   place,
   comment,
+  bookmark,
+  albums,
   centuries,
   types,
+  effects,
+  credibility,
 ) => {
   return async (dispatch) => {
     try {
@@ -105,7 +113,7 @@ export const uploadOneFile = (
 
       if (value !== null) {
         const response = await api.post(
-          `user/draft/edit/file/${file.id}`,
+          `/cabinet/material/send/draft/edit/file/${file.id}`,
           {
             title: name,
             year,
@@ -114,6 +122,7 @@ export const uploadOneFile = (
             comment,
             tags_century: centuries,
             tags_information: types,
+            tags_credibility: credibility,
           },
           {
             headers: { Authorization: `Bearer ${value}` },
@@ -129,8 +138,12 @@ export const uploadOneFile = (
           author,
           place,
           comment,
+          bookmark,
+          albums,
           centuries,
           types,
+          effects,
+          credibility,
         });
       }
     } catch (e) {
@@ -139,88 +152,7 @@ export const uploadOneFile = (
   };
 };
 
-export const uploadGroupFiles = (
-  file,
-  format,
-  name,
-  year,
-  author,
-  place,
-  comment,
-  centuries,
-  types,
-) => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-
-      dispatch({ type: GROUP_UPLOAD_START });
-
-      if (value !== null) {
-        const response = await api.post(
-          `user/draft/edit/group/${file.group}`,
-          {
-            title: name,
-            year,
-            author,
-            location: place,
-            comment,
-            tags_century: centuries,
-            tags_information: types,
-          },
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
-        dispatch({
-          type: GROUP_UPLOAD_SUCCESS,
-          data: response.data,
-          payload: file,
-          format,
-          name,
-          year,
-          author,
-          place,
-          comment,
-          centuries,
-          types,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-};
-
-export const removeFiles = (files) => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-
-      dispatch({
-        type: REMOVE_FILES_START,
-      });
-
-      if (value !== null) {
-        const response = await api.delete(
-          `/user/draft/group/${files.group_uid}`,
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
-        dispatch({
-          type: REMOVE_FILES_SUCCESS,
-          payload: files,
-          data: response.data,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-};
-
-export const removeFile = (file) => {
+export const removeFileHistorian = (file) => {
   return async (dispatch) => {
     try {
       const value = await AsyncStorage.getItem('token');
@@ -230,9 +162,12 @@ export const removeFile = (file) => {
       });
 
       if (value !== null) {
-        const response = await api.delete(`/user/draft/file/${file.id}`, {
-          headers: { Authorization: `Bearer ${value}` },
-        });
+        const response = await api.delete(
+          `/cabinet/material/send/draft/file/${file.id}`,
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
         dispatch({
           type: REMOVE_FILE_SUCCESS,
           payload: file,
@@ -282,13 +217,18 @@ export const setDraftError = () => {
 
 export const changeTextFile = (
   file,
+  format,
   name,
   year,
   author,
   place,
   comment,
-  centuries,
-  types,
+  bookmark,
+  albums,
+  information,
+  century,
+  credibility,
+  localEffects,
 ) => {
   return async (dispatch) => {
     try {
@@ -306,8 +246,9 @@ export const changeTextFile = (
             author,
             location: place,
             comment,
-            tags_century: centuries,
-            tags_information: types,
+            tags_century: century,
+            tags_information: information,
+            tags_credibility: credibility,
           },
           {
             headers: { Authorization: `Bearer ${value}` },
@@ -316,13 +257,18 @@ export const changeTextFile = (
         dispatch({
           type: TEXT_CHANGE_SUCCESS,
           data: response.data,
+          format,
           name,
           year,
           author,
           place,
           comment,
-          centuries,
-          types,
+          bookmark,
+          albums,
+          information,
+          century,
+          credibility,
+          localEffects,
         });
       }
     } catch (e) {
@@ -339,8 +285,12 @@ export const changeOneFile = (
   author,
   place,
   comment,
-  centuries,
-  types,
+  bookmark,
+  albums,
+  information,
+  century,
+  credibility,
+  localEffects,
 ) => {
   return async (dispatch) => {
     try {
@@ -357,8 +307,9 @@ export const changeOneFile = (
             author,
             location: place,
             comment,
-            tags_century: centuries,
-            tags_information: types,
+            tags_century: century,
+            tags_information: information,
+            tags_credibility: credibility,
           },
           {
             headers: { Authorization: `Bearer ${value}` },
@@ -367,68 +318,19 @@ export const changeOneFile = (
         dispatch({
           type: ONE_CHANGE_SUCCESS,
           data: response.data,
-          name,
-          year,
-          author,
-          place,
-          comment,
-          centuries,
-          types,
-          format,
           id,
-        });
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-};
-
-export const changeGroupFiles = (
-  format,
-  group,
-  name,
-  year,
-  author,
-  place,
-  comment,
-  centuries,
-  types,
-) => {
-  return async (dispatch) => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-
-      dispatch({ type: GROUP_CHANGE_START });
-
-      if (value !== null) {
-        const response = await api.post(
-          `/user/draft/edit/group/${group}`,
-          {
-            title: name,
-            year,
-            author,
-            location: place,
-            comment,
-            tags_century: centuries,
-            tags_information: types,
-          },
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
-        dispatch({
-          type: GROUP_CHANGE_SUCCESS,
-          data: response.data,
+          format,
           name,
           year,
           author,
           place,
           comment,
-          centuries,
-          types,
-          group,
-          format,
+          bookmark,
+          albums,
+          information,
+          century,
+          credibility,
+          localEffects,
         });
       }
     } catch (e) {
@@ -439,7 +341,16 @@ export const changeGroupFiles = (
 
 // api/user/add/material/send
 
-export const postMaterial = (title, text, photo, document, video, audio) => {
+export const postHistorianMaterial = (
+  bookmark,
+  is_material,
+  title,
+  text,
+  photo,
+  document,
+  audio,
+  video,
+) => {
   return async (dispatch) => {
     try {
       const value = await AsyncStorage.getItem('token');
@@ -447,24 +358,48 @@ export const postMaterial = (title, text, photo, document, video, audio) => {
       dispatch({ type: MATERIA_POST_START });
 
       if (value !== null) {
-        const response = await api.post(
-          '/user/contribution/material/send',
-          {
-            title,
-            text,
-            photo,
-            document,
-            audio,
-            video,
-          },
-          {
-            headers: { Authorization: `Bearer ${value}` },
-          },
-        );
-        dispatch({
-          type: MATERIA_POST_SUCCESS,
-          data: response.data,
-        });
+        if (text.text === undefined) {
+          const response = await api.post(
+            '/cabinet/material/send',
+            {
+              bookmark,
+              is_material,
+              title,
+              photo,
+              document,
+              audio,
+              video,
+            },
+            {
+              headers: { Authorization: `Bearer ${value}` },
+            },
+          );
+          dispatch({
+            type: MATERIA_POST_SUCCESS,
+            data: response.data,
+          });
+        } else {
+          const response = await api.post(
+            '/cabinet/material/send',
+            {
+              bookmark,
+              is_material,
+              title,
+              text,
+              photo,
+              document,
+              audio,
+              video,
+            },
+            {
+              headers: { Authorization: `Bearer ${value}` },
+            },
+          );
+          dispatch({
+            type: MATERIA_POST_SUCCESS,
+            data: response.data,
+          });
+        }
       }
     } catch (e) {
       console.error(e);
@@ -475,21 +410,21 @@ export const postMaterial = (title, text, photo, document, video, audio) => {
   };
 };
 
-export const setSendError = () => {
+export const setHistorianSendError = () => {
   return {
     type: SEND_ERROR_CHANGE,
   };
 };
 
 // Тексты
-export const changeTitle = (value) => {
+export const historianMaterialTitle = (value) => {
   return {
     type: CHANGE_TITLE,
     payload: value,
   };
 };
 
-export const changeText = (value) => {
+export const changeTextHistorian = (value) => {
   return {
     type: CHANGE_TEXT,
     payload: value,
@@ -498,7 +433,7 @@ export const changeText = (value) => {
 
 //Удаление текста с сервера
 
-export const deleteDraftText = (id) => {
+export const deleteHistorianDraftText = (id) => {
   return async (dispatch) => {
     try {
       const value = await AsyncStorage.getItem('token');
@@ -506,9 +441,12 @@ export const deleteDraftText = (id) => {
       dispatch({ type: TEXT_DELETE_START });
 
       if (value !== null) {
-        const response = await api.delete(`/user/draft/text/${id}`, {
-          headers: { Authorization: `Bearer ${value}` },
-        });
+        const response = await api.delete(
+          `/cabinet/material/send/draft/text/${id}`,
+          {
+            headers: { Authorization: `Bearer ${value}` },
+          },
+        );
         dispatch({
           type: TEXT_DELETE_SUCCESS,
           payload: response.data,
@@ -520,7 +458,7 @@ export const deleteDraftText = (id) => {
   };
 };
 
-export const clearTextForm = () => {
+export const clearHistorianTextForm = () => {
   return {
     type: TEXT_CLEAR,
   };
@@ -529,5 +467,11 @@ export const clearTextForm = () => {
 export const changedIsMaterialHistorian = () => {
   return {
     type: CHANGED_IS_MATERIAL,
+  };
+};
+
+export const changeBookmarkMaterial = () => {
+  return {
+    type: CHANGE_MATERIAL_BOOKMARK,
   };
 };

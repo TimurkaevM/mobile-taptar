@@ -2,12 +2,9 @@ import { View, Text, Image, Pressable, FlatList } from 'react-native';
 import React from 'react';
 import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
 import ImageListIcon from '../../SvgIcons/SendMaterialIcons/ImageListIcon';
-import { useSelector } from 'react-redux';
 import DeleteBtn from './DeleteBtn';
 
-const ImageList = ({ navigate }) => {
-  const photo = useSelector((state) => state.sendMaterial.materials.photo.one);
-
+const ImageList = ({ photo, navigate }) => {
   const renderImage = ({ item }) => {
     const title = item.title === null ? '' : item.title;
     const titleSub = title.substr(0, 12);

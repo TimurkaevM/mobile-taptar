@@ -2,18 +2,34 @@ import { View, Text, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeText } from '../../redux/actions/material';
+import { changeTextHistorian } from '../../redux/actions/historianMaterial';
 
 const MaterialText = ({ setTextError, textError }) => {
   const dispatch = useDispatch();
 
-  const text = useSelector((state) => state.sendMaterial.materials.text);
+  const userText = useSelector((state) => state.sendMaterial.materials.text);
+  const historianText = useSelector(
+    (state) => state.historianMaterial.materials.text,
+  );
+  const currentUser = useSelector((state) => state.user.currentUser);
 
-  const handleChangeText = (event) => {
+  const { role } = currentUser;
+
+  const changeUserText = (event) => {
     if (textError) {
       setTextError(null);
       dispatch(changeText(event.nativeEvent.text));
     } else {
       dispatch(changeText(event.nativeEvent.text));
+    }
+  };
+
+  const changeHistorianText = (event) => {
+    if (textError) {
+      setTextError(null);
+      dispatch(changeTextHistorian(event.nativeEvent.text));
+    } else {
+      dispatch(changeTextHistorian(event.nativeEvent.text));
     }
   };
 
@@ -36,9 +52,9 @@ const MaterialText = ({ setTextError, textError }) => {
         style={styles.inputComment}
         type="password"
         name="comment"
-        value={text.text}
+        value={role === 'user' ? userText.text : historianText.text}
         placeholder="Введите комментарий..."
-        onChange={handleChangeText}
+        onChange={role === 'user' ? changeUserText : changeHistorianText}
       />
     </View>
   );

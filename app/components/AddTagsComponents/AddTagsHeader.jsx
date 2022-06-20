@@ -11,6 +11,11 @@ import {
   uploadOneFile,
   uploadTextFail,
 } from '../../redux/actions/material';
+import {
+  removeFileHistorian,
+  uploadFileHistorian,
+  uploadTextHistorian,
+} from '../../redux/actions/historianMaterial';
 
 const AddTagsHeader = ({
   navigate,
@@ -19,6 +24,8 @@ const AddTagsHeader = ({
   yearError,
   authorError,
   commentError,
+  credibilityError,
+  setCredibilityError,
   setAuthorError,
   setCommentError,
   setNameError,
@@ -35,14 +42,26 @@ const AddTagsHeader = ({
   const title = useSelector((state) => state.userTags.title);
   const year = useSelector((state) => state.userTags.year);
   const location = useSelector((state) => state.userTags.location);
+  const bookmark = useSelector((state) => state.userTags.bookmark);
+  const albums = useSelector((state) => state.userTags.albums);
+  const effects = useSelector((state) => state.userTags.effects);
   const comment = useSelector((state) => state.userTags.comment);
   const centuriesClient = useSelector((state) => state.userTags.tags_century);
   const typesClient = useSelector((state) => state.userTags.tags_information);
+  const credibilityClient = useSelector(
+    (state) => state.userTags.tags_credibility,
+  );
   const author = useSelector((state) => state.userTags.author);
-  const text = useSelector((state) => state.sendMaterial.materials.text);
+  const userText = useSelector((state) => state.sendMaterial.materials.text);
+  const historianText = useSelector(
+    (state) => state.historianMaterial.materials.text,
+  );
+  const currentUser = useSelector((state) => state.user.currentUser);
 
-  const onSuccess = () => {
-    if (!text.text && materialText) {
+  const { role } = currentUser;
+
+  const onSuccessUser = () => {
+    if (!userText.text && materialText) {
       return setTextError('Текст не может быть пустым');
     }
     if (!title) {
@@ -79,7 +98,7 @@ const AddTagsHeader = ({
           comment,
           centuriesClient,
           typesClient,
-          text.text,
+          userText.text,
         ),
       );
       return;
@@ -121,7 +140,81 @@ const AddTagsHeader = ({
     );
   };
 
-  const onPressClose = () => {
+  const onSuccessHistorian = () => {
+    if (!historianText.text && materialText) {
+      return setTextError('Текст не может быть пустым');
+    }
+    if (!title) {
+      return setNameError('Название не может быть пустым');
+    }
+    if (title.length < 4) {
+      return setNameError('В название не может быть меньше 4 символов');
+    }
+    if (year.length !== 0 && /\D/.test(year)) {
+      return setYearError('Год только числа');
+    }
+    if (year.length !== 0 && +year > currentYear) {
+      return setYearError('Год не может быть больше текущего');
+    }
+    if (author.length !== 0 && author.length < 4) {
+      return setAuthorError('Автор не может быть меньше 4 символов');
+    }
+    if (comment.length !== 0 && comment.length > 200) {
+      return setCommentError('В комментарии не может быть больше 200 символов');
+    }
+    if (author.length !== 0 && /\d/.test(author)) {
+      return setAuthorError('В авторе не может быть чисел');
+    }
+    if (credibilityClient.length === 0) {
+      return setCredibilityError(
+        'Необходимо добавить хотя бы один тег достоверности',
+      );
+    }
+    if (materialText) {
+      navigate('SendMaterialScreen');
+      dispatch(cleanStateTags());
+      dispatch(cleanUploadFiles());
+      dispatch(
+        uploadTextHistorian(
+          title,
+          year,
+          author,
+          location,
+          comment,
+          bookmark,
+          albums,
+          centuriesClient,
+          typesClient,
+          historianText.text,
+          effects,
+          credibilityClient,
+        ),
+      );
+      return;
+    }
+    navigate('SendMaterialScreen');
+    dispatch(cleanStateTags());
+    dispatch(cleanUploadFiles());
+    dispatch(
+      uploadFileHistorian(
+        files,
+        files.type,
+        title,
+        year,
+        author,
+        location,
+        comment,
+        bookmark,
+        albums,
+        centuriesClient,
+        typesClient,
+        effects,
+        credibilityClient,
+      ),
+    );
+  };
+
+  const onPressCloseUser = () => {
     if (materialText) {
       dispatch(cleanStateTags());
       dispatch(cleanUploadFiles());
@@ -131,13 +224,7 @@ const AddTagsHeader = ({
     if (files.group) {
       dispatch(cleanStateTags());
       dispatch(cleanUploadFiles());
-      dispatch(
-        removeFiles({
-          files: files.files,
-          type: files.type,
-          group_uid: files.group,
-        }),
-      );
+      dispatch(removeFiles(files));
       navigate('SendMaterialScreen');
       return;
     }
@@ -147,14 +234,33 @@ const AddTagsHeader = ({
     navigate('SendMaterialScreen');
   };
 
+  const onPressCloseHistorian = () => {
+    if (materialText) {
+      dispatch(cleanStateTags());
+      dispatch(cleanUploadFiles());
+      navigate('SendMaterialScreen');
+      return;
+    }
+    dispatch(cleanStateTags());
+    dispatch(cleanUploadFiles());
+    dispatch(removeFileHistorian(files));
+    navigate('SendMaterialScreen');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <TouchableOpacity onPress={onPressClose} style={styles.btn}>
+        <TouchableOpacity
+          onPress={role === 'user' ? onPressCloseUser : onPressCloseHistorian}
+          style={styles.btn}
+        >
           <Text style={styles.btnText}>отклонить</Text>
         </TouchableOpacity>
         <Text>Настройка</Text>
-        <TouchableOpacity onPress={onSuccess} style={styles.btn}>
+        <TouchableOpacity
+          onPress={role === 'user' ? onSuccessUser : onSuccessHistorian}
+          style={styles.btn}
+        >
           <Text style={styles.btnText}>отправить</Text>
         </TouchableOpacity>
       </View>
@@ -181,6 +287,11 @@ const AddTagsHeader = ({
       {textError && (
         <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
           {textError}
+        </Text>
+      )}
+      {credibilityError && (
+        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
+          {credibilityError}
         </Text>
       )}
     </View>

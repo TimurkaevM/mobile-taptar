@@ -1,15 +1,12 @@
 import { View, Text, Pressable, FlatList } from 'react-native';
 import React from 'react';
 import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
-import { useSelector } from 'react-redux';
 import DeleteBtn from './DeleteBtn';
 import AudioBottomItemIcon from '../../SvgIcons/SendMaterialIcons/AudioBottomItemIcon';
 import AudioTopItemIcon from '../../SvgIcons/SendMaterialIcons/AudioTopItemIcon';
 import AudioListIcon from '../../SvgIcons/SendMaterialIcons/AudioListIcon';
 
-const AudioList = ({ navigate }) => {
-  const audio = useSelector((state) => state.sendMaterial.materials.audio.one);
-
+const AudioList = ({ audio, navigate }) => {
   const renderAudio = ({ item }) => {
     const title = item.title === null ? '' : item.title;
     const titleSub = title.substr(0, 12);

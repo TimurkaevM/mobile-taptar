@@ -1,16 +1,11 @@
 import { View, Text, Pressable, FlatList } from 'react-native';
 import React from 'react';
 import { sendMaterialStyles } from '../../styles/sendMaterialStyles';
-import { useSelector } from 'react-redux';
 import DeleteBtn from './DeleteBtn';
 import DocumentItemIcon from '../../SvgIcons/SendMaterialIcons/DocumentItemIcon';
 import DocumentListIcon from '../../SvgIcons/SendMaterialIcons/DocumentListIcon';
 
-const DocumentList = ({ navigate }) => {
-  const document = useSelector(
-    (state) => state.sendMaterial.materials.document.one,
-  );
-
+const DocumentList = ({ document, navigate }) => {
   const renderDocument = ({ item }) => {
     const title = item.title === null ? '' : item.title;
     const titleSub = title.substr(0, 12);

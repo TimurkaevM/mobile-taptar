@@ -10,7 +10,7 @@ import DocumentAddBtnIcon from '../../SvgIcons/SendMaterialIcons/DocumentAddBtnI
 import VideoAddBtnIcon from '../../SvgIcons/SendMaterialIcons/VideoAddBtnIcon';
 import AudioAddBtnIcon from '../../SvgIcons/SendMaterialIcons/AudioAddBtnIcon';
 
-const AddFileButton = (props) => {
+const AddBtnsUser = (props) => {
   const [addFile, setAddFile] = useState(false);
 
   const dispatch = useDispatch();
@@ -176,4 +176,4 @@ const AddFileButton = (props) => {
   );
 };
 
-export default AddFileButton;
+export default AddBtnsUser;

@@ -163,6 +163,10 @@ export default function userTags(state = initialState, action) {
         comment: '',
         tags_century: [],
         tags_information: [],
+        tags_credibility: [],
+        effects: [],
+        bookmark: false,
+        albums: [],
       };
 
     default:

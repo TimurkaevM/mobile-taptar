@@ -7,32 +7,64 @@ import {
   clearTextForm,
   deleteDraftText,
 } from '../../redux/actions/material';
+import {
+  changeTextHistorian,
+  clearHistorianTextForm,
+  deleteHistorianDraftText,
+} from '../../redux/actions/historianMaterial';
 
 const MaterialText = ({ navigate }) => {
   const dispatch = useDispatch();
 
-  const text = useSelector((state) => state.sendMaterial.materials.text);
+  const userText = useSelector((state) => state.sendMaterial.materials.text);
+  const historianText = useSelector(
+    (state) => state.historianMaterial.materials.text,
+  );
+  const currentUser = useSelector((state) => state.user.currentUser);
 
-  const handleChangeText = (event) => {
+  const { role } = currentUser;
+
+  const changeUserText = (event) => {
     if (
       event.nativeEvent.text === '' &&
-      text.text !== undefined &&
-      text.id !== undefined
+      userText.text !== undefined &&
+      userText.id !== undefined
     ) {
-      dispatch(deleteDraftText(text.id));
+      dispatch(deleteDraftText(userText.id));
     }
     dispatch(changeText(event.nativeEvent.text));
   };
 
-  const handleClickClearText = () => {
-    if (text.id !== undefined) return dispatch(deleteDraftText(text.id));
+  const changeHistorianText = (event) => {
+    if (
+      event.nativeEvent.text === '' &&
+      historianText.text !== undefined &&
+      historianText.id !== undefined
+    ) {
+      dispatch(deleteHistorianDraftText(historianText.id));
+    }
+    dispatch(changeTextHistorian(event.nativeEvent.text));
+  };
+
+  const clearUserText = () => {
+    if (userText.id !== undefined)
+      return dispatch(deleteDraftText(userText.id));
 
     return dispatch(clearTextForm());
   };
 
+  const clearHistorianText = () => {
+    if (historianText.id !== undefined)
+      return dispatch(deleteHistorianDraftText(historianText.id));
+
+    return dispatch(clearHistorianTextForm());
+  };
+
   const onPressNavigate = () => {
-    if (text.id) {
-      navigate('ChangeTagsScreen', { item: text });
+    if (userText.id) {
+      navigate('ChangeTagsScreen', { item: userText });
+    } else if (historianText.id) {
+      navigate('ChangeTagsScreen', { item: historianText });
     } else {
       navigate('ModalAddFile', { type: 'text' });
     }
@@ -50,7 +82,9 @@ const MaterialText = ({ navigate }) => {
         >
           Добавить текст
         </Text>
-        <TouchableOpacity onPress={handleClickClearText}>
+        <TouchableOpacity
+          onPress={role === 'user' ? clearUserText : clearHistorianText}
+        >
           <Text
             style={{
               marginBottom: 10,
@@ -69,18 +103,19 @@ const MaterialText = ({ navigate }) => {
         style={sendMaterialStyles.inputText}
         type="password"
         name="title"
-        value={text.text}
+        value={role === 'user' ? userText.text : historianText.text}
         placeholder="Введите текст"
-        onChange={handleChangeText}
+        onChange={role === 'user' ? changeUserText : changeHistorianText}
       />
-      {text.text ? (
+      {userText.text || historianText.text ? (
         <TouchableOpacity
           onPress={onPressNavigate}
           style={{
             width: 200,
             paddingTop: 40,
             paddingBottom: 6,
-            backgroundColor: text.title ? '#4caf50' : '#f00',
+            backgroundColor:
+              userText.title || historianText.title ? '#4caf50' : '#f00',
             borderRadius: 15,
             position: 'absolute',
             zIndex: -1,
@@ -97,7 +132,9 @@ const MaterialText = ({ navigate }) => {
               color: '#fff',
             }}
           >
-            {text.title ? 'Изменить принадлежности' : 'Добавить принадлежности'}
+            {userText.title || historianText.title
+              ? 'Изменить принадлежности'
+              : 'Добавить принадлежности'}
           </Text>
         </TouchableOpacity>
       ) : null}
