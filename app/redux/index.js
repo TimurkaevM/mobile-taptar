@@ -12,7 +12,6 @@ import contributionMaterial from './ducks/contributionMaterial';
 import contributionPhoto from './ducks/contributionPhoto';
 import contributionVideo from './ducks/contributionVideo';
 import application from './ducks/application';
-import historianCabinet from './ducks/historianCabinet';
 import historianMaterial from './ducks/historianMaterial';
 import cabinetMaterial from './ducks/cabinetMaterial';
 import showFileCabinet from './ducks/showFileCabinet';
@@ -41,7 +40,6 @@ const rootReducer = combineReducers({
   messages,
   cabinetMaterial,
   showFileCabinet,
-  // historianCabinet,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk, logger));

@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import MainRoutes from './MainRoutes';
 import { auth } from '../redux/ducks/user';
 import EntranceRoutes from './EntranceRoutes';
-import ContributionMediasRoutes from './ContributionMediasRoutes';
 import ContentRoutes from './ContentRoutes';
 
 export default function AppRoutes() {
@@ -20,9 +18,7 @@ export default function AppRoutes() {
   let routes;
 
   if (isAuth && !user.length) {
-    // routes = <MainRoutes />;
     routes = <ContentRoutes />;
-    // routes = <ContributionMediasRoutes />;
   } else {
     routes = <EntranceRoutes />;
   }
