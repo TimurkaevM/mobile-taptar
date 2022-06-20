@@ -51,3 +51,25 @@ export const getVideo = () => {
     }
   };
 };
+
+export const getVideoHistorian = () => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: VIDEO_START });
+
+      if (value !== null) {
+        const response = await api.get('/cabinet/bookmark/video', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
+        dispatch({
+          type: VIDEO_SUCCESS,
+          payload: response.data,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};

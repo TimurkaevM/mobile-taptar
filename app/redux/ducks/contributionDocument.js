@@ -51,3 +51,25 @@ export const getDocument = () => {
     }
   };
 };
+
+export const getDocumentHistorian = () => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: DOCUMENT_START });
+
+      if (value !== null) {
+        const response = await api.get('/cabinet/bookmark/document', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
+        dispatch({
+          type: DOCUMENT_SUCCESS,
+          payload: response.data,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};

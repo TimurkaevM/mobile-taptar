@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPhoto } from '../redux/ducks/contributionPhoto';
+import { getPhoto, getPhotoHistorian } from '../redux/ducks/contributionPhoto';
 
 const ContributionPhotoScreen = ({ navigation }) => {
   const { navigate } = navigation;
@@ -19,9 +19,16 @@ const ContributionPhotoScreen = ({ navigation }) => {
 
   const photos = useSelector((state) => state.contributionPhoto.photo);
   const loading = useSelector((state) => state.contributionPhoto.loading);
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const { role } = currentUser;
 
   React.useEffect(() => {
-    dispatch(getPhoto());
+    if (role === 'user') {
+      dispatch(getPhoto());
+    } else {
+      dispatch(getPhotoHistorian());
+    }
   }, [dispatch]);
 
   const renderImage = ({ item }) => {
@@ -30,7 +37,11 @@ const ContributionPhotoScreen = ({ navigation }) => {
     return (
       <View style={styles.card}>
         <TouchableOpacity
-          onPress={() => navigate('FileInfoScreen', { id: item.file_id })}
+          onPress={() =>
+            navigate('FileInfoScreen', {
+              id: role === 'user' ? item.file_id : item.id,
+            })
+          }
           style={styles.cardMedia}
         >
           <Image

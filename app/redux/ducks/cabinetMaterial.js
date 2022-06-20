@@ -104,23 +104,29 @@ export default function cabinetMaterial(state = initialState, action) {
 }
 
 export const getShowMaterial = (id) => {
-  return (dispatch) => {
-    dispatch({
-      type: BOOKMARK_MATERIAL_LOAD_START,
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get(`/cabinet/material/processed/${id}`)
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({
+        type: BOOKMARK_MATERIAL_LOAD_START,
+      });
+
+      if (value !== null) {
+        const response = await api.get(`/cabinet/material/processed/${id}`, {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: BOOKMARK_MATERIAL_LOAD_SUCCESS,
-          payload: data,
+          payload: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
+      }
+    } catch (e) {
+      console.error(e);
+      dispatch({
+        type: CONTRIBUTION_MATERIAL_LOAD_ERROR,
       });
+    }
   };
 };
 

@@ -11,7 +11,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AudioTopItemIcon from '../SvgIcons/SendMaterialIcons/AudioTopItemIcon';
 import AudioBottomItemIcon from '../SvgIcons/SendMaterialIcons/AudioBottomItemIcon';
-import { getAudio } from '../redux/ducks/contributionAudio';
+import { getAudio, getAudioHistorian } from '../redux/ducks/contributionAudio';
 
 const ContributionAudioScreen = ({ navigation }) => {
   const { navigate } = navigation;
@@ -20,9 +20,16 @@ const ContributionAudioScreen = ({ navigation }) => {
 
   const audios = useSelector((state) => state.contributionAudio.audio);
   const loading = useSelector((state) => state.contributionAudio.loading);
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const { role } = currentUser;
 
   React.useEffect(() => {
-    dispatch(getAudio());
+    if (role === 'user') {
+      dispatch(getAudio());
+    } else {
+      dispatch(getAudioHistorian());
+    }
   }, [dispatch]);
 
   const renderItem = ({ item }) => {
@@ -31,7 +38,11 @@ const ContributionAudioScreen = ({ navigation }) => {
     return (
       <View style={styles.card}>
         <TouchableOpacity
-          onPress={() => navigate('FileInfoScreen', { id: item.file_id })}
+          onPress={() =>
+            navigate('FileInfoScreen', {
+              id: role === 'user' ? item.file_id : item.id,
+            })
+          }
           style={styles.cardMedia}
         >
           <AudioTopItemIcon width={110} height={75} color="#4686CC" />

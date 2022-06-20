@@ -48,23 +48,29 @@ export default function showFileCabinet(state = initialState, action) {
 }
 
 export const getCabinetFile = (id) => {
-  return (dispatch) => {
-    dispatch({
-      type: FILE_START,
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get(`cabinet/bookmark/file/${id}`)
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({
+        type: FILE_START,
+      });
+
+      if (value !== null) {
+        const response = await api.get(`cabinet/bookmark/file/${id}`, {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: FILE_SUCCESS,
-          payload: data,
+          payload: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
+      }
+    } catch (e) {
+      console.error(e);
+      dispatch({
+        type: FILE_ERROR,
       });
+    }
   };
 };
 

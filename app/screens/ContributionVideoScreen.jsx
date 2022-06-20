@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Video } from 'expo-av';
-import { getVideo } from '../redux/ducks/contributionVideo';
+import { getVideo, getVideoHistorian } from '../redux/ducks/contributionVideo';
 
 const ContributionVideoScreen = ({ navigation }) => {
   const { navigate } = navigation;
@@ -19,9 +19,18 @@ const ContributionVideoScreen = ({ navigation }) => {
 
   const videos = useSelector((state) => state.contributionVideo.video);
   const loading = useSelector((state) => state.contributionVideo.loading);
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const { role } = currentUser;
+
+  console.log(videos);
 
   React.useEffect(() => {
-    dispatch(getVideo());
+    if (role === 'user') {
+      dispatch(getVideo());
+    } else {
+      dispatch(getVideoHistorian());
+    }
   }, [dispatch]);
 
   const renderItem = ({ item }) => {
@@ -30,7 +39,11 @@ const ContributionVideoScreen = ({ navigation }) => {
     return (
       <View style={styles.card}>
         <TouchableOpacity
-          onPress={() => navigate('FileInfoScreen', { id: item.file_id })}
+          onPress={() =>
+            navigate('FileInfoScreen', {
+              id: role === 'user' ? item.file_id : item.id,
+            })
+          }
           style={styles.cardMedia}
         >
           <Video

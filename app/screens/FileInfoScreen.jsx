@@ -12,7 +12,10 @@ import CommentClient from '../components/FileInfoComponents/CommentClient';
 import TagsInformation from '../components/FileInfoComponents/TagsInformation';
 import TagsCenturies from '../components/FileInfoComponents/TagsCenturies';
 import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
-import { getContributionFile } from '../redux/ducks/showFileCabinet';
+import {
+  getCabinetFile,
+  getContributionFile,
+} from '../redux/ducks/showFileCabinet';
 import MediaBoxFile from '../components/FileInfoComponents/MediaBoxFile';
 import TagsCredibility from '../components/FileInfoComponents/TagsCredibility';
 
@@ -23,10 +26,17 @@ const AddTagsScreen = (props) => {
 
   const loadingFiles = useSelector((state) => state.showFileCabinet.loading);
   const file = useSelector((state) => state.showFileCabinet.file);
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const { role } = currentUser;
 
   React.useEffect(() => {
     if (params.id !== undefined) {
-      dispatch(getContributionFile(params.id));
+      if (role === 'user') {
+        dispatch(getContributionFile(params.id));
+      } else {
+        dispatch(getCabinetFile(params.id));
+      }
     }
   }, [dispatch, params.id]);
 

@@ -9,7 +9,10 @@ import MaterialTitle from '../components/MaterialInfoComponents/MaterialTitle';
 import MaterialText from '../components/MaterialInfoComponents/MaterialText';
 import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 import MaterialError from '../components/MaterialInfoComponents/MaterialError';
-import { getContributionMaterial } from '../redux/ducks/cabinetMaterial';
+import {
+  getContributionMaterial,
+  getShowMaterial,
+} from '../redux/ducks/cabinetMaterial';
 
 function MaterialInfoScreen(props) {
   const { navigate } = props.navigation;
@@ -30,12 +33,19 @@ function MaterialInfoScreen(props) {
   const documents = useSelector(
     (state) => state.cabinetMaterial.material.files.document,
   );
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const { role } = currentUser;
 
   React.useEffect(() => {
     if (params.id !== undefined) {
-      dispatch(getContributionMaterial(params.id));
+      if (role === 'user') {
+        dispatch(getContributionMaterial(params.id));
+      } else {
+        dispatch(getShowMaterial(params.id));
+      }
     }
-  }, [params.id]);
+  }, [dispatch, params.id]);
 
   if (loading) {
     return (

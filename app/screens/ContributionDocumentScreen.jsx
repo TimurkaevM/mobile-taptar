@@ -10,7 +10,10 @@ import {
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DocumentItemIcon from '../SvgIcons/SendMaterialIcons/DocumentItemIcon';
-import { getDocument } from '../redux/ducks/contributionDocument';
+import {
+  getDocument,
+  getDocumentHistorian,
+} from '../redux/ducks/contributionDocument';
 
 const ContributionDocumentScreen = ({ navigation }) => {
   const { navigate } = navigation;
@@ -19,9 +22,16 @@ const ContributionDocumentScreen = ({ navigation }) => {
 
   const documents = useSelector((state) => state.contributionDocument.document);
   const loading = useSelector((state) => state.contributionDocument.loading);
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const { role } = currentUser;
 
   React.useEffect(() => {
-    dispatch(getDocument());
+    if (role === 'user') {
+      dispatch(getDocument());
+    } else {
+      dispatch(getDocumentHistorian());
+    }
   }, [dispatch]);
 
   const renderItem = ({ item }) => {
@@ -30,7 +40,11 @@ const ContributionDocumentScreen = ({ navigation }) => {
     return (
       <View style={styles.card}>
         <TouchableOpacity
-          onPress={() => navigate('FileInfoScreen', { id: item.file_id })}
+          onPress={() =>
+            navigate('FileInfoScreen', {
+              id: role === 'user' ? item.file_id : item.id,
+            })
+          }
           style={styles.cardMedia}
         >
           <DocumentItemIcon width={170} height={170} color="#4686CC" />

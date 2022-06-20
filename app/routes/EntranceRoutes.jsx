@@ -2,9 +2,12 @@ import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Auth from '../screens/AuthScreen';
 import Registration from '../screens/RegistrationScreen';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 function EntranceRoutes() {
   const Tab = createMaterialTopTabNavigator();
+
+  const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? getStatusBarHeight() : 0;
 
   return (
     <Tab.Navigator
@@ -14,7 +17,7 @@ function EntranceRoutes() {
         tabBarLabelStyle: { fontSize: 14, textTransform: 'capitalize' },
         tabBarStyle: {
           backgroundColor: '#f1f1f1',
-          marginTop: 30,
+          marginTop: STATUS_BAR_HEIGHT,
           borderWidth: 0,
         },
       }}

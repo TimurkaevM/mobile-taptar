@@ -15,7 +15,10 @@ import PhotoIcon from '../SvgIcons/ContributionIcons/PhotoIcon';
 import VideoIcon from '../SvgIcons/ContributionIcons/VideoIcon';
 import DocumentIcon from '../SvgIcons/ContributionIcons/DocumentIcon';
 import AudioIcon from '../SvgIcons/ContributionIcons/AudioIcon';
-import { getReadyMaterial } from '../redux/ducks/contributionMaterial';
+import {
+  getMaterialHistorian,
+  getReadyMaterial,
+} from '../redux/ducks/contributionMaterial';
 
 const ContributionMaterialScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -25,11 +28,18 @@ const ContributionMaterialScreen = ({ navigation }) => {
   );
   const loading = useSelector((state) => state.contributionMaterial.loading);
   const error = useSelector((state) => state.contributionMaterial.error);
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const { role } = currentUser;
 
   const { navigate } = navigation;
 
   React.useEffect(() => {
-    dispatch(getReadyMaterial());
+    if (role === 'user') {
+      dispatch(getReadyMaterial());
+    } else {
+      dispatch(getMaterialHistorian());
+    }
   }, [dispatch]);
 
   const renderMaterial = ({ item }) => {
@@ -39,7 +49,11 @@ const ContributionMaterialScreen = ({ navigation }) => {
 
     return (
       <TouchableOpacity
-        onPress={() => navigate('MaterialInfoScreen', { id: item.id })}
+        onPress={() =>
+          navigate('MaterialInfoScreen', {
+            id: role === 'user' ? item.id : item.process_id,
+          })
+        }
         style={styles.card}
       >
         <Text style={styles.cardTitle} numberOfLines={1}>

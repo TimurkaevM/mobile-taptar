@@ -51,3 +51,25 @@ export const getPhoto = () => {
     }
   };
 };
+
+export const getPhotoHistorian = () => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: PHOTO_START });
+
+      if (value !== null) {
+        const response = await api.get('/cabinet/bookmark/photo', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
+        dispatch({
+          type: PHOTO_SUCCESS,
+          payload: response.data,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};
