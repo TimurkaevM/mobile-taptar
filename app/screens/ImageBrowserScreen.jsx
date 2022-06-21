@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, StyleSheet, SafeAreaView } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Platform } from 'react-native';
 import { AssetsSelector } from 'expo-images-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -31,6 +31,17 @@ export default function ImageBrowserScreen(props) {
   const causId = causes.map((caus) => caus.id);
 
   const onSuccess = (data) => {
+    // let newUri = Platform.OS === 'ios' ? data[0].localUri : data[0].uri;
+
+    //       if(params.media === 'photo') {
+    //     const  maniResult = await ImageManipulator.manipulateAsync(
+    //       Platform.OS === 'ios' ? data[0].localUri : data[0].uri,
+    //       [],
+    //       { compress: 1, format: SaveFormat.PNG}
+    //     );
+
+    //     newUri = maniResult;
+    //   }
     console.log(data);
     navigate('ModalAddFile');
     if (data.length > 1)
@@ -66,7 +77,6 @@ export default function ImageBrowserScreen(props) {
 
   const widgetResize = useMemo(
     () => ({
-      width: 50,
       compress: 0.7,
       base64: false,
       saveTo: 'jpeg',
@@ -134,7 +144,7 @@ export default function ImageBrowserScreen(props) {
             Errors={widgetErrors}
             Styles={widgetStyles}
             Navigator={widgetNavigator}
-            // Resize={widgetResize} know how to use first , perform slower results.
+            Resize={widgetResize}
           />
         </View>
       </SafeAreaView>

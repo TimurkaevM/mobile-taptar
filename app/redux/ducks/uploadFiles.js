@@ -1,6 +1,8 @@
 import { api } from '../../api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
+import * as ImageManipulator from 'expo-image-manipulator';
+import { FlipType, SaveFormat } from 'expo-image-manipulator';
 
 const FILES_UPLOAD_START = 'files/post/start';
 const FILES_UPLOAD_SUCCESS = 'files/post/success';
@@ -65,10 +67,12 @@ export default function uploadFiles(state = initialState, action) {
 }
 
 export const postFail = (file, format) => {
+  let newUri = Platform.OS === 'ios' ? file[0].localUri : file[0].uri;
   const form = new FormData();
+
   form.append('file', {
-    uri: Platform.OS === 'ios' ? file[0].localUri : file[0].uri,
-    name: file[0].filename,
+    uri: file[0].uri,
+    name: '1de34e9a-2542-4e17-950d-0f7c044699ec.jpg',
     type: 'image/jpeg',
   });
   form.append('type', format);
@@ -229,9 +233,8 @@ export const postFilesGroup = (files, format, causes) => {
   form.append('type', format);
   for (let i = 0; i < files.length; i++) {
     form.append(`files[${i}]`, {
-      uri: Platform.OS === 'ios' ? files[i].localUri : files[i].uri,
-      name: files[i].filename,
-      type: 'image/jpeg',
+      uri: files[i].localUri || files[i].uri,
+      type: 'image/png',
     });
   }
 
