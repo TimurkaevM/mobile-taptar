@@ -3,6 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeText } from '../../redux/actions/material';
 import { changeTextHistorian } from '../../redux/actions/historianMaterial';
+import color from '../../misc/color';
 
 const MaterialText = ({ setTextError, textError }) => {
   const dispatch = useDispatch();
@@ -69,10 +70,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     padding: 20,
-    borderWidth: 0.1,
-    borderRadius: 2,
+    borderWidth: 0.6,
+    borderRadius: 10,
     marginBottom: 20,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#fff',
+    borderColor: color.MAIN_COLOR,
     color: '#000',
     fontSize: 13,
     textAlignVertical: 'top',

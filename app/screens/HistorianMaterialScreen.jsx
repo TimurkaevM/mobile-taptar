@@ -13,21 +13,30 @@ import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 import SendMaterialHeader from '../components/SendMaterialComponents/SendMaterialHeader';
 import MaterialError from '../components/SendMaterialComponents/MaterialError';
 import { getAllTags, getCauses } from '../redux/ducks/tags';
-import { getHistorianDraftFiles } from '../redux/actions/historianMaterial';
+import {
+  changedIsMaterialHistorian,
+  getHistorianDraftFiles,
+} from '../redux/actions/historianMaterial';
+import IsMaterialBtn from '../components/SendMaterialComponents/IsMaterialBtn';
+import BookmarkBtn from '../components/SendMaterialComponents/BookmarkBtn';
 
 function HistorianMaterialScreen(props) {
   const { navigate, push } = props.navigation;
-
-  const dispatch = useDispatch();
 
   const loading = useSelector((state) => state.historianMaterial.loading);
   const draftError = useSelector((state) => state.historianMaterial.draftError);
   const photo = useSelector((state) => state.historianMaterial.materials.photo);
   const video = useSelector((state) => state.historianMaterial.materials.video);
   const audio = useSelector((state) => state.historianMaterial.materials.audio);
+  const is_material = useSelector(
+    (state) => state.historianMaterial.materials.is_material,
+  );
+
   const document = useSelector(
     (state) => state.sendMaterial.materials.document,
   );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getHistorianDraftFiles());
@@ -53,6 +62,8 @@ function HistorianMaterialScreen(props) {
       <StatusBarPlaceHolder />
       <SendMaterialHeader />
       <ScrollView>
+        <IsMaterialBtn />
+        {is_material ? <BookmarkBtn /> : null}
         <MaterialTitle />
         <MaterialText navigate={navigate} />
         <AddBtnsHistorian push={push} navigate={navigate} />

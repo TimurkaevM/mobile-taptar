@@ -202,7 +202,7 @@ export const removeFiles = (files) => {
 
       if (value !== null) {
         const response = await api.delete(
-          `/user/draft/group/${files.group_uid}`,
+          `/user/draft/group/${files.group_uid || files.group}`,
           {
             headers: { Authorization: `Bearer ${value}` },
           },

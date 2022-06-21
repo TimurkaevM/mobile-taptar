@@ -16,6 +16,7 @@ import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 import MediaBox from '../components/AddTagsComponents/MediaBox';
 import MaterialText from '../components/AddTagsComponents/MaterialText';
 import TagsCredibility from '../components/AddTagsComponents/TagsCredibility';
+import BookmarkBtn from '../components/AddTagsComponents/BookmarkBtn';
 
 const AddTagsScreen = (props) => {
   const { navigate } = props.navigation;
@@ -77,6 +78,7 @@ const AddTagsScreen = (props) => {
       />
       <View style={styles.centeredView}>
         <ScrollView>
+          {role === 'user' ? null : <BookmarkBtn />}
           <InputInfoBox
             setNameError={setNameError}
             setAuthorError={setAuthorError}

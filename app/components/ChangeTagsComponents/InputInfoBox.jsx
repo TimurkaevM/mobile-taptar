@@ -1,5 +1,6 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
+import color from '../../misc/color';
 
 const InputInfoBox = ({
   setNameError,
@@ -127,7 +128,6 @@ const InputInfoBox = ({
         </Text>
         <TextInput
           style={styles.inputTitle}
-          type="password"
           name="location"
           value={location}
           placeholder="Введите место"
@@ -149,10 +149,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     paddingLeft: 15,
-    borderWidth: 0.2,
+    borderWidth: 0.6,
     borderRadius: 10,
     marginBottom: 20,
     backgroundColor: '#fff',
+    borderColor: color.MAIN_COLOR,
     color: '#000',
     fontSize: 13,
   },

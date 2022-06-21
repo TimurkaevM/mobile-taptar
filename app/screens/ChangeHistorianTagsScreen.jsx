@@ -10,6 +10,7 @@ import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 import MediaBox from '../components/ChangeTagsComponents/MediaBox';
 import MaterialText from '../components/ChangeTagsComponents/MaterialText';
 import { useSelector } from 'react-redux';
+import BookmarkBtn from '../components/ChangeTagsComponents/BookmarkBtn';
 
 const ChangeHistorianTagsScreen = (props) => {
   const { navigate } = props.navigation;
@@ -82,6 +83,7 @@ const ChangeHistorianTagsScreen = (props) => {
       />
       <View style={styles.centeredView}>
         <ScrollView>
+          <BookmarkBtn bookmark={bookmark} setBookmark={setBookmark} />
           <InputInfoBox
             setNameError={setNameError}
             setAuthorError={setAuthorError}

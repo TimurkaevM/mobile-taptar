@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
   },
 
   cardMedia: {
-    overflow: 'hidden',
     width: '100%',
     height: 250,
     borderRadius: 20,

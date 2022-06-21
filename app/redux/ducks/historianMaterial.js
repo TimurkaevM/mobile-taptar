@@ -308,6 +308,11 @@ export default function historianMaterial(state = initialState, action) {
         },
       };
 
+    case MATERIA_POST_START:
+      return {
+        ...state,
+        loading: true,
+      };
     // отправка материала
     case MATERIA_POST_SUCCESS:
       return {

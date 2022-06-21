@@ -3,16 +3,20 @@ import { View, StyleSheet } from 'react-native';
 import UserAvatar from '../components/ProfileComponents/UserAvatar';
 import CurrentUserInfo from '../components/ProfileComponents/CurrentUserInfo';
 import ProfileButtons from '../components/ProfileComponents/ProfileButtons';
+import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 
 function ProfileScreen({ navigation }) {
   const { navigate } = navigation;
 
   return (
-    <View style={styles.container}>
-      <UserAvatar />
-      <CurrentUserInfo />
-      <ProfileButtons navigate={navigate} />
-    </View>
+    <>
+      <StatusBarPlaceHolder />
+      <View style={styles.container}>
+        <UserAvatar />
+        <CurrentUserInfo />
+        <ProfileButtons navigate={navigate} />
+      </View>
+    </>
   );
 }
 

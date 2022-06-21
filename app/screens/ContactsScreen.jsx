@@ -10,6 +10,7 @@ import {
   Image,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 import { loadContacts } from '../redux/ducks/contacts';
 import AvatarIcon from '../SvgIcons/AvatarIcon/AvatarIcon';
 
@@ -66,6 +67,7 @@ function ContactsScreen({ navigation }) {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#fafafa', alignItems: 'center' }}>
+      <StatusBarPlaceHolder />
       <FlatList
         data={contacts}
         renderItem={renderContact}

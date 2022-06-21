@@ -42,7 +42,6 @@ export const authStyles = StyleSheet.create({
     width: '100%',
     height: 50,
     paddingLeft: 15,
-    borderWidth: 0,
     borderRadius: 30,
     marginBottom: 50,
     backgroundColor: '#ffffff',

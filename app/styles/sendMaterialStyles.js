@@ -18,12 +18,13 @@ export const sendMaterialStyles = StyleSheet.create({
     width: '100%',
     height: 50,
     paddingLeft: 15,
-    borderWidth: 0.3,
-    borderRadius: 7,
-    marginBottom: 20,
-    backgroundColor: '#fafafa',
-    color: '#000',
+    borderRadius: 30,
+    marginBottom: 50,
+    backgroundColor: '#ffffff',
+    color: '#4686cc',
     fontSize: 13,
+    borderWidth: 0.5,
+    borderColor: '#4686cc',
   },
 
   textTitleContainer: {

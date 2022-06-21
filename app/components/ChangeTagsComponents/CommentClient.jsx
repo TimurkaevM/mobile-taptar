@@ -1,5 +1,6 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
+import color from '../../misc/color';
 
 const CommentClient = ({
   setCommentError,
@@ -52,10 +53,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 100,
     padding: 20,
-    borderWidth: 0.1,
-    borderRadius: 2,
+    borderWidth: 0.6,
+    borderRadius: 10,
     marginBottom: 20,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#fff',
+    borderColor: color.MAIN_COLOR,
     color: '#000',
     fontSize: 13,
     textAlignVertical: 'top',

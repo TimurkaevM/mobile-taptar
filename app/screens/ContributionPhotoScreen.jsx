@@ -11,6 +11,7 @@ import {
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPhoto, getPhotoHistorian } from '../redux/ducks/contributionPhoto';
+import color from '../misc/color';
 
 const ContributionPhotoScreen = ({ navigation }) => {
   const { navigate } = navigation;
@@ -106,6 +107,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     shadowColor: '#000',
     backgroundColor: '#fff',
+    borderWidth: 0.7,
+    borderColor: color.FONT_LIGHT,
     shadowOffset: {
       width: 0,
       height: 1,
@@ -114,8 +117,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
-
   cardItem: {
+    // borderRadius: 20,
     width: '100%',
     height: '100%',
     resizeMode: 'contain',

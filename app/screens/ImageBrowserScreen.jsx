@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
 import { AssetsSelector } from 'expo-images-picker';
 import { Ionicons } from '@expo/vector-icons';
-import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -54,7 +53,7 @@ export default function ImageBrowserScreen(props) {
 
   const widgetSettings = useMemo(
     () => ({
-      getImageMetaData: false, // true might perform slower results but gives meta data and absolute path for ios users
+      getImageMetaData: true, // true might perform slower results but gives meta data and absolute path for ios users
       initialLoad: 100,
       assetsType: [mediaType],
       minSelection: 1,
@@ -129,7 +128,6 @@ export default function ImageBrowserScreen(props) {
   return (
     <SafeAreaProvider>
       <SafeAreaView forceInset={ForceInset} style={styles.container}>
-        <StatusBarPlaceHolder />
         <View style={styles.container}>
           <AssetsSelector
             Settings={widgetSettings}

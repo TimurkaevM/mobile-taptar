@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
   },
 
   cardMedia: {
-    overflow: 'hidden',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',

@@ -53,6 +53,7 @@ function ContentRoutes() {
         name="ModalAddFile"
         component={AddTagsScreen}
         options={{
+          gestureEnabled: false,
           headerShown: false,
         }}
       />
@@ -62,6 +63,7 @@ function ContentRoutes() {
           role === 'user' ? ChangeTagsScreen : ChangeHistorianTagsScreen
         }
         options={{
+          gestureEnabled: false,
           headerShown: false,
         }}
       />
