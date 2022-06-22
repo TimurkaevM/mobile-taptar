@@ -8,7 +8,7 @@ import BtnOpenModal from '../components/ProfileChangeComponents/BtnOpenModal';
 import BtnSaveChanges from '../components/ProfileChangeComponents/BtnSaveChanges';
 
 function ProfileChangeScreen({ navigation }) {
-  const { goBack } = navigation;
+  const { goBack, navigate } = navigation;
 
   const currentUser = useSelector((state) => state.user.currentUser);
 
@@ -20,7 +20,7 @@ function ProfileChangeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <PickUserAvatar />
+      <PickUserAvatar navigate={navigate} />
       <ProfileTextInputs
         name={name}
         email={email}

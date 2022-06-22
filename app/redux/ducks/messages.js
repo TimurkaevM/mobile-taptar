@@ -312,3 +312,113 @@ export const addFile = (file, format, id) => {
     }
   };
 };
+
+export const addBrowserFile = (file, format, id) => {
+  const form = new FormData();
+
+  form.append('file', {
+    uri: file[0].localUri || file[0].uri,
+    name: file[0].filename,
+    type: 'image/jpeg',
+  });
+  form.append('type', format);
+
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: FILE_POST_START });
+
+      if (value !== null) {
+        const response = await api.post(`/chat/${id}/upload`, form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${value}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            const totalLength = progressEvent.lengthComputable
+              ? progressEvent.total
+              : progressEvent.target.getResponseHeader('content-length') ||
+                progressEvent.target.getResponseHeader(
+                  'x-decompressed-content-length',
+                );
+            if (totalLength) {
+              let progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength,
+              );
+              dispatch({
+                type: 'change/progress',
+                payload: progress,
+              });
+            }
+          },
+        });
+        dispatch({
+          type: FILE_POST_SUCCESS,
+          payload: response.data,
+          format,
+        });
+      }
+    } catch (e) {
+      console.log(e.response);
+      dispatch({
+        type: FILE_POST_ERROR,
+      });
+    }
+  };
+};
+
+export const addBrowserFileIos = (file, format, id) => {
+  const form = new FormData();
+
+  form.append('file', {
+    uri: file[0].uri,
+    name: '1de34e9a-2542-4e17-950d-0f7c044699ec.jpg',
+    type: 'image/jpeg',
+  });
+  form.append('type', format);
+
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: FILE_POST_START });
+
+      if (value !== null) {
+        const response = await api.post(`/chat/${id}/upload`, form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${value}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            const totalLength = progressEvent.lengthComputable
+              ? progressEvent.total
+              : progressEvent.target.getResponseHeader('content-length') ||
+                progressEvent.target.getResponseHeader(
+                  'x-decompressed-content-length',
+                );
+            if (totalLength) {
+              let progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength,
+              );
+              dispatch({
+                type: 'change/progress',
+                payload: progress,
+              });
+            }
+          },
+        });
+        dispatch({
+          type: FILE_POST_SUCCESS,
+          payload: response.data,
+          format,
+        });
+      }
+    } catch (e) {
+      console.log(e.response);
+      dispatch({
+        type: FILE_POST_ERROR,
+      });
+    }
+  };
+};

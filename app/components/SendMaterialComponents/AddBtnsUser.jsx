@@ -93,7 +93,12 @@ const AddBtnsUser = (props) => {
               style={sendMaterialStyles.btnAddMedia}
               title="Pick an image from camera roll"
               onPress={() => {
-                props.navigate('ImageBrowserScreen', { media: 'photo' });
+                props.navigate('ImageBrowserScreen', {
+                  media: 'photo',
+                  min: 1,
+                  max: 5,
+                  currentRoom: 'materialUser',
+                });
               }}
             >
               <ImageAddBtnIcon />
@@ -135,7 +140,12 @@ const AddBtnsUser = (props) => {
               style={sendMaterialStyles.btnAddMedia}
               title="Pick an image from camera roll"
               onPress={() => {
-                props.navigate('ImageBrowserScreen', { media: 'video' });
+                props.navigate('VideoBrowserScreen', {
+                  media: 'video',
+                  min: 1,
+                  max: 5,
+                  currentRoom: 'materialUser',
+                });
               }}
             >
               <VideoAddBtnIcon />

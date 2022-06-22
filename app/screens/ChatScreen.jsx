@@ -24,7 +24,7 @@ import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 
 function ChatScreen({ route, navigation }) {
   const { params } = route;
-  const { goBack } = navigation;
+  const { goBack, navigate } = navigation;
 
   const dispatch = useDispatch();
 
@@ -121,7 +121,7 @@ function ChatScreen({ route, navigation }) {
       </View>
       <MessageSend contactId={params.id} />
       <DeleteMessageModal />
-      <ChatModal contactId={params.id} />
+      <ChatModal navigate={navigate} />
     </>
   );
 }

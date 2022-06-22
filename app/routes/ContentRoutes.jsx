@@ -13,6 +13,8 @@ import ChatScreen from '../screens/ChatScreen';
 import ProfileChangeScreen from '../screens/ProfileChangeScreen';
 import ChangeHistorianTagsScreen from '../screens/ChangeHistorianTagsScreen';
 import { useSelector } from 'react-redux';
+import ImageBrowserIosScreen from '../screens/ImageBrowserIosScreen';
+import VideoBrowserScreen from '../screens/VideoBrowserScreen';
 
 const Stack = createStackNavigator();
 
@@ -44,7 +46,16 @@ function ContentRoutes() {
       />
       <Stack.Screen
         name="ImageBrowserScreen"
-        component={ImageBrowserScreen}
+        component={
+          Platform.OS === 'ios' ? ImageBrowserIosScreen : ImageBrowserScreen
+        }
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="VideoBrowserScreen"
+        component={VideoBrowserScreen}
         options={{
           headerShown: false,
         }}

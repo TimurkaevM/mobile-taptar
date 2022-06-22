@@ -6,12 +6,12 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { MediaType } from 'expo-media-library';
 import {
-  postFilesGroup,
-  postMediaFile,
-  postMediaHistorian,
+  postImageIos,
+  postImagesIos,
+  postMediaHistorianIos,
 } from '../redux/ducks/uploadFiles';
-import { addAvatar } from '../redux/ducks/user';
-import { addBrowserFile } from '../redux/ducks/messages';
+import { addAvatarIos } from '../redux/ducks/user';
+import { addBrowserFileIos } from '../redux/ducks/messages';
 
 const ForceInset = {
   top: 'never',
@@ -23,7 +23,7 @@ const ForceInset = {
 
 // See => https://docs.expo.dev/versions/latest/sdk/media-library/#assetinfo
 
-export default function ImageBrowserScreen(props) {
+export default function ImageBrowserIosScreen(props) {
   const dispatch = useDispatch();
 
   const { navigate, goBack } = props.navigation;
@@ -37,20 +37,20 @@ export default function ImageBrowserScreen(props) {
   const onSuccess = (data) => {
     if (currentRoom === 'materialUser') {
       navigate('ModalAddFile');
-      if (data.length > 1) return dispatch(postFilesGroup(data, media, causId));
-      return dispatch(postMediaFile(data, media));
+      if (data.length > 1) return dispatch(postImagesIos(data, media, causId));
+      return dispatch(postImageIos(data, media));
     }
     if (currentRoom === 'materialHistorian') {
       navigate('ModalAddFile');
-      return dispatch(postMediaHistorian(data, media));
+      return dispatch(postMediaHistorianIos(data, media));
     }
     if (currentRoom === 'profile') {
       goBack();
-      return dispatch(addAvatar(data));
+      return dispatch(addAvatarIos(data));
     }
     if (currentRoom === 'chat') {
       goBack();
-      return dispatch(addBrowserFile(data, media, contactId));
+      return dispatch(addBrowserFileIos(data, media, contactId));
     }
   };
 
@@ -69,13 +69,22 @@ export default function ImageBrowserScreen(props) {
 
   const widgetSettings = useMemo(
     () => ({
-      getImageMetaData: false, // true might perform slower results but gives meta data and absolute path for ios users
+      getImageMetaData: true, // true might perform slower results but gives meta data and absolute path for ios users
       initialLoad: 100,
       assetsType: [MediaType.photo],
       minSelection: min,
       maxSelection: max,
       portraitCols: 4,
       landscapeCols: 4,
+    }),
+    [],
+  );
+
+  const widgetResize = useMemo(
+    () => ({
+      compress: 0.7,
+      base64: false,
+      saveTo: 'jpeg',
     }),
     [],
   );
@@ -140,6 +149,7 @@ export default function ImageBrowserScreen(props) {
             Errors={widgetErrors}
             Styles={widgetStyles}
             Navigator={widgetNavigator}
+            Resize={widgetResize}
           />
         </View>
       </SafeAreaView>

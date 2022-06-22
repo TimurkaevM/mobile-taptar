@@ -9,7 +9,7 @@ import { addFile } from '../../redux/ducks/messages';
 import AddFileRoomIcon from '../../SvgIcons/ChatIcons/AddFileRoomIcon';
 import { useDispatch, useSelector } from 'react-redux';
 
-const PickFileBtns = ({ closeModal, setPickRoomFiles }) => {
+const PickFileBtns = ({ closeModal, setPickRoomFiles, navigate }) => {
   const contactId = useSelector((state) => state.messages.room?.id);
 
   const dispatch = useDispatch();
@@ -39,6 +39,27 @@ const PickFileBtns = ({ closeModal, setPickRoomFiles }) => {
     }
   };
 
+  const pickImage = () => {
+    closeModal();
+    navigate('ImageBrowserScreen', {
+      media: 'photo',
+      min: 1,
+      max: 1,
+      currentRoom: 'chat',
+      contactId,
+    });
+  };
+  const pickVideo = () => {
+    closeModal();
+    navigate('VideoBrowserScreen', {
+      media: 'video',
+      min: 1,
+      max: 1,
+      currentRoom: 'chat',
+      contactId,
+    });
+  };
+
   return (
     <View
       style={{
@@ -49,7 +70,7 @@ const PickFileBtns = ({ closeModal, setPickRoomFiles }) => {
       <TouchableOpacity
         style={styles.btnAddMedia}
         title="Pick an image from camera roll"
-        onPress={() => pickFile('photo', 'image')}
+        onPress={pickImage}
       >
         <ImageAddBtnIcon />
         <Text
@@ -83,7 +104,7 @@ const PickFileBtns = ({ closeModal, setPickRoomFiles }) => {
       <TouchableOpacity
         style={styles.btnAddMedia}
         title="Pick an image from camera roll"
-        onPress={() => pickFile('video', 'video')}
+        onPress={pickVideo}
       >
         <VideoAddBtnIcon />
         <Text

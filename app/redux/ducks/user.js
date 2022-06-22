@@ -347,9 +347,58 @@ export const changeUserPass = (newPass, checkPass, oldPass) => {
 export const addAvatar = (file) => {
   const form = new FormData();
   form.append('photo', {
-    uri: file.uri,
-    name: file.name,
-    type: file.type,
+    uri: file[0].uri,
+    name: file[0].filename,
+    type: 'image/jpeg',
+  });
+
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: AVATAR__ADD__START });
+
+      if (value !== null) {
+        const response = await api.post('/user/profile/upload/avatar', form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${value}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            const totalLength = progressEvent.lengthComputable
+              ? progressEvent.total
+              : progressEvent.target.getResponseHeader('content-length') ||
+                progressEvent.target.getResponseHeader(
+                  'x-decompressed-content-length',
+                );
+            if (totalLength) {
+              let progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength,
+              );
+              dispatch({
+                type: AVATAR__ADD__PROGRESS,
+                payload: progress,
+              });
+            }
+          },
+        });
+        dispatch({
+          type: AVATAR__ADD__SUCCESS,
+          payload: response.data,
+        });
+      }
+    } catch (e) {
+      console.log(e.response.data);
+    }
+  };
+};
+
+export const addAvatarIos = (file) => {
+  const form = new FormData();
+  form.append('photo', {
+    uri: file[0].uri,
+    name: '1de34e9a-2542-4e17-950d-0f7c044699ec.jpg',
+    type: 'image/jpeg',
   });
 
   return async (dispatch) => {

@@ -4,13 +4,13 @@ import { AssetsSelector } from 'expo-images-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { MediaType } from 'expo-media-library';
 import {
   postFilesGroup,
   postMediaFile,
   postMediaHistorian,
 } from '../redux/ducks/uploadFiles';
-import { addAvatar } from '../redux/ducks/user';
 import { addBrowserFile } from '../redux/ducks/messages';
 
 const ForceInset = {
@@ -23,7 +23,7 @@ const ForceInset = {
 
 // See => https://docs.expo.dev/versions/latest/sdk/media-library/#assetinfo
 
-export default function ImageBrowserScreen(props) {
+export default function VideoBrowserScreen(props) {
   const dispatch = useDispatch();
 
   const { navigate, goBack } = props.navigation;
@@ -44,10 +44,6 @@ export default function ImageBrowserScreen(props) {
       navigate('ModalAddFile');
       return dispatch(postMediaHistorian(data, media));
     }
-    if (currentRoom === 'profile') {
-      goBack();
-      return dispatch(addAvatar(data));
-    }
     if (currentRoom === 'chat') {
       goBack();
       return dispatch(addBrowserFile(data, media, contactId));
@@ -67,11 +63,13 @@ export default function ImageBrowserScreen(props) {
     [],
   );
 
+  console.log(max);
+
   const widgetSettings = useMemo(
     () => ({
-      getImageMetaData: false, // true might perform slower results but gives meta data and absolute path for ios users
+      getImageMetaData: Platform.OS === 'ios', // true might perform slower results but gives meta data and absolute path for ios users
       initialLoad: 100,
-      assetsType: [MediaType.photo],
+      assetsType: [MediaType.video],
       minSelection: min,
       maxSelection: max,
       portraitCols: 4,

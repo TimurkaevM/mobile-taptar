@@ -66,13 +66,123 @@ export default function uploadFiles(state = initialState, action) {
   }
 }
 
-export const postFail = (file, format) => {
+export const postImageIos = (file, format) => {
   let newUri = Platform.OS === 'ios' ? file[0].localUri : file[0].uri;
   const form = new FormData();
 
   form.append('file', {
     uri: file[0].uri,
     name: '1de34e9a-2542-4e17-950d-0f7c044699ec.jpg',
+    type: 'image/jpeg',
+  });
+  form.append('type', format);
+
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: FILES_UPLOAD_START });
+
+      if (value !== null) {
+        const response = await api.post('/user/draft/file', form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${value}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            const totalLength = progressEvent.lengthComputable
+              ? progressEvent.total
+              : progressEvent.target.getResponseHeader('content-length') ||
+                progressEvent.target.getResponseHeader(
+                  'x-decompressed-content-length',
+                );
+            if (totalLength) {
+              let progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength,
+              );
+              dispatch({
+                type: CHANGE_PROGRESS,
+                payload: progress,
+              });
+            }
+          },
+        });
+        dispatch({
+          type: FILES_UPLOAD_SUCCESS,
+          payload: response.data,
+          format,
+        });
+      }
+    } catch (e) {
+      console.log(e.response);
+    }
+  };
+};
+
+export const postImagesIos = (files, format, causes) => {
+  const form = new FormData();
+  form.append('type', format);
+  for (let i = 0; i < files.length; i++) {
+    form.append(`files[${i}]`, {
+      uri: files[i].uri,
+      name: '1de34e9a-2542-4e17-950d-0f7c044699ec.jpg',
+      type: 'image/jpeg',
+    });
+  }
+
+  for (let i = 0; i < causes.length; i++) {
+    form.append(`causes[${i}]`, causes[i]);
+  }
+
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: FILES_UPLOAD_START });
+
+      if (value !== null) {
+        const response = await api.post('/user/draft/group', form, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${value}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            const totalLength = progressEvent.lengthComputable
+              ? progressEvent.total
+              : progressEvent.target.getResponseHeader('content-length') ||
+                progressEvent.target.getResponseHeader(
+                  'x-decompressed-content-length',
+                );
+            if (totalLength) {
+              let progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength,
+              );
+              dispatch({
+                type: CHANGE_PROGRESS,
+                payload: progress,
+              });
+            }
+          },
+        });
+        dispatch({
+          type: FILES_UPLOAD_SUCCESS,
+          payload: response.data,
+          format,
+        });
+      }
+    } catch (e) {
+      console.log(e.response);
+    }
+  };
+};
+
+export const postMediaFile = (file, format) => {
+  let newUri = Platform.OS === 'ios' ? file[0].localUri : file[0].uri;
+  const form = new FormData();
+
+  form.append('file', {
+    uri: file[0].localUri || file[0].uri,
+    name: file[0].filename,
     type: 'image/jpeg',
   });
   form.append('type', format);
@@ -228,12 +338,129 @@ export const postFileHistorian = (file, format) => {
   };
 };
 
+export const postMediaHistorian = (file, format) => {
+  const form = new FormData();
+  form.append('file', {
+    uri: file[0].localUri || file[0].uri,
+    name: file[0].filename,
+    type: 'image/jpeg',
+  });
+  form.append('type', format);
+
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: FILES_UPLOAD_START });
+
+      if (value !== null) {
+        const response = await api.post(
+          '/cabinet/material/send/draft/file',
+          form,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Bearer ${value}`,
+            },
+            onUploadProgress: (progressEvent) => {
+              const totalLength = progressEvent.lengthComputable
+                ? progressEvent.total
+                : progressEvent.target.getResponseHeader('content-length') ||
+                  progressEvent.target.getResponseHeader(
+                    'x-decompressed-content-length',
+                  );
+              if (totalLength) {
+                let progress = Math.round(
+                  (progressEvent.loaded * 100) / totalLength,
+                );
+                dispatch({
+                  type: CHANGE_PROGRESS,
+                  payload: progress,
+                });
+              }
+            },
+          },
+        );
+        dispatch({
+          type: FILES_UPLOAD_SUCCESS,
+          payload: response.data,
+          format,
+        });
+      }
+    } catch (e) {
+      console.log(e.response);
+      dispatch({
+        type: FILES_UPLOAD_ERROR,
+      });
+    }
+  };
+};
+
+export const postMediaHistorianIos = (file, format) => {
+  const form = new FormData();
+  form.append('file', {
+    uri: file[0].uri,
+    name: '1de34e9a-2542-4e17-950d-0f7c044699ec.jpg',
+    type: 'image/jpeg',
+  });
+  form.append('type', format);
+
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: FILES_UPLOAD_START });
+
+      if (value !== null) {
+        const response = await api.post(
+          '/cabinet/material/send/draft/file',
+          form,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Bearer ${value}`,
+            },
+            onUploadProgress: (progressEvent) => {
+              const totalLength = progressEvent.lengthComputable
+                ? progressEvent.total
+                : progressEvent.target.getResponseHeader('content-length') ||
+                  progressEvent.target.getResponseHeader(
+                    'x-decompressed-content-length',
+                  );
+              if (totalLength) {
+                let progress = Math.round(
+                  (progressEvent.loaded * 100) / totalLength,
+                );
+                dispatch({
+                  type: CHANGE_PROGRESS,
+                  payload: progress,
+                });
+              }
+            },
+          },
+        );
+        dispatch({
+          type: FILES_UPLOAD_SUCCESS,
+          payload: response.data,
+          format,
+        });
+      }
+    } catch (e) {
+      console.log(e.response);
+      dispatch({
+        type: FILES_UPLOAD_ERROR,
+      });
+    }
+  };
+};
+
 export const postFilesGroup = (files, format, causes) => {
   const form = new FormData();
   form.append('type', format);
   for (let i = 0; i < files.length; i++) {
     form.append(`files[${i}]`, {
       uri: files[i].localUri || files[i].uri,
+      name: files[i].filename,
       type: 'image/png',
     });
   }

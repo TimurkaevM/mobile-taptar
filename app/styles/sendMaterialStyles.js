@@ -21,7 +21,7 @@ export const sendMaterialStyles = StyleSheet.create({
     borderRadius: 30,
     marginBottom: 50,
     backgroundColor: '#ffffff',
-    color: '#4686cc',
+    color: '#000',
     fontSize: 13,
     borderWidth: 0.5,
     borderColor: '#4686cc',
@@ -44,6 +44,7 @@ export const sendMaterialStyles = StyleSheet.create({
     color: '#000',
     fontSize: 13,
     textAlignVertical: 'top',
+    borderColor: '#4686cc',
   },
 
   btnAdd: {

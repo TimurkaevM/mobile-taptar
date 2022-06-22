@@ -90,7 +90,14 @@ const AddBtnsHistorian = (props) => {
             <TouchableOpacity
               style={sendMaterialStyles.btnAddMedia}
               title="Pick an image from camera roll"
-              onPress={() => pickFile('photo', 'image')}
+              onPress={() => {
+                props.navigate('ImageBrowserScreen', {
+                  media: 'photo',
+                  min: 1,
+                  max: 1,
+                  currentRoom: 'materialHistorian',
+                });
+              }}
             >
               <ImageAddBtnIcon />
               <Text
@@ -130,7 +137,14 @@ const AddBtnsHistorian = (props) => {
             <TouchableOpacity
               style={sendMaterialStyles.btnAddMedia}
               title="Pick an image from camera roll"
-              onPress={() => pickFile('video', 'video')}
+              onPress={() => {
+                props.navigate('VideoBrowserScreen', {
+                  media: 'video',
+                  min: 1,
+                  max: 1,
+                  currentRoom: 'materialHistorian',
+                });
+              }}
             >
               <VideoAddBtnIcon />
               <Text

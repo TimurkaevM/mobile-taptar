@@ -11,7 +11,7 @@ import { closeChatModal } from '../../redux/ducks/application';
 import PickFileBtns from './PickFileBtns';
 import RoomFiles from './RoomFiles';
 
-const ChatModal = ({ contactId }) => {
+const ChatModal = ({ navigate }) => {
   const dispatch = useDispatch();
 
   const [pickRoomFiles, setPickRoomFiles] = useState(false);
@@ -35,6 +35,7 @@ const ChatModal = ({ contactId }) => {
           <PickFileBtns
             closeModal={closeModal}
             setPickRoomFiles={setPickRoomFiles}
+            navigate={navigate}
           />
         )}
       </View>

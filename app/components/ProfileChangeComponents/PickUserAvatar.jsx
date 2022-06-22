@@ -7,7 +7,7 @@ import AvatarAddIcon from '../../SvgIcons/AvatarIcon/AvatarAddIcon';
 import { addAvatar } from '../../redux/ducks/user';
 import color from '../../misc/color';
 
-function PickUserAvatar() {
+function PickUserAvatar(props) {
   const dispatch = useDispatch();
 
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -67,7 +67,17 @@ function PickUserAvatar() {
   // };
 
   return (
-    <TouchableOpacity onPress={pickPhoto} style={styles.avatarContainer}>
+    <TouchableOpacity
+      onPress={() => {
+        props.navigate('ImageBrowserScreen', {
+          media: 'photo',
+          min: 1,
+          max: 1,
+          currentRoom: 'profile',
+        });
+      }}
+      style={styles.avatarContainer}
+    >
       {currentUser.avatar ? (
         <Image
           style={styles.avatar}
