@@ -97,8 +97,12 @@ const ContributionMaterialScreen = ({ navigation }) => {
     );
   }
 
-  if (error) {
-    return <Text>`${error}`</Text>;
+  if (!materials.length) {
+    return (
+      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+        <Text>Список файлов пуст</Text>
+      </View>
+    );
   }
 
   return (

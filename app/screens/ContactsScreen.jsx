@@ -65,6 +65,14 @@ function ContactsScreen({ navigation }) {
     );
   }
 
+  if (!contacts.length) {
+    return (
+      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+        <Text>Список контактов пуст</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: '#fafafa', alignItems: 'center' }}>
       <StatusBarPlaceHolder />

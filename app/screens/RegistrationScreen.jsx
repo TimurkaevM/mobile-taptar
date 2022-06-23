@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registration, ChangeError } from '../redux/ducks/user';
+import { registration, ChangeErrorCreate } from '../redux/ducks/user';
 import {
   TouchableOpacity,
   Text,
@@ -14,66 +14,95 @@ import { registrStyles } from '../styles/registrStyles';
 function RegistrationScreen() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.user.loading);
-  const error = useSelector((state) => state.user.error);
+  const error = useSelector((state) => state.user.errorCreate);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmed, setConfirmed] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+  const [nameError, setNameError] = useState(null);
 
   const emailChange = (e) => {
-    setEmailError('');
-    dispatch(ChangeError());
+    if (error) {
+      dispatch(ChangeErrorCreate());
+      setEmailError(null);
+      return;
+    }
+    if (emailError) {
+      setEmailError(null);
+      return;
+    }
+    return;
   };
   const nameChange = (e) => {
-    setNameError('');
+    if (error) {
+      dispatch(ChangeErrorCreate());
+      setNameError(null);
+      return;
+    }
+    if (nameError) {
+      setNameError(null);
+      return;
+    }
+    return;
   };
   const passwordChange = (e) => {
-    setPasswordError('');
+    if (error) {
+      dispatch(ChangeErrorCreate());
+      setPasswordError(null);
+      return;
+    }
+    if (passwordError) {
+      setPasswordError(null);
+      return;
+    }
+    return;
   };
   const confirmedChange = (e) => {
-    setPasswordError('');
+    if (error) {
+      dispatch(ChangeErrorCreate());
+      setPasswordError(null);
+      return;
+    }
+    if (passwordError) {
+      setPasswordError(null);
+      return;
+    }
+    return;
   };
 
   const handleClick = (e) => {
-    // e.preventDefault();
-    // const re =
-    //   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    // const letters = /^[А-Яа-яёЁ]+$/;
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    // if (error !== null) {
-    //   setEmailError(error);
-    //   dispatch(ChangeError());
-    // }
-    // if (!name) {
-    //   return setNameError('Не может быть пустым');
-    // }
-    // if (!email) {
-    //   return setEmailError('Не может быть пустым');
-    // }
-    // if (!re.test(String(email).toLowerCase())) {
-    //   return setEmailError('Некорректные данные');
-    // }
-    // if (!password) {
-    //   return setPasswordError('Не может быть пустым');
-    // }
-    // if (!confirmed) {
-    //   return setPasswordError('Не может быть пустым');
-    // }
-    // if (password.length < 8) {
-    //   return setPasswordError('минимум 8 символов');
-    // }
-    // if (letters.test(String(password).toLowerCase())) {
-    //   return setPasswordError(
-    //     'Можно использовать только Латинские буквы и цифры',
-    //   );
-    // }
-    if (email && password && name) {
-      dispatch(registration(name, email, password, confirmed));
+    if (!name) {
+      return setNameError('Имя не может быть пустым');
     }
+    if (name.length < 3) {
+      return setNameError('В имени не может быть меньше 3 символов');
+    }
+    if (!email) {
+      return setEmailError('Email не может быть пустым');
+    }
+    if (!re.test(String(email).toLowerCase())) {
+      return setEmailError('Некорректные данные email');
+    }
+    if (!password) {
+      return setPasswordError('пароль не может быть пустым');
+    }
+    if (password !== confirmed) {
+      return setPasswordError('Неверный пароль подтверждения');
+    }
+    if (password.length < 6) {
+      return setPasswordError('Пароль должен содержать минимум 6 символов');
+    }
+    if (password.length !== 0 && /\s/.test(password)) {
+      return setPasswordError('В пароле не может быть пробелов');
+    }
+
+    dispatch(registration(name, email, password, confirmed));
   };
 
   return (
@@ -145,6 +174,26 @@ function RegistrationScreen() {
               </Text>
             </TouchableOpacity>
           </View>
+          {emailError && (
+            <Text style={{ textAlign: 'center', marginTop: 15, color: 'red' }}>
+              {emailError}
+            </Text>
+          )}
+          {passwordError && (
+            <Text style={{ textAlign: 'center', marginTop: 15, color: 'red' }}>
+              {passwordError}
+            </Text>
+          )}
+          {nameError && (
+            <Text style={{ textAlign: 'center', marginTop: 15, color: 'red' }}>
+              {nameError}
+            </Text>
+          )}
+          {error && (
+            <Text style={{ textAlign: 'center', marginTop: 15, color: 'red' }}>
+              {error}
+            </Text>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

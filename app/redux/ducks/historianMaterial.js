@@ -288,19 +288,6 @@ export default function historianMaterial(state = initialState, action) {
                 bookmark: action.bookmark,
                 albums: action.albums,
               };
-              item.processed = true;
-              item.type = action.format;
-              item.title = action.title;
-              item.year = action.year;
-              item.author = action.author;
-              item.location = action.location;
-              item.comment = action.comment;
-              item.tags_century = action.centuryClient;
-              item.tags_information = action.informationClient;
-              item.effects = action.effects;
-              item.tags_credibility = action.credibilityClient;
-              item.bookmark = action.bookmark;
-              item.albums = action.albums;
             }
 
             return item;

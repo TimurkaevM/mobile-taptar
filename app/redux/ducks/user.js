@@ -13,7 +13,8 @@ export const CREATE_START = 'user/create/start';
 export const CREATE_SUCCESS = 'user/create/success';
 export const CREATE_ERROR = 'user/create/error';
 export const LOGOUT = 'user/logout';
-export const CHANGE_ERROR = 'error/change';
+export const CHANGE_ERROR_LOGIN = 'error/change/login';
+export const CHANGE_ERROR_CREATE = 'error/change/create';
 
 const PROFILE__CHANGE__START = 'profile/change/start';
 const PROFILE__CHANGE__SUCCESS = 'profile/change/success';
@@ -37,9 +38,9 @@ const initialState = {
   isAuth: false,
   loading: false,
   loadingAuth: false,
-  message: '',
   token: null,
-  error: '',
+  errorCreate: false,
+  errorLogin: null,
 };
 
 export default function user(state = initialState, action) {
@@ -72,7 +73,7 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        errorLogin: action.payload.message,
       };
 
     case AUTH_START:
@@ -133,7 +134,7 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        errorCreate: action.payload.email[0],
       };
 
     case PROFILE__CHANGE__SUCCESS:
@@ -181,10 +182,16 @@ export default function user(state = initialState, action) {
         token: null,
       };
 
-    case CHANGE_ERROR:
+    case CHANGE_ERROR_LOGIN:
       return {
         ...state,
-        error: null,
+        errorLogin: null,
+      };
+
+    case CHANGE_ERROR_CREATE:
+      return {
+        ...state,
+        errorCreate: null,
       };
 
     default:
@@ -245,7 +252,7 @@ export const registration = (name, email, password, password_confirmation) => {
       .catch((e) => {
         dispatch({
           type: CREATE_ERROR,
-          payload: e.response.data.message,
+          payload: e.response.data.errors,
         });
         console.error(e.response.data);
       });
@@ -278,7 +285,7 @@ export const login = (email, password) => {
           type: LOGIN_ERROR,
           payload: e.response.data,
         });
-        console.error(e.response.data);
+        console.log(e.response.data);
       });
   };
 };
@@ -448,8 +455,14 @@ export const userLogOut = () => {
   };
 };
 
-export const ChangeError = () => {
+export const ChangeErrorLogin = () => {
   return {
-    type: CHANGE_ERROR,
+    type: CHANGE_ERROR_LOGIN,
+  };
+};
+
+export const ChangeErrorCreate = () => {
+  return {
+    type: CHANGE_ERROR_CREATE,
   };
 };

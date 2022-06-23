@@ -63,6 +63,14 @@ const ContributionAudioScreen = ({ navigation }) => {
     );
   }
 
+  if (!audios.length) {
+    return (
+      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+        <Text>Список файлов пуст</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center' }}>
       <FlatList
