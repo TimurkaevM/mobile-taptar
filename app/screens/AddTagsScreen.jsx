@@ -17,6 +17,8 @@ import MediaBox from '../components/AddTagsComponents/MediaBox';
 import MaterialText from '../components/AddTagsComponents/MaterialText';
 import TagsCredibility from '../components/AddTagsComponents/TagsCredibility';
 import BookmarkBtn from '../components/AddTagsComponents/BookmarkBtn';
+import AddEffects from '../components/AddTagsComponents/AddEffects';
+import ModalEffect from '../components/AddTagsComponents/ModalEffect';
 
 const AddTagsScreen = (props) => {
   const { navigate } = props.navigation;
@@ -92,6 +94,7 @@ const AddTagsScreen = (props) => {
           ) : (
             <MediaBox />
           )}
+          {role === 'user' ? null : <AddEffects />}
           <CommentClient
             setCommentError={setCommentError}
             commentError={commentError}
@@ -106,6 +109,7 @@ const AddTagsScreen = (props) => {
           <TagsCenturies />
         </ScrollView>
       </View>
+      {role === 'user' ? null : <ModalEffect />}
     </>
   );
 };

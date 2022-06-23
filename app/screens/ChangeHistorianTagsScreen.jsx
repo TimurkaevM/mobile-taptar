@@ -11,6 +11,8 @@ import MediaBox from '../components/ChangeTagsComponents/MediaBox';
 import MaterialText from '../components/ChangeTagsComponents/MaterialText';
 import { useSelector } from 'react-redux';
 import BookmarkBtn from '../components/ChangeTagsComponents/BookmarkBtn';
+import AddEffects from '../components/ChangeTagsComponents/AddEffects';
+import ModalEffect from '../components/ChangeTagsComponents/ModalEffect';
 
 const ChangeHistorianTagsScreen = (props) => {
   const { navigate } = props.navigation;
@@ -105,6 +107,7 @@ const ChangeHistorianTagsScreen = (props) => {
           ) : (
             <MediaBox item={item} />
           )}
+          <AddEffects effectsUser={effects} />
           <CommentClient
             setCommentError={setCommentError}
             commentError={commentError}
@@ -127,6 +130,7 @@ const ChangeHistorianTagsScreen = (props) => {
           />
         </ScrollView>
       </View>
+      <ModalEffect effectsUser={effects} setEffectsUser={setEffects} />
     </>
   );
 };

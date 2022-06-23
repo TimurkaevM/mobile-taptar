@@ -139,25 +139,26 @@ export const getAllTags = () => {
 };
 
 export const getEffects = () => {
-  return (dispatch) => {
-    dispatch({
-      type: EFFECTS_START,
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get('/tags/effects', {
-        headers: { Authorization: `Bearer ${AsyncStorage.getItem('token')}` },
-      })
-      .then((response) => response.data)
-      .then((data) => {
+      dispatch({
+        type: EFFECTS_START,
+      });
+
+      if (value !== null) {
+        const response = await api.get('/tags/effects', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
         dispatch({
           type: EFFECTS_SUCCESS,
-          payload: data,
+          payload: response.data,
         });
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 };
 

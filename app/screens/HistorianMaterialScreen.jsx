@@ -12,7 +12,7 @@ import MaterialText from '../components/SendMaterialComponents/MaterialText';
 import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 import SendMaterialHeader from '../components/SendMaterialComponents/SendMaterialHeader';
 import MaterialError from '../components/SendMaterialComponents/MaterialError';
-import { getAllTags, getCauses } from '../redux/ducks/tags';
+import { getAllTags, getCauses, getEffects } from '../redux/ducks/tags';
 import {
   changedIsMaterialHistorian,
   getHistorianDraftFiles,
@@ -43,6 +43,7 @@ function HistorianMaterialScreen(props) {
   }, [dispatch, draftError]);
 
   useEffect(() => {
+    dispatch(getEffects());
     dispatch(getAllTags());
     dispatch(getCauses());
   }, [dispatch]);

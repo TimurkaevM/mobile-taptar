@@ -3,6 +3,11 @@ const initialState = {
     open: false,
     item: null,
   },
+  modalEffect: {
+    open: false,
+    item: null,
+    check: null,
+  },
   deleteMessageModal: {
     open: false,
     roomId: null,
@@ -14,6 +19,8 @@ const initialState = {
 
 const SEND_OPEN_MODAL_DELETE = 'send/open/modal/delete';
 const SEND_CLOSE_MODAL_DELETE = 'send/close/modal/delete';
+const MODAL_EFFECT_OPEN = 'modal/effect/open';
+const MODAL_EFFECT_CLOSE = 'modal/effect/close';
 
 const MESSAGE_OPEN_MODAL_DELETE = 'message/open/modal/delete';
 const MESSAGE_CLOSE_MODAL_DELETE = 'message/close/modal/delete';
@@ -41,6 +48,26 @@ export default function application(state = initialState, action) {
         sendModalDelete: {
           open: false,
           item: null,
+        },
+      };
+
+    case MODAL_EFFECT_OPEN:
+      return {
+        ...state,
+        modalEffect: {
+          open: true,
+          item: action.payload.item,
+          check: action.payload.check,
+        },
+      };
+
+    case MODAL_EFFECT_CLOSE:
+      return {
+        ...state,
+        modalEffect: {
+          open: false,
+          item: null,
+          check: null,
         },
       };
 
@@ -103,6 +130,19 @@ export const openSendModalDelete = (item) => {
 export const closeSendModalDelete = () => {
   return {
     type: SEND_CLOSE_MODAL_DELETE,
+  };
+};
+
+export const openModalEffect = (item) => {
+  return {
+    type: MODAL_EFFECT_OPEN,
+    payload: item,
+  };
+};
+
+export const closeModalEffect = () => {
+  return {
+    type: MODAL_EFFECT_CLOSE,
   };
 };
 
