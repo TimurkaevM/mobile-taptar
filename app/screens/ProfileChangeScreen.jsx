@@ -1,5 +1,12 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  KeyboardAvoidingView,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import { useSelector } from 'react-redux';
 import PassChangeModal from '../components/ProfileChangeComponents/PassChangeModal';
 import PickUserAvatar from '../components/ProfileChangeComponents/PickUserAvatar';
@@ -19,40 +26,51 @@ function ProfileChangeScreen({ navigation }) {
   const [nameError, setNameError] = React.useState(null);
 
   return (
-    <View style={styles.container}>
-      <PickUserAvatar navigate={navigate} />
-      <ProfileTextInputs
-        name={name}
-        email={email}
-        setEmail={setEmail}
-        setEmailError={setEmailError}
-        setName={setName}
-        setNameError={setNameError}
-        nameError={nameError}
-        emailError={emailError}
-      />
-      <BtnOpenModal />
-      <BtnSaveChanges
-        name={name}
-        email={email}
-        setEmailError={setEmailError}
-        setNameError={setNameError}
-        goBack={goBack}
-      />
-      <PassChangeModal />
-      {emailError && (
-        <Text style={{ marginTop: 20, color: 'red' }}>{emailError}</Text>
-      )}
-      {nameError && (
-        <Text style={{ marginTop: 20, color: 'red' }}>{nameError}</Text>
-      )}
-    </View>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView>
+        <View style={styles.container}>
+          <PickUserAvatar navigate={navigate} />
+          <ProfileTextInputs
+            name={name}
+            email={email}
+            setEmail={setEmail}
+            setEmailError={setEmailError}
+            setName={setName}
+            setNameError={setNameError}
+            nameError={nameError}
+            emailError={emailError}
+          />
+          <BtnOpenModal />
+          <BtnSaveChanges
+            name={name}
+            email={email}
+            setEmailError={setEmailError}
+            setNameError={setNameError}
+            goBack={goBack}
+          />
+          <PassChangeModal />
+          {emailError && (
+            <Text style={{ marginTop: 20, color: 'red' }}>{emailError}</Text>
+          )}
+          {nameError && (
+            <Text style={{ marginTop: 20, color: 'red' }}>{nameError}</Text>
+          )}
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: width,
+    height: height - 50,
+    justifyContent: 'center',
     backgroundColor: '#f5f5f5',
     alignItems: 'center',
   },

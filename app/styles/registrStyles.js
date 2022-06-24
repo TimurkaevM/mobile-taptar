@@ -1,23 +1,16 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export const registrStyles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#f1f1f1',
-  },
-
   container: {
-    justifyContent: 'center',
-    paddingTop: 40,
-    padding: 20,
+    flexGrow: 1,
   },
 
-  auth: {
-    width: '100%',
-    height: '100%',
-    fontSize: 16,
-    fontWeight: '300',
+  content: {
+    width: width,
+    height: height - 50,
+    justifyContent: 'center',
   },
 
   or: {
@@ -28,6 +21,9 @@ export const registrStyles = StyleSheet.create({
   },
 
   title: {
+    width: width > 450 ? 380 : width - 80,
+    alignSelf: 'center',
+    textAlign: 'left',
     fontWeight: '400',
     textTransform: 'capitalize',
     fontSize: 15,
@@ -37,7 +33,8 @@ export const registrStyles = StyleSheet.create({
   },
 
   input: {
-    width: '100%',
+    width: width > 450 ? 380 : width - 80,
+    alignSelf: 'center',
     height: 50,
     paddingLeft: 15,
     borderWidth: 0,
@@ -51,7 +48,6 @@ export const registrStyles = StyleSheet.create({
   },
 
   inputFocus: {
-    // width: "100%",
     height: 35,
     paddingLeft: 15,
     borderWidth: 0,
@@ -63,7 +59,6 @@ export const registrStyles = StyleSheet.create({
   },
 
   btn: {
-    marginHorizontal: 'auto',
     width: 200,
     borderWidth: 0,
     borderRadius: 20,
@@ -71,12 +66,4 @@ export const registrStyles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
-
-  // .auth button:hover {
-  //   box-shadow: inset 0 0 12px 2px rgba(0, 0, 0, 0.5);
-  // }
-
-  // .auth button:active {
-  //   box-shadow: inset 0 0 12px 2px rgba(0, 0, 0, 0.5);
-  // }
 });

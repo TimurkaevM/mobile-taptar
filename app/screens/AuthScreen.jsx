@@ -1,5 +1,12 @@
 import React from 'react';
-import { Text, TextInput, View, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, ChangeErrorLogin } from '../redux/ducks/user';
 
@@ -66,26 +73,28 @@ function AuthScreen() {
   };
 
   return (
-    <View style={authStyles.container}>
+    <KeyboardAvoidingView
+      style={authStyles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <Text style={authStyles.title}>Email</Text>
       <TextInput
         style={authStyles.input}
-        type="email"
-        name="email"
         value={email}
         onChangeText={setEmail}
         onChange={emailChange}
+        placeholder="taptar@mail.ru"
       />
       <Text style={authStyles.title} htmlFor="password">
         Пароль
       </Text>
       <TextInput
         style={authStyles.input}
-        type="password"
-        name={password}
         value={password}
         onChangeText={setPassword}
         onChange={passChange}
+        secureTextEntry={true}
+        placeholder="1234567"
       />
       <View
         style={{
@@ -125,7 +134,7 @@ function AuthScreen() {
           {error}
         </Text>
       )}
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

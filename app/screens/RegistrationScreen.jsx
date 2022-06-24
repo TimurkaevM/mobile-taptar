@@ -7,7 +7,8 @@ import {
   TextInput,
   ScrollView,
   View,
-  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { registrStyles } from '../styles/registrStyles';
 
@@ -106,15 +107,16 @@ function RegistrationScreen() {
   };
 
   return (
-    <SafeAreaView style={registrStyles.scrollView}>
-      <ScrollView contentContainerStyle={registrStyles.center}>
-        <View style={registrStyles.container}>
+    <KeyboardAvoidingView
+      style={registrStyles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView>
+        <View style={registrStyles.content}>
           <Text style={registrStyles.title}>Имя</Text>
           <TextInput
             style={registrStyles.input}
-            placeholder="name"
-            type="name"
-            name="name"
+            placeholder="Введите логин"
             value={name}
             onChangeText={setName}
             onChange={nameChange}
@@ -122,9 +124,7 @@ function RegistrationScreen() {
           <Text style={registrStyles.title}>Email</Text>
           <TextInput
             style={registrStyles.input}
-            placeholder="email"
-            type="email"
-            name="email"
+            placeholder="taptar@mail.ru"
             value={email}
             onChangeText={setEmail}
             onChange={emailChange}
@@ -132,29 +132,25 @@ function RegistrationScreen() {
           <Text style={registrStyles.title}>Пароль</Text>
           <TextInput
             style={registrStyles.input}
-            type="password"
-            name={password}
             value={password}
+            placeholder="1234567"
             onChangeText={setPassword}
             onChange={passwordChange}
+            secureTextEntry={true}
           />
           <Text style={registrStyles.title}>Подтверждение пароля</Text>
           <TextInput
             style={registrStyles.input}
-            type="password"
-            name={confirmed}
             value={confirmed}
+            placeholder="1234567"
             onChangeText={setConfirmed}
             onChange={confirmedChange}
+            secureTextEntry={true}
           />
-          {/* <button className={style.google} disabled={loading} onClick={handleClick}>
-        Google
-      </button>
-      <div className={style.or}>или</div> */}
           <View
             style={{
               alignItems: 'center',
-              marginTop: 23,
+              marginTop: 10,
             }}
           >
             <TouchableOpacity
@@ -196,7 +192,7 @@ function RegistrationScreen() {
           )}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 

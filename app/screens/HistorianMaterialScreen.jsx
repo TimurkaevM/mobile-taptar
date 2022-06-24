@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react';
-import { ScrollView, StyleSheet, ActivityIndicator, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  ActivityIndicator,
+  View,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import AddBtnsHistorian from '../components/SendMaterialComponents/AddBtnsHistorian';
 import DeleteFileModal from '../components/SendMaterialComponents/DeleteFileModal';
@@ -59,7 +65,10 @@ function HistorianMaterialScreen(props) {
   return draftError ? (
     <MaterialError />
   ) : (
-    <>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <StatusBarPlaceHolder />
       <SendMaterialHeader />
       <ScrollView>
@@ -76,7 +85,7 @@ function HistorianMaterialScreen(props) {
         {audio.length ? <AudioList audio={audio} navigate={navigate} /> : null}
         <DeleteFileModal />
       </ScrollView>
-    </>
+    </KeyboardAvoidingView>
   );
 }
 

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import color from '../../misc/color';
@@ -73,45 +74,50 @@ const ModalEffect = () => {
         closeModal();
       }}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <CloseModalEffectsBtn onClose={closeModal} />
-          <View style={styles.titleContainer}>
-            <MainEffectIcons color="#fff" title={item?.title} size={25} />
-            <Text style={styles.modalText}>{item?.title}</Text>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <CloseModalEffectsBtn onClose={closeModal} />
+            <View style={styles.titleContainer}>
+              <MainEffectIcons color="#fff" title={item?.title} size={25} />
+              <Text style={styles.modalText}>{item?.title}</Text>
+            </View>
+            <TextInput
+              multiline
+              numberOfLines={4}
+              style={styles.inputComment}
+              type="password"
+              name="comment"
+              value={comment}
+              placeholder="Введите комментарий..."
+              onChangeText={setComment}
+            />
+            {!check ? (
+              <TouchableOpacity style={styles.button} onPress={addEffectFile}>
+                <Text style={styles.textStyle}>Добавить задачу</Text>
+              </TouchableOpacity>
+            ) : (
+              <>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={changeEffectFile}
+                >
+                  <Text style={styles.textStyle}>Изменить задачу</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={removeEffectFile}
+                >
+                  <Text style={styles.textStyle}>Удалить задачу</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
-          <TextInput
-            multiline
-            numberOfLines={4}
-            style={styles.inputComment}
-            type="password"
-            name="comment"
-            value={comment}
-            placeholder="Введите комментарий..."
-            onChangeText={setComment}
-          />
-          {!check ? (
-            <TouchableOpacity style={styles.button} onPress={addEffectFile}>
-              <Text style={styles.textStyle}>Добавить задачу</Text>
-            </TouchableOpacity>
-          ) : (
-            <>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={changeEffectFile}
-              >
-                <Text style={styles.textStyle}>Изменить задачу</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={removeEffectFile}
-              >
-                <Text style={styles.textStyle}>Удалить задачу</Text>
-              </TouchableOpacity>
-            </>
-          )}
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };

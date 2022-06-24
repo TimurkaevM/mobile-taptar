@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     borderRadius: 150,
     backgroundColor: '#fff',
     padding: 3,
-    marginTop: 20,
     marginBottom: 15,
   },
   avatar: {

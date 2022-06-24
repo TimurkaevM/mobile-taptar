@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react';
-import { ScrollView, StyleSheet, ActivityIndicator, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  ActivityIndicator,
+  View,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import AddBtnsUser from '../components/SendMaterialComponents/AddBtnsUser';
 import DeleteFileModal from '../components/SendMaterialComponents/DeleteFileModal';
@@ -65,7 +71,10 @@ function SendMaterialScreen(props) {
   return draftError ? (
     <MaterialError />
   ) : (
-    <>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <StatusBarPlaceHolder />
       <SendMaterialHeader />
       <ScrollView>
@@ -84,7 +93,7 @@ function SendMaterialScreen(props) {
         {audios.length ? <AudiosList navigate={navigate} /> : null}
         <DeleteFileModal />
       </ScrollView>
-    </>
+    </KeyboardAvoidingView>
   );
 }
 

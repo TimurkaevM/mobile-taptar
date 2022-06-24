@@ -8,6 +8,7 @@ import {
   View,
   Dimensions,
   TextInput,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import color from '../../misc/color';
@@ -106,63 +107,72 @@ const PassChangeModal = () => {
         closeModal();
       }}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <TouchableOpacity onPress={closeModal} style={styles.btnClose}>
-            <CloseIcon />
-          </TouchableOpacity>
-          <View style={styles.infoContainer}>
-            <Text style={styles.title}>Новый пароль</Text>
-            <TextInput
-              style={styles.subTitle}
-              type="name"
-              name="newPass"
-              value={newPass}
-              onChangeText={setNewPass}
-              onChange={handleChangeNewPass}
-            />
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity onPress={closeModal} style={styles.btnClose}>
+              <CloseIcon />
+            </TouchableOpacity>
+            <View style={styles.infoContainer}>
+              <Text style={styles.title}>Новый пароль</Text>
+              <TextInput
+                style={styles.subTitle}
+                type="name"
+                name="newPass"
+                value={newPass}
+                onChangeText={setNewPass}
+                onChange={handleChangeNewPass}
+              />
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.title}>Повторить пароль</Text>
+              <TextInput
+                style={styles.subTitle}
+                type="name"
+                name="checkPass"
+                value={checkPass}
+                onChangeText={setCheckPass}
+                onChange={handleChangeCheckPass}
+              />
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.title}>Старый пароль</Text>
+              <TextInput
+                style={styles.subTitle}
+                type="name"
+                name="oldPass"
+                value={oldPass}
+                onChangeText={setOldPass}
+                onChange={handleChangeOldPass}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={changeCurrentUserPass}
+              style={styles.btnSave}
+            >
+              <Text style={styles.btnSaveText}>Сменить пароль</Text>
+            </TouchableOpacity>
+            {newPassError && (
+              <Text style={{ marginTop: 20, color: 'red' }}>
+                {newPassError}
+              </Text>
+            )}
+            {oldPassError && (
+              <Text style={{ marginTop: 20, color: 'red' }}>
+                {oldPassError}
+              </Text>
+            )}
+            {checkPassError && (
+              <Text style={{ marginTop: 20, color: 'red' }}>
+                {checkPassError}
+              </Text>
+            )}
           </View>
-          <View style={styles.infoContainer}>
-            <Text style={styles.title}>Повторить пароль</Text>
-            <TextInput
-              style={styles.subTitle}
-              type="name"
-              name="checkPass"
-              value={checkPass}
-              onChangeText={setCheckPass}
-              onChange={handleChangeCheckPass}
-            />
-          </View>
-          <View style={styles.infoContainer}>
-            <Text style={styles.title}>Старый пароль</Text>
-            <TextInput
-              style={styles.subTitle}
-              type="name"
-              name="oldPass"
-              value={oldPass}
-              onChangeText={setOldPass}
-              onChange={handleChangeOldPass}
-            />
-          </View>
-          <TouchableOpacity
-            onPress={changeCurrentUserPass}
-            style={styles.btnSave}
-          >
-            <Text style={styles.btnSaveText}>Сменить пароль</Text>
-          </TouchableOpacity>
-          {newPassError && (
-            <Text style={{ marginTop: 20, color: 'red' }}>{newPassError}</Text>
-          )}
-          {oldPassError && (
-            <Text style={{ marginTop: 20, color: 'red' }}>{oldPassError}</Text>
-          )}
-          {checkPassError && (
-            <Text style={{ marginTop: 20, color: 'red' }}>
-              {checkPassError}
-            </Text>
-          )}
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
