@@ -10,8 +10,9 @@ import {
   Image,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import ContactHeader from '../components/ContactsComponent/ContactHeader';
 import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
-import { loadContacts } from '../redux/ducks/contacts';
+import { loadContacts, minusCountMessages } from '../redux/ducks/contacts';
 import AvatarIcon from '../SvgIcons/AvatarIcon/AvatarIcon';
 
 function ContactsScreen({ navigation }) {
@@ -19,8 +20,22 @@ function ContactsScreen({ navigation }) {
 
   const dispatch = useDispatch();
 
-  const contacts = useSelector((state) => state.contacts.contacts);
+  const contacts = useSelector((state) => {
+    return state.contacts.contacts.filter(
+      (contact) =>
+        contact.title
+          .toUpperCase()
+          .indexOf(state.contacts.filter.toUpperCase()) > -1,
+    );
+  });
   const loading = useSelector((state) => state.contacts.loading);
+
+  const openCurrentRoom = (contactId, count) => {
+    navigate('ChatScreen', { id: contactId })
+    dispatch(
+      minusCountMessages(+contactId, count),
+    );
+  };
 
   useEffect(() => {
     dispatch(loadContacts());
@@ -30,7 +45,7 @@ function ContactsScreen({ navigation }) {
     const { avatar, title, count_new_messages } = item;
     return (
       <TouchableOpacity
-        onPress={() => navigate('ChatScreen', { id: item.id })}
+        onPress={() => openCurrentRoom(item.id, count_new_messages)}
         style={styles.contact}
       >
         <View style={styles.contactInfo}>
@@ -65,22 +80,21 @@ function ContactsScreen({ navigation }) {
     );
   }
 
-  if (!contacts.length) {
-    return (
-      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-        <Text>Список контактов пуст</Text>
-      </View>
-    );
-  }
-
   return (
     <View style={{ flex: 1, backgroundColor: '#fafafa', alignItems: 'center' }}>
       <StatusBarPlaceHolder />
-      <FlatList
+      <ContactHeader />
+      {!contacts.length ? (
+      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+      <Text>Список контактов пуст</Text>
+    </View>
+      ) : (
+        <FlatList
         data={contacts}
         renderItem={renderContact}
         keyExtractor={(item) => item.id.toString()}
       />
+      )}
     </View>
   );
 }

@@ -5,7 +5,7 @@ import { addingMassage } from '../../redux/ducks/messages';
 import { openChatModal } from '../../redux/ducks/application';
 import PickFileIcon from '../../SvgIcons/ChatIcons/PickFileIcon';
 
-const SendFileBtn = ({ message, setMessage, contactId }) => {
+const SendFileBtn = () => {
   const dispatch = useDispatch();
 
   const openModal = () => {

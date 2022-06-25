@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AddTagsScreen from '../screens/AddTagsScreen';
 import ChangeTagsScreen from '../screens/ChangeTagsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -12,9 +12,12 @@ import FileInfoScreen from '../screens/FileInfoScreen';
 import ChatScreen from '../screens/ChatScreen';
 import ProfileChangeScreen from '../screens/ProfileChangeScreen';
 import ChangeHistorianTagsScreen from '../screens/ChangeHistorianTagsScreen';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ImageBrowserIosScreen from '../screens/ImageBrowserIosScreen';
 import VideoBrowserScreen from '../screens/VideoBrowserScreen';
+import Echo from 'laravel-echo';
+import socketio from 'socket.io-client';
+import { loadCountNewChat, plusCountMessages } from '../redux/ducks/contacts';
 
 const Stack = createStackNavigator();
 
@@ -31,9 +34,39 @@ const config = {
 };
 
 function ContentRoutes() {
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
 
-  const { role } = currentUser;
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const roomId = useSelector((state) => state.messages.room?.id);
+  const token = useSelector((state) => state.user.token);
+
+  const { role, id } = currentUser;
+
+  let echo = new Echo({
+    broadcaster: 'socket.io',
+    host: 'https://api.taptar.ru',
+    client: socketio,
+    auth: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  });
+
+  useEffect(() => {
+    echo
+      .private(`notification.${id}`)
+      .listen('.received.message', function (e) {
+        console.log(roomId);
+        console.log(e);
+        if (parseInt(roomId) === e.roomId) return;
+        dispatch(plusCountMessages(e));
+      });
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    dispatch(loadCountNewChat());
+  }, [dispatch]);
 
   return (
     <Stack.Navigator initialRouteName="MainRoutes">

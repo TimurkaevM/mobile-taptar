@@ -11,6 +11,10 @@ const initialState = {
 const CONTACTS_LOAD_START = 'contacts/load/start';
 const CONTACTS_LOAD_SUCCESS = 'contacts/load/success';
 const CONTACTS_LOAD_ERROR = 'contacts/load/error';
+const PLUS_MESSAGE = 'plus/messages';
+const MINUS_MESSAGE = 'minus/messages';
+const COUNT_LOAD_START = 'count/load/start';
+const COUNT_LOAD_SUCCESS = 'count/load/success';
 
 export default function contacts(state = initialState, action) {
   switch (action.type) {
@@ -27,7 +31,7 @@ export default function contacts(state = initialState, action) {
         loading: false,
       };
 
-    case 'count/load/success':
+    case COUNT_LOAD_SUCCESS:
       return {
         ...state,
         countNewChat: action.payload.message,
@@ -40,7 +44,7 @@ export default function contacts(state = initialState, action) {
         filter: action.payload,
       };
 
-    case 'minus/messages':
+    case MINUS_MESSAGE:
       return {
         ...state,
         contacts: state.contacts.map((contact) => {
@@ -56,7 +60,7 @@ export default function contacts(state = initialState, action) {
         countNewChat: state.countNewChat - action.count,
       };
 
-    case 'plus/messages':
+    case PLUS_MESSAGE:
       return {
         ...state,
         contacts: state.contacts.map((contact) => {
@@ -120,23 +124,26 @@ export const loadContacts = () => {
 };
 
 export const loadCountNewChat = () => {
-  return (dispatch) => {
-    dispatch({
-      type: 'count/load/start',
-    });
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
 
-    api
-      .get('/chat/new/count')
-      .then((response) => response.data)
-      .then((data) => {
-        dispatch({
-          type: 'count/load/success',
-          payload: data,
-        });
-      })
-      .catch((e) => {
-        console.error(e);
+      dispatch({
+        type: COUNT_LOAD_START,
       });
+
+      if (value !== null) {
+        const response = await api.get('/chat/new/count', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
+        dispatch({
+          type: COUNT_LOAD_SUCCESS,
+          payload: response.data,
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 };
 
@@ -149,7 +156,7 @@ export const setFilter = (e) => {
 
 export const minusCountMessages = (id, count) => {
   return {
-    type: 'minus/messages',
+    type: MINUS_MESSAGE,
     payload: id,
     count,
   };
@@ -157,7 +164,7 @@ export const minusCountMessages = (id, count) => {
 
 export const plusCountMessages = (data) => {
   return {
-    type: 'plus/messages',
+    type: PLUS_MESSAGE,
     payload: data,
   };
 };
