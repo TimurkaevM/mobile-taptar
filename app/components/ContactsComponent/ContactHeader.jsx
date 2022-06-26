@@ -3,6 +3,7 @@ import React from 'react';
 import color from '../../misc/color';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../redux/ducks/contacts';
+import SearchIcon from '../../SvgIcons/ContactIcon/SearchIcon';
 
 const ContactHeader = ({}) => {
   const dispatch = useDispatch();
@@ -15,12 +16,15 @@ const ContactHeader = ({}) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        value={filter}
-        placeholder="Введите текст..."
-        onChange={changeFilterText}
-      />
+      <View style={styles.box}>
+        <SearchIcon />
+        <TextInput
+          style={styles.input}
+          value={filter}
+          placeholder="Введите текст..."
+          onChange={changeFilterText}
+        />
+      </View>
     </View>
   );
 };
@@ -33,16 +37,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  input: {
+  box: {
+    flexDirection: 'row',
+    alignItems: 'center',
     width: 300,
     // height: 200,
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
     borderWidth: 0.6,
-    borderRadius: 10,
+    borderRadius: 30,
     backgroundColor: '#fff',
-    borderColor: color.MAIN_COLOR,
+    borderColor: '#878787',
+  },
+  input: {
+    width: 240,
+    backgroundColor: '#fff',
     color: '#000',
     fontSize: 13,
+    marginLeft: 10,
   },
 });
 

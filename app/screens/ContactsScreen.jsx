@@ -31,10 +31,8 @@ function ContactsScreen({ navigation }) {
   const loading = useSelector((state) => state.contacts.loading);
 
   const openCurrentRoom = (contactId, count) => {
-    navigate('ChatScreen', { id: contactId })
-    dispatch(
-      minusCountMessages(+contactId, count),
-    );
+    navigate('ChatScreen', { id: contactId });
+    dispatch(minusCountMessages(+contactId, count));
   };
 
   useEffect(() => {
@@ -85,15 +83,17 @@ function ContactsScreen({ navigation }) {
       <StatusBarPlaceHolder />
       <ContactHeader />
       {!contacts.length ? (
-      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-      <Text>Список контактов пуст</Text>
-    </View>
+        <View
+          style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}
+        >
+          <Text>Список контактов пуст</Text>
+        </View>
       ) : (
         <FlatList
-        data={contacts}
-        renderItem={renderContact}
-        keyExtractor={(item) => item.id.toString()}
-      />
+          data={contacts}
+          renderItem={renderContact}
+          keyExtractor={(item) => item.id.toString()}
+        />
       )}
     </View>
   );
