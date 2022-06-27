@@ -1,6 +1,5 @@
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
-import color from '../../misc/color';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../redux/ducks/contacts';
 import SearchIcon from '../../SvgIcons/ContactIcon/SearchIcon';
@@ -41,7 +40,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: 300,
-    // height: 200,
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderWidth: 0.6,

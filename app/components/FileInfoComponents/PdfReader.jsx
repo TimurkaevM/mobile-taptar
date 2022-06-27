@@ -1,47 +1,17 @@
 import { Pressable, StyleSheet } from 'react-native';
 import React from 'react';
 import Svg, { Path, G } from 'react-native-svg';
-import * as FileSystem from 'expo-file-system';
-import * as MediaLibrary from 'expo-media-library';
-import { WebView } from 'react-native-webview';
+import * as WebBrowser from 'expo-web-browser';
 
 const PdfReader = ({ path, navigate }) => {
-  const [documentDownload, setDocumentDownload] = React.useState(false);
-
-  const handlePress = () => {
-    return setDocumentDownload(true);
-    navigate('PdfReaderScreen', { path: path });
+  const handleOpenWithWebBrowser = async () => {
+    const result = await WebBrowser.openBrowserAsync(
+      `https://api.taptar.ru/storage/${path}`,
+    );
   };
 
-  // React.useEffect(() => {
-  //   return () => setDocumentDownload(false);
-  // }, [documentDownload])
-
-  // const handlePress = () => {
-  //   FileSystem.downloadAsync(
-  //     `https://api.taptar.ru/storage/${path}`,
-  //     FileSystem.documentDirectory + path,
-  //   )
-  //     .then(({ uri }) => {
-  //       console.log('Finished downloading to ', uri);
-  //       saveFile(uri);
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //     });
-  // }
-
-  //   const saveFile = async (fileUri) => {
-  //         const asset = await MediaLibrary.createAssetAsync(fileUri)
-  //         await MediaLibrary.createAlbumAsync("Download", asset, false)
-  // }
-  //   console.log(path)
-
   return (
-    <Pressable onPress={handlePress} style={styles.container}>
-      {documentDownload ? (
-        <WebView source={{ uri: `https://api.taptar.ru/storage/${path}` }} />
-      ) : null}
+    <Pressable onPress={handleOpenWithWebBrowser} style={styles.container}>
       <Svg
         width="100%"
         height="100%"
