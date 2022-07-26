@@ -264,35 +264,13 @@ const AddTagsHeader = ({
           <Text style={styles.btnText}>отправить</Text>
         </TouchableOpacity>
       </View>
-      {nameError && (
-        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
-          {nameError}
-        </Text>
-      )}
-      {commentError && (
-        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
-          {commentError}
-        </Text>
-      )}
-      {yearError && (
-        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
-          {yearError}
-        </Text>
-      )}
-      {authorError && (
-        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
-          {authorError}
-        </Text>
-      )}
-      {textError && (
-        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
-          {textError}
-        </Text>
-      )}
+      {nameError && <Text style={styles.textError}>{nameError}</Text>}
+      {commentError && <Text style={styles.textError}>{commentError}</Text>}
+      {yearError && <Text style={styles.textError}>{yearError}</Text>}
+      {authorError && <Text style={styles.textError}>{authorError}</Text>}
+      {textError && <Text style={styles.textError}>{textError}</Text>}
       {credibilityError && (
-        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
-          {credibilityError}
-        </Text>
+        <Text style={styles.textError}>{credibilityError}</Text>
       )}
     </View>
   );
@@ -317,6 +295,13 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: color.APP_BG,
+    fontFamily: 'GothamMedium',
+  },
+  textError: {
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 10,
+    fontFamily: 'GothamMedium',
   },
 });
 

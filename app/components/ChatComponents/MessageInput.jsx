@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     borderWidth: 0.5,
     borderColor: '#878787',
+    fontFamily: 'GothamMedium',
   },
 });
 

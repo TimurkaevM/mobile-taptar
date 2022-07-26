@@ -100,7 +100,7 @@ const ContributionMaterialScreen = ({ navigation }) => {
   if (!materials.length) {
     return (
       <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-        <Text>Список файлов пуст</Text>
+        <Text style={{ fontFamily: 'GothamMedium' }}>Список файлов пуст</Text>
       </View>
     );
   }
@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '700',
     marginBottom: 5,
+    fontFamily: 'GothamMedium',
     color: '#7d7d7d',
   },
   cardData: {

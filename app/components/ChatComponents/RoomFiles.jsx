@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
   },
   btnSaveText: {
     color: color.APP_BG,
+    fontFamily: 'GothamMedium',
   },
 });
 

@@ -10,7 +10,11 @@ const TagsInformation = () => {
 
   return (
     <View style={styles.inputTitleContainer}>
-      <Text>Тип/Принадлежность:</Text>
+      <Text
+        style={{ fontFamily: 'GothamLight', marginBottom: 10, fontSize: 15 }}
+      >
+        Тип/Принадлежность:
+      </Text>
       <View style={styles.flexTags}>
         {file.tags_information.map((item) => {
           const backgroundColor = '#4686cc';
@@ -35,6 +39,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'GothamMedium',
   },
 
   inputTitleContainer: {

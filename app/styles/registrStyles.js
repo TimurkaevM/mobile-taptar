@@ -30,6 +30,7 @@ export const registrStyles = StyleSheet.create({
     paddingLeft: 15,
     paddingBottom: 10,
     color: '#4686cc',
+    fontFamily: 'GothamMedium',
   },
 
   input: {
@@ -44,6 +45,7 @@ export const registrStyles = StyleSheet.create({
     color: '#4686cc',
     fontSize: 13,
     borderWidth: 0.5,
+    fontFamily: 'GothamMedium',
     borderColor: '#4686cc',
   },
 
@@ -65,5 +67,12 @@ export const registrStyles = StyleSheet.create({
     backgroundColor: '#4382c8',
     paddingHorizontal: 20,
     paddingVertical: 10,
+  },
+
+  textError: {
+    textAlign: 'center',
+    marginTop: 15,
+    color: 'red',
+    fontFamily: 'GothamMedium',
   },
 });

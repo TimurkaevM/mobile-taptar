@@ -78,6 +78,7 @@ const MaterialText = ({ navigate }) => {
             marginBottom: 10,
             fontWeight: '600',
             fontSize: 17,
+            fontFamily: 'GothamMedium',
           }}
         >
           Добавить текст
@@ -88,9 +89,10 @@ const MaterialText = ({ navigate }) => {
           <Text
             style={{
               marginBottom: 10,
-              fontWeight: '400',
+              fontWeight: '500',
               fontSize: 15,
               color: '#bed1e6',
+              fontFamily: 'GothamLight',
             }}
           >
             удалить текст
@@ -130,6 +132,7 @@ const MaterialText = ({ navigate }) => {
               fontWeight: '400',
               fontSize: 12,
               color: '#fff',
+              fontFamily: 'GothamMedium',
             }}
           >
             {userText.title || historianText.title

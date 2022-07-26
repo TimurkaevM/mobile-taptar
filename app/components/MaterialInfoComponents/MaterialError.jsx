@@ -18,6 +18,7 @@ export default function MaterialError() {
           textAlign: 'center',
           marginTop: 10,
           paddingHorizontal: 10,
+          fontFamily: 'GothamMedium',
         }}
       >
         Не удалось получить материал...
@@ -47,5 +48,6 @@ const styles = StyleSheet.create({
   },
   errorResumeText: {
     color: '#fff',
+    fontFamily: 'GothamMedium',
   },
 });

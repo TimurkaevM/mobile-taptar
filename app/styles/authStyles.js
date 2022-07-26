@@ -36,6 +36,7 @@ export const authStyles = StyleSheet.create({
     paddingLeft: 15,
     paddingBottom: 10,
     color: '#4686cc',
+    fontFamily: 'GothamMedium',
   },
 
   input: {
@@ -49,6 +50,7 @@ export const authStyles = StyleSheet.create({
     fontSize: 13,
     borderWidth: 0.5,
     borderColor: '#4686cc',
+    fontFamily: 'GothamMedium',
   },
 
   inputFocus: {
@@ -73,11 +75,10 @@ export const authStyles = StyleSheet.create({
     paddingVertical: 10,
   },
 
-  // .auth button:hover {
-  //   box-shadow: inset 0 0 12px 2px rgba(0, 0, 0, 0.5);
-  // }
-
-  // .auth button:active {
-  //   box-shadow: inset 0 0 12px 2px rgba(0, 0, 0, 0.5);
-  // }
+  textError: {
+    textAlign: 'center',
+    marginTop: 15,
+    color: 'red',
+    fontFamily: 'GothamMedium',
+  },
 });

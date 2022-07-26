@@ -34,6 +34,7 @@ const DocumentList = ({ document, navigate }) => {
             marginBottom: 10,
             fontWeight: '400',
             fontSize: 15,
+            fontFamily: 'GothamMedium',
           }}
         >
           {title ? changeTitle : 'Нет названия'}
@@ -61,6 +62,7 @@ const DocumentList = ({ document, navigate }) => {
             fontWeight: '400',
             fontSize: 15,
             marginLeft: 10,
+            fontFamily: 'GothamMedium',
           }}
         >
           Документ

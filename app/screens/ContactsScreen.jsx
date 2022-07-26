@@ -86,7 +86,9 @@ function ContactsScreen({ navigation }) {
         <View
           style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}
         >
-          <Text>Список контактов пуст</Text>
+          <Text style={{ fontFamily: 'GothamMedium' }}>
+            Список контактов пуст
+          </Text>
         </View>
       ) : (
         <FlatList
@@ -136,8 +138,12 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
-  title: {},
-  count: {},
+  title: {
+    fontFamily: 'GothamMedium',
+  },
+  count: {
+    fontFamily: 'GothamMedium',
+  },
 });
 
 export default ContactsScreen;

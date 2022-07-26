@@ -70,7 +70,7 @@ const ContributionPhotoScreen = ({ navigation }) => {
   if (!photos.length) {
     return (
       <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-        <Text>Список файлов пуст</Text>
+        <Text style={{ fontFamily: 'GothamMedium' }}>Список файлов пуст</Text>
       </View>
     );
   }
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginTop: 25,
     color: '#000',
+    fontFamily: 'GothamMedium',
   },
 
   cardMedia: {

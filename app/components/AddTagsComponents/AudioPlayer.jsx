@@ -170,7 +170,8 @@ const styles = StyleSheet.create({
   audioCount: {
     textAlign: 'right',
     color: color.FONT_LIGHT,
-    fontSize: 14,
+    fontSize: 13,
+    fontFamily: 'GothamMedium',
   },
   midBannerContainer: {
     flex: 1,
@@ -178,8 +179,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   audioTitle: {
-    fontSize: 16,
+    fontSize: 15,
     color: color.FONT,
     padding: 15,
+    fontFamily: 'GothamMedium',
   },
 });

@@ -26,7 +26,7 @@ const TagsCredibility = ({ setCredibilityError, credibilityError }) => {
 
   return (
     <View style={styles.inputTitleContainer}>
-      <Text>Достоверность:</Text>
+      <Text style={styles.textStyle}>Достоверность:</Text>
       <View style={styles.flexTags}>
         {credibility.map((item) => {
           const check = credibilityClient.some(
@@ -54,9 +54,11 @@ const TagsCredibility = ({ setCredibilityError, credibilityError }) => {
 
 const styles = StyleSheet.create({
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: '#000',
+    textAlign: 'left',
+    marginBottom: 20,
+    fontSize: 18,
+    fontFamily: 'GothamMedium',
   },
 
   inputTitleContainer: {

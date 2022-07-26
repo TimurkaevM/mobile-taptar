@@ -22,6 +22,9 @@ const styles = StyleSheet.create({
     marginTop: 15,
     padding: 5,
   },
+  btnText: {
+    fontFamily: 'GothamLight',
+  },
 });
 
 export default BtnOpenModal;

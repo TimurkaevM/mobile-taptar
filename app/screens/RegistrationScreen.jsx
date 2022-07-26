@@ -164,6 +164,7 @@ function RegistrationScreen() {
                   fontSize: 14,
                   textTransform: 'capitalize',
                   color: '#fff',
+                  fontFamily: 'GothamMedium',
                 }}
               >
                 Войти
@@ -171,25 +172,15 @@ function RegistrationScreen() {
             </TouchableOpacity>
           </View>
           {emailError && (
-            <Text style={{ textAlign: 'center', marginTop: 15, color: 'red' }}>
-              {emailError}
-            </Text>
+            <Text style={registrStyles.textError}>{emailError}</Text>
           )}
           {passwordError && (
-            <Text style={{ textAlign: 'center', marginTop: 15, color: 'red' }}>
-              {passwordError}
-            </Text>
+            <Text style={registrStyles.textError}>{passwordError}</Text>
           )}
           {nameError && (
-            <Text style={{ textAlign: 'center', marginTop: 15, color: 'red' }}>
-              {nameError}
-            </Text>
+            <Text style={registrStyles.textError}>{nameError}</Text>
           )}
-          {error && (
-            <Text style={{ textAlign: 'center', marginTop: 15, color: 'red' }}>
-              {error}
-            </Text>
-          )}
+          {error && <Text style={registrStyles.textError}>{error}</Text>}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

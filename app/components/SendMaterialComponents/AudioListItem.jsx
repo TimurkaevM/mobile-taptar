@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   thumbnailText: {
     fontSize: 18,
     fontWeight: 'bold',
+    fontFamily: 'GothamMedium',
     color: color.APP_BG,
   },
   titleContainer: {
@@ -143,6 +144,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     color: color.FONT,
+    fontFamily: 'GothamMedium',
   },
   separator: {
     width: width - 80,
@@ -155,5 +157,6 @@ const styles = StyleSheet.create({
   timeText: {
     fontSize: 14,
     color: color.FONT_LIGHT,
+    fontFamily: 'GothamMedium',
   },
 });

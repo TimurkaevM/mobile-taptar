@@ -75,10 +75,12 @@ const styles = StyleSheet.create({
   },
   messageText: {
     color: color.APP_BG,
+    fontFamily: 'GothamMedium',
   },
   messageDate: {
     color: '#616161',
     fontSize: 12,
+    fontFamily: 'GothamLight',
   },
 });
 

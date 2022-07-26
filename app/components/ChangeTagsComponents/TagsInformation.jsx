@@ -20,7 +20,11 @@ const TagsInformation = ({ informationClient, setInformationClient }) => {
 
   return (
     <View style={styles.inputTitleContainer}>
-      <Text>Тип/Принадлежность:</Text>
+      <Text
+        style={{ fontFamily: 'GothamLight', marginBottom: 10, fontSize: 15 }}
+      >
+        Тип/Принадлежность:
+      </Text>
       <View style={styles.flexTags}>
         {types.map((item) => {
           const check = informationClient.some((type) => type.id === item.id);
@@ -48,6 +52,7 @@ const styles = StyleSheet.create({
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
+    fontFamily: 'GothamMedium',
     textAlign: 'center',
   },
 

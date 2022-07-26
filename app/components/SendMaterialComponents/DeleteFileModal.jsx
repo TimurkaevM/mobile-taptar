@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'GothamMedium',
   },
   modalText: {
     marginBottom: 30,
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     color: '#9e9e9e',
     fontSize: 16,
+    fontFamily: 'GothamMedium',
   },
 });
 

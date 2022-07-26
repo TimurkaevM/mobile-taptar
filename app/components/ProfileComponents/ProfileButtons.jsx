@@ -41,7 +41,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  btnText: {},
+  btnText: {
+    fontFamily: 'GothamLight',
+  },
 });
 
 export default ProfileButtons;

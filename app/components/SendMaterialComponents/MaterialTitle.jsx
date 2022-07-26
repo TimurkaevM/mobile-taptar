@@ -45,6 +45,7 @@ const MaterialTitle = () => {
           marginBottom: 10,
           fontWeight: '600',
           fontSize: 17,
+          fontFamily: 'GothamMedium',
         }}
       >
         Название материала

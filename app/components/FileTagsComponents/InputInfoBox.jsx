@@ -12,6 +12,7 @@ const InputInfoBox = ({ title, year, location, author }) => {
             textTransform: 'capitalize',
             fontWeight: '400',
             fontSize: 15,
+            fontFamily: 'GothamMedium',
           }}
         >
           Название
@@ -34,6 +35,7 @@ const InputInfoBox = ({ title, year, location, author }) => {
               textTransform: 'capitalize',
               fontWeight: '400',
               fontSize: 15,
+              fontFamily: 'GothamMedium',
             }}
           >
             Год
@@ -57,6 +59,7 @@ const InputInfoBox = ({ title, year, location, author }) => {
               textTransform: 'capitalize',
               fontWeight: '400',
               fontSize: 15,
+              fontFamily: 'GothamMedium',
             }}
           >
             Автор
@@ -80,6 +83,7 @@ const InputInfoBox = ({ title, year, location, author }) => {
               textTransform: 'capitalize',
               fontWeight: '400',
               fontSize: 15,
+              fontFamily: 'GothamMedium',
             }}
           >
             Место
@@ -113,6 +117,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     color: '#000',
     fontSize: 13,
+    fontFamily: 'GothamMedium',
   },
 });
 

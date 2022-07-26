@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: color.APP_BG,
+    fontFamily: 'GothamMedium',
   },
 });
 

@@ -91,6 +91,7 @@ export default function ImageBrowserIosScreen(props) {
 
   const _textStyle = {
     color: 'white',
+    fontFamily: 'GothamMedium',
   };
 
   const _buttonStyle = {

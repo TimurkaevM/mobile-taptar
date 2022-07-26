@@ -73,7 +73,12 @@ const AddBtnsUser = (props) => {
       {!addFile ? (
         <Text
           onPress={changeAddFile}
-          style={{ marginLeft: 10, fontSize: 12, textTransform: 'uppercase' }}
+          style={{
+            marginLeft: 10,
+            fontSize: 12,
+            textTransform: 'uppercase',
+            fontFamily: 'GothamMedium',
+          }}
         >
           Добавить файл
         </Text>
@@ -108,6 +113,7 @@ const AddBtnsUser = (props) => {
                   fontSize: 12,
                   textTransform: 'capitalize',
                   color: '#fff',
+                  fontFamily: 'GothamMedium',
                 }}
               >
                 Фото
@@ -125,6 +131,7 @@ const AddBtnsUser = (props) => {
                   fontSize: 12,
                   textTransform: 'capitalize',
                   color: '#fff',
+                  fontFamily: 'GothamMedium',
                 }}
               >
                 Документ
@@ -155,6 +162,7 @@ const AddBtnsUser = (props) => {
                   fontSize: 12,
                   textTransform: 'capitalize',
                   color: '#fff',
+                  fontFamily: 'GothamMedium',
                 }}
               >
                 Видео
@@ -174,6 +182,7 @@ const AddBtnsUser = (props) => {
                   fontSize: 12,
                   textTransform: 'capitalize',
                   color: '#fff',
+                  fontFamily: 'GothamMedium',
                 }}
               >
                 Аудио

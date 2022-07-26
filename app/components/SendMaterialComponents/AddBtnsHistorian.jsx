@@ -71,7 +71,12 @@ const AddBtnsHistorian = (props) => {
       {!addFile ? (
         <Text
           onPress={changeAddFile}
-          style={{ marginLeft: 10, fontSize: 12, textTransform: 'uppercase' }}
+          style={{
+            marginLeft: 10,
+            fontSize: 12,
+            textTransform: 'uppercase',
+            fontFamily: 'GothamMedium',
+          }}
         >
           Добавить файл
         </Text>
@@ -106,6 +111,7 @@ const AddBtnsHistorian = (props) => {
                   fontSize: 12,
                   textTransform: 'capitalize',
                   color: '#fff',
+                  fontFamily: 'GothamMedium',
                 }}
               >
                 Фото
@@ -123,6 +129,7 @@ const AddBtnsHistorian = (props) => {
                   fontSize: 12,
                   textTransform: 'capitalize',
                   color: '#fff',
+                  fontFamily: 'GothamMedium',
                 }}
               >
                 Документ
@@ -153,6 +160,7 @@ const AddBtnsHistorian = (props) => {
                   fontSize: 12,
                   textTransform: 'capitalize',
                   color: '#fff',
+                  fontFamily: 'GothamMedium',
                 }}
               >
                 Видео
@@ -170,6 +178,7 @@ const AddBtnsHistorian = (props) => {
                   fontSize: 12,
                   textTransform: 'capitalize',
                   color: '#fff',
+                  fontFamily: 'GothamMedium',
                 }}
               >
                 Аудио

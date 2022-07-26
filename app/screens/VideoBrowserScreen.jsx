@@ -80,6 +80,7 @@ export default function VideoBrowserScreen(props) {
 
   const _textStyle = {
     color: 'white',
+    fontFamily: 'GothamMedium',
   };
 
   const _buttonStyle = {

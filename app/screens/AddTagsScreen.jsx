@@ -52,6 +52,7 @@ const AddTagsScreen = (props) => {
             fontWeight: '400',
             fontSize: 20,
             color: '#4686cc',
+            fontFamily: 'GothamMedium',
           }}
         >
           {progress} %

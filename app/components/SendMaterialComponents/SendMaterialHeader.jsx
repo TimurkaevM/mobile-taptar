@@ -68,7 +68,13 @@ const SendMaterialHeader = () => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text style={{ color: '#4686cc', fontSize: 12.5 }}>
+        <Text
+          style={{
+            color: '#4686cc',
+            fontSize: 10.5,
+            fontFamily: 'GothamMedium',
+          }}
+        >
           ФОРМА ОТПРАВКИ ИНФОРМАЦИИ
         </Text>
         <TouchableOpacity
@@ -79,13 +85,27 @@ const SendMaterialHeader = () => {
         </TouchableOpacity>
       </View>
       {sendUserError ? (
-        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
+        <Text
+          style={{
+            color: 'red',
+            textAlign: 'center',
+            marginTop: 10,
+            fontFamily: 'GothamMedium',
+          }}
+        >
           Не удалось отправить материал, пожалуйста убедитесь в целостности
           данных
         </Text>
       ) : null}
       {sendHistorianError ? (
-        <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>
+        <Text
+          style={{
+            color: 'red',
+            textAlign: 'center',
+            marginTop: 10,
+            fontFamily: 'GothamMedium',
+          }}
+        >
           Не удалось отправить материал, пожалуйста убедитесь в целостности
           данных
         </Text>
@@ -113,6 +133,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: color.APP_BG,
+    fontFamily: 'GothamMedium',
   },
 });
 

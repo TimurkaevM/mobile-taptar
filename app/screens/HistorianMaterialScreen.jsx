@@ -19,10 +19,7 @@ import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 import SendMaterialHeader from '../components/SendMaterialComponents/SendMaterialHeader';
 import MaterialError from '../components/SendMaterialComponents/MaterialError';
 import { getAllTags, getCauses, getEffects } from '../redux/ducks/tags';
-import {
-  changedIsMaterialHistorian,
-  getHistorianDraftFiles,
-} from '../redux/actions/historianMaterial';
+import { getHistorianDraftFiles } from '../redux/actions/historianMaterial';
 import IsMaterialBtn from '../components/SendMaterialComponents/IsMaterialBtn';
 import BookmarkBtn from '../components/SendMaterialComponents/BookmarkBtn';
 

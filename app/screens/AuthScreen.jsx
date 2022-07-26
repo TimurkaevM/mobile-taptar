@@ -113,27 +113,18 @@ function AuthScreen() {
               fontSize: 14,
               textTransform: 'capitalize',
               color: '#fff',
+              fontFamily: 'GothamMedium',
             }}
           >
             Войти
           </Text>
         </TouchableOpacity>
       </View>
-      {emailError && (
-        <Text style={{ textAlign: 'center', marginTop: 15, color: 'red' }}>
-          {emailError}
-        </Text>
-      )}
+      {emailError && <Text style={authStyles.textError}>{emailError}</Text>}
       {passwordError && (
-        <Text style={{ textAlign: 'center', marginTop: 15, color: 'red' }}>
-          {passwordError}
-        </Text>
+        <Text style={authStyles.textError}>{passwordError}</Text>
       )}
-      {error && (
-        <Text style={{ textAlign: 'center', marginTop: 15, color: 'red' }}>
-          {error}
-        </Text>
-      )}
+      {error && <Text style={authStyles.textError}>{error}</Text>}
     </KeyboardAvoidingView>
   );
 }

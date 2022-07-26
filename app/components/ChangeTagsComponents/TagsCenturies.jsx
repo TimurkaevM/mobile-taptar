@@ -20,7 +20,11 @@ const TagsCenturies = ({ centuryClient, setCenturyClient }) => {
 
   return (
     <View style={styles.inputTitleContainer}>
-      <Text>Период/Век:</Text>
+      <Text
+        style={{ fontFamily: 'GothamLight', marginBottom: 10, fontSize: 15 }}
+      >
+        Период/Век:
+      </Text>
       <View style={styles.flexTags}>
         {centuries.map((item) => {
           const check = centuryClient.some((century) => century.id === item.id);
@@ -49,6 +53,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'GothamMedium',
   },
 
   inputTitleContainer: {

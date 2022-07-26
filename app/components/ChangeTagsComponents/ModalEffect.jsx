@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     marginLeft: 20,
+    fontFamily: 'GothamMedium',
   },
   inputComment: {
     width: 270,
@@ -156,6 +157,7 @@ const styles = StyleSheet.create({
     color: color.MAIN_COLOR,
     fontSize: 13,
     textAlignVertical: 'top',
+    fontFamily: 'GothamMedium',
   },
   btnContainer: {
     flexDirection: 'row',
@@ -172,6 +174,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'GothamMedium',
   },
 });
 

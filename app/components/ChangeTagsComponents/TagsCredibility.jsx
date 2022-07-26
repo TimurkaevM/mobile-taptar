@@ -1,10 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-import {
-  addedCredibility,
-  removeCredibility,
-} from '../../redux/ducks/userTags';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import AddCredibility from './AddCredibility';
 
 const TagsCredibility = ({
@@ -13,8 +9,6 @@ const TagsCredibility = ({
   credibilityClient,
   setCredibilityClient,
 }) => {
-  const dispatch = useDispatch();
-
   const credibility = useSelector((state) => state.tags.credibility);
 
   const pressChangeCredibility = (tag, check) => {
@@ -34,7 +28,7 @@ const TagsCredibility = ({
 
   return (
     <View style={styles.inputTitleContainer}>
-      <Text>Достоверность:</Text>
+      <Text style={styles.textStyle}>Достоверность:</Text>
       <View style={styles.flexTags}>
         {credibility.map((item) => {
           const check = credibilityClient.some(
@@ -62,9 +56,11 @@ const TagsCredibility = ({
 
 const styles = StyleSheet.create({
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: '#000',
+    textAlign: 'left',
+    marginBottom: 20,
+    fontSize: 18,
+    fontFamily: 'GothamMedium',
   },
 
   inputTitleContainer: {

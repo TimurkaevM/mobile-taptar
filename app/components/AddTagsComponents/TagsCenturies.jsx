@@ -18,7 +18,11 @@ const TagsCenturies = () => {
 
   return (
     <View style={styles.inputTitleContainer}>
-      <Text>Период/Век:</Text>
+      <Text
+        style={{ fontFamily: 'GothamLight', marginBottom: 10, fontSize: 15 }}
+      >
+        Период/Век:
+      </Text>
       <View style={styles.flexTags}>
         {centuries.map((item) => {
           const check = centuriesClient.some(

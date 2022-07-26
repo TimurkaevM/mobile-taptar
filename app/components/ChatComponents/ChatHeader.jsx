@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     width: width - 210,
     color: '#878787',
     fontWeight: '600',
+    fontFamily: 'GothamMedium',
   },
 });
 

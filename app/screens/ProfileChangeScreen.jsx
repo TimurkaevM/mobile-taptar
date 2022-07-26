@@ -52,12 +52,8 @@ function ProfileChangeScreen({ navigation }) {
             goBack={goBack}
           />
           <PassChangeModal />
-          {emailError && (
-            <Text style={{ marginTop: 20, color: 'red' }}>{emailError}</Text>
-          )}
-          {nameError && (
-            <Text style={{ marginTop: 20, color: 'red' }}>{nameError}</Text>
-          )}
+          {emailError && <Text style={styles.textError}>{emailError}</Text>}
+          {nameError && <Text style={styles.textError}>{nameError}</Text>}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -73,6 +69,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#f5f5f5',
     alignItems: 'center',
+  },
+  textError: {
+    marginTop: 20,
+    color: 'red',
+    fontFamily: 'GothamMedium',
   },
 });
 

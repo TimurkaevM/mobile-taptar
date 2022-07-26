@@ -79,6 +79,7 @@ const PickFileBtns = ({ closeModal, setPickRoomFiles, navigate }) => {
             fontSize: 12,
             textTransform: 'capitalize',
             color: '#fff',
+            fontFamily: 'GothamMedium',
           }}
         >
           Фото
@@ -96,6 +97,7 @@ const PickFileBtns = ({ closeModal, setPickRoomFiles, navigate }) => {
             fontSize: 12,
             textTransform: 'capitalize',
             color: '#fff',
+            fontFamily: 'GothamMedium',
           }}
         >
           Документ
@@ -113,6 +115,7 @@ const PickFileBtns = ({ closeModal, setPickRoomFiles, navigate }) => {
             fontSize: 12,
             textTransform: 'capitalize',
             color: '#fff',
+            fontFamily: 'GothamMedium',
           }}
         >
           Видео
@@ -130,6 +133,7 @@ const PickFileBtns = ({ closeModal, setPickRoomFiles, navigate }) => {
             fontSize: 12,
             textTransform: 'capitalize',
             color: '#fff',
+            fontFamily: 'GothamMedium',
           }}
         >
           Аудио
@@ -147,6 +151,7 @@ const PickFileBtns = ({ closeModal, setPickRoomFiles, navigate }) => {
             fontSize: 12,
             textTransform: 'capitalize',
             color: '#fff',
+            fontFamily: 'GothamMedium',
           }}
         >
           файл из материала

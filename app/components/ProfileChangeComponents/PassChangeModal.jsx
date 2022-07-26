@@ -156,17 +156,36 @@ const PassChangeModal = () => {
               <Text style={styles.btnSaveText}>Сменить пароль</Text>
             </TouchableOpacity>
             {newPassError && (
-              <Text style={{ marginTop: 20, color: 'red' }}>
+              <Text
+                style={{
+                  marginTop: 20,
+                  color: 'red',
+                  fontFamily: 'GothamMedium',
+                }}
+              >
                 {newPassError}
               </Text>
             )}
             {oldPassError && (
-              <Text style={{ marginTop: 20, color: 'red' }}>
+              <Text
+                style={{
+                  marginTop: 20,
+                  color: 'red',
+                  fontFamily: 'GothamMedium',
+                }}
+              >
                 {oldPassError}
               </Text>
             )}
             {checkPassError && (
-              <Text style={{ marginTop: 20, color: 'red' }}>
+              <Text
+                style={{
+                  marginTop: 20,
+                  color: 'red',
+                  fontFamily: 'GothamMedium',
+                  fontFamily: 'GothamMedium',
+                }}
+              >
                 {checkPassError}
               </Text>
             )}
@@ -210,8 +229,9 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'left',
-    fontSize: 14,
+    fontSize: 13,
     color: '#9b9b9b',
+    fontFamily: 'GothamMedium',
   },
   subTitle: {
     marginTop: 10,
@@ -219,6 +239,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: '#fff',
     borderRadius: 10,
+    fontFamily: 'GothamMedium',
   },
   btnSave: {
     paddingVertical: 10,
@@ -231,6 +252,7 @@ const styles = StyleSheet.create({
   },
   btnSaveText: {
     color: color.APP_BG,
+    fontFamily: 'GothamMedium',
   },
 });
 

@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'GothamMedium',
   },
 
   inputTitleContainer: {

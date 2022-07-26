@@ -23,6 +23,7 @@ const MaterialText = ({ navigate }) => {
           marginBottom: 10,
           fontWeight: '600',
           fontSize: 17,
+          fontFamily: 'GothamMedium',
         }}
       >
         Текст
@@ -59,6 +60,7 @@ const MaterialText = ({ navigate }) => {
               fontWeight: '400',
               fontSize: 12,
               color: '#fff',
+              fontFamily: 'GothamMedium',
             }}
           >
             Открыть

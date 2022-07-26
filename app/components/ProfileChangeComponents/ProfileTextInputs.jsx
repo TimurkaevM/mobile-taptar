@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 14,
     color: '#9b9b9b',
+    fontFamily: 'GothamMedium',
   },
   subTitle: {
     marginTop: 10,
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     backgroundColor: '#fff',
     borderRadius: 10,
+    fontFamily: 'GothamMedium',
   },
 });
 

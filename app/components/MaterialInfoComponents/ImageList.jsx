@@ -14,8 +14,6 @@ const ImageList = ({ navigate }) => {
     const titleSub = title.substr(0, 12);
     const titleFile = title;
 
-    console.log(item);
-
     const changeTitle = titleFile.length >= 12 ? `${titleSub}...` : titleFile;
     return (
       <View>
@@ -38,6 +36,7 @@ const ImageList = ({ navigate }) => {
             marginBottom: 10,
             fontWeight: '400',
             fontSize: 15,
+            fontFamily: 'GothamMedium',
           }}
         >
           {title ? changeTitle : 'Нет названия'}
@@ -65,6 +64,7 @@ const ImageList = ({ navigate }) => {
             fontWeight: '400',
             fontSize: 15,
             marginLeft: 10,
+            fontFamily: 'GothamMedium',
           }}
         >
           Фото

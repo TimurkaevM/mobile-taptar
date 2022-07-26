@@ -39,6 +39,7 @@ const ImagesList = ({ navigate }) => {
             marginBottom: 10,
             fontWeight: '400',
             fontSize: 15,
+            fontFamily: 'GothamMedium',
           }}
         >
           {title ? changeTitle : 'Нет названия'}
@@ -66,6 +67,7 @@ const ImagesList = ({ navigate }) => {
             fontWeight: '400',
             fontSize: 15,
             marginLeft: 10,
+            fontFamily: 'GothamMedium',
           }}
         >
           Фото (группа файлов)

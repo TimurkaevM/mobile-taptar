@@ -82,6 +82,7 @@ export default function ImageBrowserScreen(props) {
 
   const _textStyle = {
     color: 'white',
+    fontFamily: 'GothamMedium',
   };
 
   const _buttonStyle = {

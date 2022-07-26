@@ -18,6 +18,7 @@ const MaterialTitle = () => {
           fontWeight: '600',
           fontSize: 17,
           color: '#4686cc',
+          fontFamily: 'GothamMedium',
         }}
       >
         Автор: id {user_id}
@@ -29,6 +30,7 @@ const MaterialTitle = () => {
           fontWeight: '600',
           fontSize: 17,
           color: '#4686cc',
+          fontFamily: 'GothamMedium',
         }}
       >
         {title}

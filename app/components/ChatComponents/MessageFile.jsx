@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
   messageDate: {
     color: '#616161',
     fontSize: 12,
+    fontFamily: 'GothamLight',
   },
 });
 

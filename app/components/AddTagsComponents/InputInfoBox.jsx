@@ -58,17 +58,7 @@ const InputInfoBox = ({
   return (
     <>
       <View style={styles.inputTitleContainer}>
-        <Text
-          style={{
-            textAlign: 'left',
-            marginBottom: 10,
-            textTransform: 'capitalize',
-            fontWeight: '400',
-            fontSize: 15,
-          }}
-        >
-          Название
-        </Text>
+        <Text style={styles.title}>Название</Text>
         <TextInput
           style={styles.inputTitle}
           type="password"
@@ -80,17 +70,7 @@ const InputInfoBox = ({
       </View>
 
       <View style={styles.inputTitleContainer}>
-        <Text
-          style={{
-            textAlign: 'left',
-            marginBottom: 10,
-            textTransform: 'capitalize',
-            fontWeight: '400',
-            fontSize: 15,
-          }}
-        >
-          Год
-        </Text>
+        <Text style={styles.title}>Год</Text>
         <TextInput
           style={styles.inputTitle}
           type="password"
@@ -102,17 +82,7 @@ const InputInfoBox = ({
       </View>
 
       <View style={styles.inputTitleContainer}>
-        <Text
-          style={{
-            textAlign: 'left',
-            marginBottom: 10,
-            textTransform: 'capitalize',
-            fontWeight: '400',
-            fontSize: 15,
-          }}
-        >
-          Автор
-        </Text>
+        <Text style={styles.title}>Автор</Text>
         <TextInput
           style={styles.inputTitle}
           type="password"
@@ -124,17 +94,7 @@ const InputInfoBox = ({
       </View>
 
       <View style={styles.inputTitleContainer}>
-        <Text
-          style={{
-            textAlign: 'left',
-            marginBottom: 10,
-            textTransform: 'capitalize',
-            fontWeight: '400',
-            fontSize: 15,
-          }}
-        >
-          Место
-        </Text>
+        <Text style={styles.title}>Место</Text>
         <TextInput
           style={styles.inputTitle}
           type="password"
@@ -152,6 +112,15 @@ const styles = StyleSheet.create({
   inputTitleContainer: {
     paddingHorizontal: 20,
     marginTop: 10,
+  },
+
+  title: {
+    textAlign: 'left',
+    marginBottom: 10,
+    textTransform: 'capitalize',
+    fontWeight: '400',
+    fontSize: 15,
+    fontFamily: 'GothamMedium',
   },
 
   inputTitle: {

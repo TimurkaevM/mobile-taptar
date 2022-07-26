@@ -25,6 +25,7 @@ export const sendMaterialStyles = StyleSheet.create({
     fontSize: 13,
     borderWidth: 0.5,
     borderColor: '#4686cc',
+    fontFamily: 'GothamMedium',
   },
 
   textTitleContainer: {
@@ -45,6 +46,7 @@ export const sendMaterialStyles = StyleSheet.create({
     fontSize: 13,
     textAlignVertical: 'top',
     borderColor: '#4686cc',
+    fontFamily: 'GothamMedium',
   },
 
   btnAdd: {

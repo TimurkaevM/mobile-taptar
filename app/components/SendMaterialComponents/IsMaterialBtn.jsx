@@ -60,8 +60,9 @@ const styles = StyleSheet.create({
   title: {
     marginRight: 20,
     color: '#9b9b9b',
-    fontSize: 15,
+    fontSize: 13,
     fontWeight: '600',
+    fontFamily: 'GothamMedium',
   },
   checkContainer: {
     width: 60,

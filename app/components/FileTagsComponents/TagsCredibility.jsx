@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginBottom: 20,
     fontSize: 18,
+    fontFamily: 'GothamMedium',
   },
 
   inputTitleContainer: {

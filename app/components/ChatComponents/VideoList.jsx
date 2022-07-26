@@ -52,6 +52,7 @@ const VideoList = ({
             marginBottom: 10,
             fontWeight: '400',
             fontSize: 15,
+            fontFamily: 'GothamMedium',
           }}
         >
           {title ? changeTitle : 'Нет названия'}
@@ -80,6 +81,7 @@ const VideoList = ({
             fontWeight: '400',
             fontSize: 15,
             marginLeft: 10,
+            fontFamily: 'GothamMedium',
           }}
         >
           Видео

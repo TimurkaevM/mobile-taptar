@@ -43,6 +43,7 @@ const VideosList = ({ navigate }) => {
             marginBottom: 10,
             fontWeight: '400',
             fontSize: 15,
+            fontFamily: 'GothamMedium',
           }}
         >
           {title ? changeTitle : 'Нет названия'}
@@ -70,6 +71,7 @@ const VideosList = ({ navigate }) => {
             fontWeight: '400',
             fontSize: 15,
             marginLeft: 10,
+            fontFamily: 'GothamMedium',
           }}
         >
           Видео (группа файлов)

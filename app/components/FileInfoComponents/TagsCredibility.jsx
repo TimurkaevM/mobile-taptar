@@ -23,9 +23,10 @@ const TagsCredibility = () => {
 const styles = StyleSheet.create({
   textStyle: {
     color: '#000',
-    fontWeight: 'bold',
     textAlign: 'left',
     marginBottom: 20,
+    fontSize: 18,
+    fontFamily: 'GothamMedium',
   },
 
   inputTitleContainer: {

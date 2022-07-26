@@ -38,7 +38,12 @@ const FileTagsScreen = (props) => {
           <TagsCredibility credibility={item.tags_credibility} />
           {item.tags_information.length || item.tags_century.length ? (
             <Text
-              style={{ paddingHorizontal: 20, marginBottom: 30, fontSize: 18 }}
+              style={{
+                paddingHorizontal: 20,
+                marginBottom: 30,
+                fontSize: 18,
+                fontFamily: 'GothamMedium',
+              }}
             >
               Добавленные:
             </Text>

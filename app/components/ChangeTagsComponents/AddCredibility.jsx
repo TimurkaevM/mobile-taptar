@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 13,
     marginRight: 10,
+    fontFamily: 'GothamMedium',
   },
   circleContainer: {
     width: 12,

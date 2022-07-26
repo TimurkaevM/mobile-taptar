@@ -43,6 +43,7 @@ const MaterialText = ({ setTextError, textError }) => {
           textTransform: 'capitalize',
           fontWeight: '400',
           fontSize: 15,
+          fontFamily: 'GothamMedium',
         }}
       >
         Изменить текст
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 13,
     textAlignVertical: 'top',
+    fontFamily: 'GothamMedium',
   },
 });
 
