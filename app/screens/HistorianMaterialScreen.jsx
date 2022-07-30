@@ -22,6 +22,7 @@ import { getAllTags, getCauses, getEffects } from '../redux/ducks/tags';
 import { getHistorianDraftFiles } from '../redux/actions/historianMaterial';
 import IsMaterialBtn from '../components/SendMaterialComponents/IsMaterialBtn';
 import BookmarkBtn from '../components/SendMaterialComponents/BookmarkBtn';
+import ModalButtonsHistorian from '../components/SendMaterialComponents/ModalButtonsHistorian';
 
 function HistorianMaterialScreen(props) {
   const { navigate, push } = props.navigation;
@@ -81,6 +82,7 @@ function HistorianMaterialScreen(props) {
         ) : null}
         {audio.length ? <AudioList audio={audio} navigate={navigate} /> : null}
         <DeleteFileModal />
+        <ModalButtonsHistorian navigate={navigate} />
       </ScrollView>
     </KeyboardAvoidingView>
   );

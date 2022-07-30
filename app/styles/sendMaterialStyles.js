@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 export const sendMaterialStyles = StyleSheet.create({
   container: {
@@ -12,6 +14,31 @@ export const sendMaterialStyles = StyleSheet.create({
   inputTitleContainer: {
     paddingHorizontal: 20,
     marginTop: 10,
+  },
+
+  mediaContainer: {
+    marginTop: 10,
+    alignItems: 'center',
+  },
+
+  mediaHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 15,
+    width: width - 40,
+    borderBottomWidth: 1,
+    marginBottom: 10,
+    alignItems: 'center',
+    borderColor: '#4686cc',
+  },
+
+  mediaHeaderTitle: {
+    textAlign: 'left',
+    fontWeight: '400',
+    fontSize: 15,
+    marginLeft: 10,
+    fontFamily: 'GothamMedium',
+    color: '#4686cc',
   },
 
   inputTitle: {
@@ -73,13 +100,27 @@ export const sendMaterialStyles = StyleSheet.create({
 
   btnAddMedia: {
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    marginLeft: 10,
-    flexDirection: 'row',
+    width: 95,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  btnAddIcon: {
+    width: 60,
+    height: 60,
+    borderRadius: 60,
     backgroundColor: '#4686cc',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  btnAddText: {
+    fontSize: 15,
+    textTransform: 'capitalize',
+    color: '#4686cc',
+    fontFamily: 'GothamLight',
+    marginTop: 10,
   },
 
   btnAddVideo: {

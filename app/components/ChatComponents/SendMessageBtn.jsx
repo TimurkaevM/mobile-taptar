@@ -33,13 +33,13 @@ const SendMessageBtn = ({ message, setMessage, contactId }) => {
 
 const styles = StyleSheet.create({
   btn: {
-    height: 50,
-    width: 50,
+    height: 35,
+    width: 35,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 0.5,
     borderColor: '#878787',
-    borderRadius: 50,
+    borderRadius: 30,
   },
 });
 

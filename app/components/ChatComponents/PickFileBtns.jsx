@@ -63,8 +63,10 @@ const PickFileBtns = ({ closeModal, setPickRoomFiles, navigate }) => {
   return (
     <View
       style={{
-        flexDirection: 'column',
+        flexDirection: 'row',
         paddingVertical: 30,
+        flexWrap: 'wrap',
+        justifyContent: 'center',
       }}
     >
       <TouchableOpacity
@@ -72,90 +74,50 @@ const PickFileBtns = ({ closeModal, setPickRoomFiles, navigate }) => {
         title="Pick an image from camera roll"
         onPress={pickImage}
       >
-        <ImageAddBtnIcon />
-        <Text
-          style={{
-            marginLeft: 15,
-            fontSize: 12,
-            textTransform: 'capitalize',
-            color: '#fff',
-            fontFamily: 'GothamMedium',
-          }}
-        >
-          Фото
-        </Text>
+        <View style={styles.btnAddIcon}>
+          <ImageAddBtnIcon />
+        </View>
+        <Text style={styles.btnAddText}>Фото</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.btnAddMedia}
         title="Pick an image from camera roll"
         onPress={() => pickFile('document', 'application')}
       >
-        <DocumentAddBtnIcon />
-        <Text
-          style={{
-            marginLeft: 15,
-            fontSize: 12,
-            textTransform: 'capitalize',
-            color: '#fff',
-            fontFamily: 'GothamMedium',
-          }}
-        >
-          Документ
-        </Text>
+        <View style={styles.btnAddIcon}>
+          <DocumentAddBtnIcon />
+        </View>
+        <Text style={styles.btnAddText}>Документ</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.btnAddMedia}
         title="Pick an image from camera roll"
         onPress={pickVideo}
       >
-        <VideoAddBtnIcon />
-        <Text
-          style={{
-            marginLeft: 15,
-            fontSize: 12,
-            textTransform: 'capitalize',
-            color: '#fff',
-            fontFamily: 'GothamMedium',
-          }}
-        >
-          Видео
-        </Text>
+        <View style={styles.btnAddIcon}>
+          <VideoAddBtnIcon />
+        </View>
+        <Text style={styles.btnAddText}>Видео</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.btnAddMedia}
         title="Pick an image from camera roll"
         onPress={() => pickFile('audio', 'audio')}
       >
-        <AudioAddBtnIcon />
-        <Text
-          style={{
-            marginLeft: 15,
-            fontSize: 12,
-            textTransform: 'capitalize',
-            color: '#fff',
-            fontFamily: 'GothamMedium',
-          }}
-        >
-          Аудио
-        </Text>
+        <View style={styles.btnAddIcon}>
+          <AudioAddBtnIcon />
+        </View>
+        <Text style={styles.btnAddText}>Аудио</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.btnAddMedia}
         title="Pick an image from camera roll"
         onPress={() => setPickRoomFiles(true)}
       >
-        <AddFileRoomIcon />
-        <Text
-          style={{
-            marginLeft: 15,
-            fontSize: 12,
-            textTransform: 'capitalize',
-            color: '#fff',
-            fontFamily: 'GothamMedium',
-          }}
-        >
-          файл из материала
-        </Text>
+        <View style={styles.btnAddIcon}>
+          <AddFileRoomIcon />
+        </View>
+        <Text style={styles.btnAddText}>Файлы из материала</Text>
       </TouchableOpacity>
     </View>
   );
@@ -163,16 +125,28 @@ const PickFileBtns = ({ closeModal, setPickRoomFiles, navigate }) => {
 
 const styles = StyleSheet.create({
   btnAddMedia: {
-    width: 200,
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    marginBottom: 18,
-    flexDirection: 'row',
+    // width: 91,
+    marginHorizontal: 20,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  btnAddIcon: {
+    width: 60,
+    height: 60,
+    borderRadius: 60,
     backgroundColor: '#4686cc',
     alignItems: 'center',
-    justifyContent: 'space-around',
-    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+
+  btnAddText: {
+    fontSize: 15,
+    color: '#4686cc',
+    fontFamily: 'GothamLight',
+    marginTop: 10,
   },
 });
 

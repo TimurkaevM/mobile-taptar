@@ -1,4 +1,11 @@
-import { View, Text, Pressable, FlatList, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  FlatList,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 import React from 'react';
 import VideoListIcon from '../../SvgIcons/SendMaterialIcons/VideoListIcon';
 import { useSelector } from 'react-redux';
@@ -51,7 +58,7 @@ const VideoList = ({
             textAlign: 'center',
             marginBottom: 10,
             fontWeight: '400',
-            fontSize: 15,
+            fontSize: 10,
             fontFamily: 'GothamMedium',
           }}
         >
@@ -62,30 +69,10 @@ const VideoList = ({
   };
 
   return (
-    <View style={styles.inputTitleContainer}>
-      <View
-        style={{
-          flexDirection: 'row',
-          paddingBottom: 15,
-          borderBottomWidth: 1,
-          marginBottom: 10,
-          borderColor: '#000',
-          alignItems: 'center',
-          marginHorizontal: 20,
-        }}
-      >
+    <View style={styles.mediaContainer}>
+      <View style={styles.mediaHeader}>
         <VideoListIcon />
-        <Text
-          style={{
-            textAlign: 'left',
-            fontWeight: '400',
-            fontSize: 15,
-            marginLeft: 10,
-            fontFamily: 'GothamMedium',
-          }}
-        >
-          Видео
-        </Text>
+        <Text style={styles.mediaHeaderTitle}>Видео</Text>
       </View>
       <FlatList
         horizontal
@@ -97,15 +84,39 @@ const VideoList = ({
   );
 };
 
+const { width } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
-  inputTitleContainer: {
+  mediaContainer: {
     marginTop: 10,
+    alignItems: 'center',
   },
+
+  mediaHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 15,
+    width: width - 40,
+    borderBottomWidth: 1,
+    marginBottom: 10,
+    alignItems: 'center',
+    borderColor: '#4686cc',
+  },
+
+  mediaHeaderTitle: {
+    textAlign: 'left',
+    fontWeight: '400',
+    fontSize: 15,
+    marginLeft: 10,
+    fontFamily: 'GothamMedium',
+    color: '#4686cc',
+  },
+
   mediaBox: {
     position: 'relative',
     zIndex: 1,
-    width: 200,
-    height: 150,
+    width: 100,
+    height: 100,
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,

@@ -47,29 +47,10 @@ const VideoList = ({ video, navigate }) => {
   };
 
   return (
-    <View style={sendMaterialStyles.inputTitleContainer}>
-      <View
-        style={{
-          flexDirection: 'row',
-          paddingBottom: 15,
-          borderBottomWidth: 1,
-          marginBottom: 10,
-          borderColor: '#000',
-          alignItems: 'center',
-        }}
-      >
+    <View style={sendMaterialStyles.mediaContainer}>
+      <View style={sendMaterialStyles.mediaHeader}>
         <VideoListIcon />
-        <Text
-          style={{
-            textAlign: 'left',
-            fontWeight: '400',
-            fontSize: 15,
-            marginLeft: 10,
-            fontFamily: 'GothamMedium',
-          }}
-        >
-          Видео
-        </Text>
+        <Text style={sendMaterialStyles.mediaHeaderTitle}>Видео</Text>
       </View>
       <FlatList
         horizontal

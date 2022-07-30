@@ -43,29 +43,10 @@ const ImageList = ({ photo, navigate }) => {
   };
 
   return (
-    <View style={sendMaterialStyles.inputTitleContainer}>
-      <View
-        style={{
-          flexDirection: 'row',
-          paddingBottom: 15,
-          borderBottomWidth: 1,
-          marginBottom: 10,
-          alignItems: 'center',
-          borderColor: '#000',
-        }}
-      >
+    <View style={sendMaterialStyles.mediaContainer}>
+      <View style={sendMaterialStyles.mediaHeader}>
         <ImageListIcon />
-        <Text
-          style={{
-            textAlign: 'left',
-            fontWeight: '400',
-            fontSize: 15,
-            marginLeft: 10,
-            fontFamily: 'GothamMedium',
-          }}
-        >
-          Фото
-        </Text>
+        <Text style={sendMaterialStyles.mediaHeaderTitle}>Фото</Text>
       </View>
       <FlatList
         horizontal

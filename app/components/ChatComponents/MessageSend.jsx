@@ -24,10 +24,12 @@ const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
-    height: 80,
     flexDirection: 'row',
     backgroundColor: '#fff',
-    alignItems: 'center',
+    paddingHorizontal: 15,
+    paddingBottom: 30,
+    paddingTop: 10,
+    alignItems: 'flex-end',
     justifyContent: 'space-around',
     borderTopWidth: 0.6,
     borderTopColor: '#878787',

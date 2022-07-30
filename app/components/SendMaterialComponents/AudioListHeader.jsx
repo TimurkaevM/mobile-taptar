@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import color from '../../misc/color';
-import { postFail, postFilesGroup } from '../../redux/ducks/uploadFiles';
+import { postFilesGroup, postMediaFile } from '../../redux/ducks/uploadFiles';
 import { useDispatch, useSelector } from 'react-redux';
 
 const AudioListHeader = ({ selectedAudio, goBack, navigate }) => {
@@ -17,7 +17,7 @@ const AudioListHeader = ({ selectedAudio, goBack, navigate }) => {
     navigate('ModalAddFile');
     if (selectedAudioLength > 1)
       return dispatch(postFilesGroup(selectedAudio, 'audio', causId));
-    return dispatch(postFail(selectedAudio, 'audio'));
+    return dispatch(postMediaFile(selectedAudio, 'audio'));
   };
 
   return (

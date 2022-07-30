@@ -23,7 +23,7 @@ function EntranceRoutes() {
         },
         tabBarStyle: {
           backgroundColor: '#f1f1f1',
-          marginTop: getStatusBarHeight(),
+          marginTop: STATUS_BAR_HEIGHT,
           borderWidth: 0,
         },
       }}

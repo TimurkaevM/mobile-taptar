@@ -47,7 +47,7 @@ const ContributionDocumentScreen = ({ navigation }) => {
           }
           style={styles.cardMedia}
         >
-          <DocumentItemIcon width={170} height={170} color="#4686CC" />
+          <DocumentItemIcon width={50} height={50} color="#4686CC" />
         </TouchableOpacity>
         <Text style={styles.cardTitle} numberOfLines={1}>
           {title}
@@ -76,6 +76,7 @@ const ContributionDocumentScreen = ({ navigation }) => {
     <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center' }}>
       <FlatList
         horizontal={false}
+        numColumns={3}
         data={documents}
         renderItem={renderItem}
         keyExtractor={(item) => item.file_id.toString()}
@@ -93,14 +94,14 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    width: width - 50,
+    width: 100,
     marginVertical: 20,
     marginHorizontal: 15,
   },
 
   cardTitle: {
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: 10,
     fontWeight: '500',
     marginTop: 25,
     color: '#000',
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 250,
+    height: 100,
     borderRadius: 20,
     shadowColor: '#000',
     backgroundColor: '#fff',

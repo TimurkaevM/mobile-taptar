@@ -80,6 +80,7 @@ const ContributionVideoScreen = ({ navigation }) => {
     <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center' }}>
       <FlatList
         horizontal={false}
+        numColumns={3}
         data={videos}
         renderItem={renderItem}
         keyExtractor={(item) => item.file_id.toString()}
@@ -97,14 +98,14 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    width: width - 50,
+    width: 100,
     marginVertical: 20,
     marginHorizontal: 15,
   },
 
   cardTitle: {
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: 10,
     fontWeight: '500',
     marginTop: 25,
     color: '#000',
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
 
   cardMedia: {
     width: '100%',
-    height: 250,
+    height: 100,
     borderRadius: 20,
     shadowColor: '#000',
     backgroundColor: '#fff',

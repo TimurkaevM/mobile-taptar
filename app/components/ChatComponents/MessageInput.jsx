@@ -5,6 +5,7 @@ import color from '../../misc/color';
 const MessageInput = ({ message, setMessage }) => {
   return (
     <TextInput
+      multiline
       style={styles.input}
       type="message"
       name={message}
@@ -19,14 +20,16 @@ const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   input: {
-    width: 250,
-    height: 50,
-    paddingLeft: 15,
-    borderRadius: 30,
+    width: 230,
+    maxHeight: 105,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 10,
     backgroundColor: color.APP_BG,
     color: color.MAIN_COLOR,
     fontSize: 13,
     borderWidth: 0.5,
+    lineHeight: 13,
     borderColor: '#878787',
     fontFamily: 'GothamMedium',
   },

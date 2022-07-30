@@ -1,8 +1,25 @@
+const SEND_OPEN_MODAL_DELETE = 'send/open/modal/delete';
+const SEND_CLOSE_MODAL_DELETE = 'send/close/modal/delete';
+const SEND_OPEN_MODAL_BUTTONS = 'send/open/modal/buttons';
+const SEND_CLOSE_MODAL_BUTTONS = 'send/close/modal/buttons';
+const MODAL_EFFECT_OPEN = 'modal/effect/open';
+const MODAL_EFFECT_CLOSE = 'modal/effect/close';
+
+const MESSAGE_OPEN_MODAL_DELETE = 'message/open/modal/delete';
+const MESSAGE_CLOSE_MODAL_DELETE = 'message/close/modal/delete';
+
+const PASS_MODAL_OPEN = 'pass/modal/open';
+const PASS_MODAL_CLOSE = 'pass/modal/close';
+
+const CHAT_MODAL_OPEN = 'chat/modal/open';
+const CHAT_MODAL_CLOSE = 'chat/modal/close';
+
 const initialState = {
   sendModalDelete: {
     open: false,
     item: null,
   },
+  sendModalButtons: false,
   modalEffect: {
     open: false,
     item: null,
@@ -16,20 +33,6 @@ const initialState = {
   passModal: false,
   chatModal: false,
 };
-
-const SEND_OPEN_MODAL_DELETE = 'send/open/modal/delete';
-const SEND_CLOSE_MODAL_DELETE = 'send/close/modal/delete';
-const MODAL_EFFECT_OPEN = 'modal/effect/open';
-const MODAL_EFFECT_CLOSE = 'modal/effect/close';
-
-const MESSAGE_OPEN_MODAL_DELETE = 'message/open/modal/delete';
-const MESSAGE_CLOSE_MODAL_DELETE = 'message/close/modal/delete';
-
-const PASS_MODAL_OPEN = 'pass/modal/open';
-const PASS_MODAL_CLOSE = 'pass/modal/close';
-
-const CHAT_MODAL_OPEN = 'chat/modal/open';
-const CHAT_MODAL_CLOSE = 'chat/modal/close';
 
 export default function application(state = initialState, action) {
   switch (action.type) {
@@ -49,6 +52,18 @@ export default function application(state = initialState, action) {
           open: false,
           item: null,
         },
+      };
+
+    case SEND_OPEN_MODAL_BUTTONS:
+      return {
+        ...state,
+        sendModalButtons: true,
+      };
+
+    case SEND_CLOSE_MODAL_BUTTONS:
+      return {
+        ...state,
+        sendModalButtons: false,
       };
 
     case MODAL_EFFECT_OPEN:
@@ -181,5 +196,17 @@ export const openChatModal = () => {
 export const closeChatModal = () => {
   return {
     type: CHAT_MODAL_CLOSE,
+  };
+};
+
+export const openSendModalButtons = () => {
+  return {
+    type: SEND_OPEN_MODAL_BUTTONS,
+  };
+};
+
+export const closeSendModalButtons = () => {
+  return {
+    type: SEND_CLOSE_MODAL_BUTTONS,
   };
 };
