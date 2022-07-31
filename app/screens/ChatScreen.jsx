@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -104,7 +105,10 @@ function ChatScreen({ route, navigation }) {
   }
 
   return (
-    <>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <StatusBarPlaceHolder />
       <ChatHeader goBack={goBack} />
       <View
@@ -122,7 +126,7 @@ function ChatScreen({ route, navigation }) {
       <MessageSend contactId={params.id} />
       <DeleteMessageModal />
       <ChatModal navigate={navigate} />
-    </>
+    </KeyboardAvoidingView>
   );
 }
 

@@ -11,6 +11,7 @@ import React from 'react';
 import ImageListIcon from '../../SvgIcons/SendMaterialIcons/ImageListIcon';
 import { useSelector } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
+import color from '../../misc/color';
 
 const ImageList = ({
   removeFileInMaterials,
@@ -121,6 +122,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     shadowColor: '#000',
+    borderWidth: 0.7,
+    borderColor: color.FONT_LIGHT,
     shadowOffset: {
       width: 0,
       height: 2,

@@ -1,4 +1,4 @@
-import { TextInput, StyleSheet, Dimensions } from 'react-native';
+import { TextInput, StyleSheet, Dimensions, Platform } from 'react-native';
 import React from 'react';
 import color from '../../misc/color';
 
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     width: 230,
     maxHeight: 105,
     paddingHorizontal: 15,
-    paddingVertical: 5,
+    paddingVertical: Platform.OS === 'ios' ? 15 : 5,
     borderRadius: 10,
     backgroundColor: color.APP_BG,
     color: color.MAIN_COLOR,
