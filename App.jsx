@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { store } from './app/redux/index'
 import AppRoutes from './app/routes/AppRoutes';
 import { NavigationContainer } from '@react-navigation/native';
 import AudioProvider from './app/context/AudioProvider';
-import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -14,8 +16,17 @@ export default function App() {
     'GothamBold': require('./assets/GothamPro/gothampro_bold.ttf'),
   });
 
+  useEffect(() => {
+    async function prepare() {
+      await SplashScreen.hideAsync();
+    }
+    if(fontsLoaded) {
+      prepare();
+    }
+  }, [fontsLoaded]);
+
   if (!fontsLoaded) {
-    return <AppLoading />;
+    return null;
   }
 
   return (

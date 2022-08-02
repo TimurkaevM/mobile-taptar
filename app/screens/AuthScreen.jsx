@@ -8,6 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import SocialAuth from '../components/SocialAuth/SocialAuth';
 import { login, ChangeErrorLogin } from '../redux/ducks/user';
 
 import { authStyles } from '../styles/authStyles';
@@ -96,6 +97,7 @@ function AuthScreen() {
         secureTextEntry={true}
         placeholder="1234567"
       />
+      <SocialAuth />
       <View
         style={{
           alignItems: 'center',
