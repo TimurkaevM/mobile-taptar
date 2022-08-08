@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registration, ChangeErrorCreate } from '../redux/ducks/user';
+import { ChangeErrorCreate, registrationSocial } from '../redux/ducks/user';
 import {
   TouchableOpacity,
   Text,
@@ -10,9 +10,16 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
+
 import { registrStyles } from '../styles/registrStyles';
 
-function RegistrationScreen() {
+function SocialRegistrationScreen(props) {
+  const { params } = props.route;
+  const { navigate } = props.navigation;
+
+  const { uuid } = params;
+
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.user.loading);
   const error = useSelector((state) => state.user.errorCreate);
@@ -103,7 +110,7 @@ function RegistrationScreen() {
       return setPasswordError('В пароле не может быть пробелов');
     }
 
-    dispatch(registration(name, email, password, confirmed));
+    dispatch(registrationSocial(name, email, password, confirmed, uuid));
   };
 
   return (
@@ -111,6 +118,7 @@ function RegistrationScreen() {
       style={registrStyles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
+      <StatusBarPlaceHolder />
       <ScrollView>
         <View style={registrStyles.content}>
           <Text style={registrStyles.title}>Имя</Text>
@@ -171,6 +179,30 @@ function RegistrationScreen() {
               </Text>
             </TouchableOpacity>
           </View>
+          <View
+            style={{
+              alignItems: 'center',
+              marginTop: 10,
+            }}
+          >
+            <TouchableOpacity
+              style={registrStyles.btn}
+              title="Pick an auth"
+              onPress={() => navigate('EntranceMainRoutes')}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 14,
+                  textTransform: 'capitalize',
+                  color: '#fff',
+                  fontFamily: 'GothamMedium',
+                }}
+              >
+                Назад
+              </Text>
+            </TouchableOpacity>
+          </View>
           {emailError && (
             <Text style={registrStyles.textError}>{emailError}</Text>
           )}
@@ -187,4 +219,4 @@ function RegistrationScreen() {
   );
 }
 
-export default RegistrationScreen;
+export default SocialRegistrationScreen;

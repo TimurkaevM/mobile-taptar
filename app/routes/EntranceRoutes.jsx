@@ -1,45 +1,30 @@
-import React from 'react';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Auth from '../screens/AuthScreen';
-import Registration from '../screens/RegistrationScreen';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { StatusBar } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import SocialRegistrationScreen from '../screens/SocialRegistrationScreen';
+import EntranceMainRoutes from './EntranceMainRoutes';
 
-function EntranceRoutes() {
-  const Tab = createMaterialTopTabNavigator();
+const Stack = createStackNavigator();
 
-  const STATUS_BAR_HEIGHT =
-    Platform.OS === 'ios' ? getStatusBarHeight() : StatusBar.currentHeight;
-
+function ContentRoutes() {
   return (
-    <Tab.Navigator
-      initialRouteName="Auth"
-      screenOptions={{
-        tabBarActiveTintColor: '#4382c8',
-        tabBarLabelStyle: {
-          fontSize: 14,
-          textTransform: 'capitalize',
-          fontFamily: 'GothamMedium',
-        },
-        tabBarStyle: {
-          backgroundColor: '#f1f1f1',
-          marginTop: STATUS_BAR_HEIGHT,
-          borderWidth: 0,
-        },
-      }}
-    >
-      <Tab.Screen
-        name="Auth"
-        component={Auth}
-        options={{ tabBarLabel: 'Авторизация' }}
+    <Stack.Navigator initialRouteName="EntranceMainRoutes">
+      <Stack.Screen
+        name="EntranceMainRoutes"
+        component={EntranceMainRoutes}
+        options={{
+          gestureEnabled: false,
+          headerShown: false,
+        }}
       />
-      <Tab.Screen
-        name="Registration"
-        component={Registration}
-        options={{ tabBarLabel: 'Регистрация' }}
+      <Stack.Screen
+        name="SocialRegistrationScreen"
+        component={SocialRegistrationScreen}
+        options={{
+          gestureEnabled: false,
+          headerShown: false,
+        }}
       />
-    </Tab.Navigator>
+    </Stack.Navigator>
   );
 }
 
-export default EntranceRoutes;
+export default ContentRoutes;

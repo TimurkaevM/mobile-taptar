@@ -13,8 +13,10 @@ import { login, ChangeErrorLogin } from '../redux/ducks/user';
 
 import { authStyles } from '../styles/authStyles';
 
-function AuthScreen() {
+function AuthScreen(props) {
   const dispatch = useDispatch();
+
+  const { navigate } = props.navigation;
 
   const loading = useSelector((state) => state.user.loading);
   const error = useSelector((state) => state.user.errorLogin);
@@ -97,7 +99,7 @@ function AuthScreen() {
         secureTextEntry={true}
         placeholder="1234567"
       />
-      <SocialAuth />
+      <SocialAuth navigate={navigate} />
       <View
         style={{
           alignItems: 'center',

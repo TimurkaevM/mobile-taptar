@@ -15,6 +15,7 @@ export const CREATE_ERROR = 'user/create/error';
 export const LOGOUT = 'user/logout';
 export const CHANGE_ERROR_LOGIN = 'error/change/login';
 export const CHANGE_ERROR_CREATE = 'error/change/create';
+export const AUTH_SOCIAL = 'user/auth/social';
 
 const PROFILE__CHANGE__START = 'profile/change/start';
 const PROFILE__CHANGE__SUCCESS = 'profile/change/success';
@@ -74,6 +75,24 @@ export default function user(state = initialState, action) {
         ...state,
         loading: false,
         errorLogin: action.payload.message,
+      };
+
+    case AUTH_SOCIAL:
+      const decodeSocial = jwt_decode(action.payload);
+
+      return {
+        ...state,
+        loading: false,
+        token: action.payload.access_token,
+        currentUser: {
+          id: decodeSocial.user.id,
+          name: decodeSocial.user.name,
+          email: decodeSocial.user.email,
+          role: decodeSocial.role[0],
+          permissions: decodeSocial.permissions,
+          avatar: decodeSocial.user.avatar,
+        },
+        isAuth: true,
       };
 
     case AUTH_START:
@@ -228,6 +247,15 @@ export const auth = () => {
   };
 };
 
+export const authSocial = (token) => {
+  AsyncStorage.setItem('token', token);
+
+  return {
+    type: AUTH_SOCIAL,
+    payload: token,
+  };
+};
+
 export const registration = (name, email, password, password_confirmation) => {
   return (dispatch) => {
     dispatch({
@@ -253,6 +281,44 @@ export const registration = (name, email, password, password_confirmation) => {
         dispatch({
           type: CREATE_ERROR,
           payload: e.response.data.errors,
+        });
+        console.error(e.response.data);
+      });
+  };
+};
+
+export const registrationSocial = (
+  name,
+  email,
+  password,
+  password_confirmation,
+  uuid,
+) => {
+  return (dispatch) => {
+    dispatch({
+      type: CREATE_START,
+    });
+
+    api
+      .post('/oauth/register', {
+        name,
+        email,
+        password,
+        password_confirmation,
+        uuid,
+      })
+      .then((response) => response.data)
+      .then((data) => {
+        dispatch({
+          type: CREATE_SUCCESS,
+          payload: data,
+        });
+        AsyncStorage.setItem('token', data.access_token);
+      })
+      .catch((e) => {
+        dispatch({
+          type: CREATE_ERROR,
+          payload: e.response.data,
         });
         console.error(e.response.data);
       });
