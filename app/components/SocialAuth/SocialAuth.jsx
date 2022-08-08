@@ -3,7 +3,7 @@ import VkAuth from './VkAuth';
 import GoogleAuth from './GoogleAuth';
 import YandexAuth from './YandexAuth';
 
-import { socialStyles } from '../../styles/SocialStyles';
+import { socialStyles } from '../../styles/socialStyles';
 
 export default function SocialAuth({ navigate }) {
   return (

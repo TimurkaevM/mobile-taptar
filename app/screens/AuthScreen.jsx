@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import SocialAuth from '../components/SocialAuth/SocialAuth';
@@ -80,55 +81,59 @@ function AuthScreen(props) {
       style={authStyles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <Text style={authStyles.title}>Email</Text>
-      <TextInput
-        style={authStyles.input}
-        value={email}
-        onChangeText={setEmail}
-        onChange={emailChange}
-        placeholder="taptar@mail.ru"
-      />
-      <Text style={authStyles.title} htmlFor="password">
-        Пароль
-      </Text>
-      <TextInput
-        style={authStyles.input}
-        value={password}
-        onChangeText={setPassword}
-        onChange={passChange}
-        secureTextEntry={true}
-        placeholder="1234567"
-      />
-      <SocialAuth navigate={navigate} />
-      <View
-        style={{
-          alignItems: 'center',
-          marginTop: 23,
-        }}
-      >
-        <TouchableOpacity
-          style={authStyles.btn}
-          title="Pick an auth"
-          onPress={handleClick}
-        >
-          <Text
+      <ScrollView>
+        <View style={authStyles.content}>
+          <Text style={authStyles.title}>Email</Text>
+          <TextInput
+            style={authStyles.input}
+            value={email}
+            onChangeText={setEmail}
+            onChange={emailChange}
+            placeholder="taptar@mail.ru"
+          />
+          <Text style={authStyles.title} htmlFor="password">
+            Пароль
+          </Text>
+          <TextInput
+            style={authStyles.input}
+            value={password}
+            onChangeText={setPassword}
+            onChange={passChange}
+            secureTextEntry={true}
+            placeholder="1234567"
+          />
+          <SocialAuth navigate={navigate} />
+          <View
             style={{
-              textAlign: 'center',
-              fontSize: 14,
-              textTransform: 'capitalize',
-              color: '#fff',
-              fontFamily: 'GothamMedium',
+              alignItems: 'center',
+              marginTop: 23,
             }}
           >
-            Войти
-          </Text>
-        </TouchableOpacity>
-      </View>
-      {emailError && <Text style={authStyles.textError}>{emailError}</Text>}
-      {passwordError && (
-        <Text style={authStyles.textError}>{passwordError}</Text>
-      )}
-      {error && <Text style={authStyles.textError}>{error}</Text>}
+            <TouchableOpacity
+              style={authStyles.btn}
+              title="Pick an auth"
+              onPress={handleClick}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 14,
+                  textTransform: 'capitalize',
+                  color: '#fff',
+                  fontFamily: 'GothamMedium',
+                }}
+              >
+                Войти
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {emailError && <Text style={authStyles.textError}>{emailError}</Text>}
+          {passwordError && (
+            <Text style={authStyles.textError}>{passwordError}</Text>
+          )}
+          {error && <Text style={authStyles.textError}>{error}</Text>}
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }

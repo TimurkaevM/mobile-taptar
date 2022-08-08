@@ -7,7 +7,7 @@ import { authSocial } from '../../redux/ducks/user';
 import { useDispatch } from 'react-redux';
 import { api } from '../../api/api';
 
-import { socialStyles } from '../../styles/SocialStyles';
+import { socialStyles } from '../../styles/socialStyles';
 
 WebBrowser.maybeCompleteAuthSession();
 

@@ -16,6 +16,9 @@ function EntranceMainRoutes() {
       initialRouteName="Auth"
       screenOptions={{
         tabBarActiveTintColor: '#4382c8',
+        tabBarIndicatorStyle: {
+          backgroundColor: '#4382c8',
+        },
         tabBarLabelStyle: {
           fontSize: 14,
           textTransform: 'capitalize',

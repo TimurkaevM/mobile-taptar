@@ -1,18 +1,16 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export const authStyles = StyleSheet.create({
-  scrollView: {
-    flex: 6,
-    justifyContent: 'center',
-    backgroundColor: '#f1f1f1',
+  container: {
+    flexGrow: 1,
   },
 
-  container: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#f1f1f1',
+  content: {
+    width: width,
+    height: height - 50,
     justifyContent: 'center',
-    padding: 20,
   },
 
   auth: {
@@ -22,14 +20,10 @@ export const authStyles = StyleSheet.create({
     fontWeight: '300',
   },
 
-  or: {
-    textAlign: 'center',
-    color: '#ffffff',
-    fontSize: 20,
-    marginTop: 23,
-  },
-
   title: {
+    width: width > 450 ? 380 : width - 80,
+    alignSelf: 'center',
+    textAlign: 'left',
     fontWeight: '400',
     textTransform: 'capitalize',
     fontSize: 15,
@@ -40,17 +34,19 @@ export const authStyles = StyleSheet.create({
   },
 
   input: {
-    width: '100%',
+    width: width > 450 ? 380 : width - 80,
+    alignSelf: 'center',
     height: 50,
     paddingLeft: 15,
+    borderWidth: 0,
     borderRadius: 30,
     marginBottom: 50,
     backgroundColor: '#ffffff',
     color: '#4686cc',
     fontSize: 13,
     borderWidth: 0.5,
-    borderColor: '#4686cc',
     fontFamily: 'GothamMedium',
+    borderColor: '#4686cc',
   },
 
   inputFocus: {
