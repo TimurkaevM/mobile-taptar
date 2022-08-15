@@ -50,7 +50,6 @@ export const authStyles = StyleSheet.create({
   },
 
   inputFocus: {
-    // width: "100%",
     height: 35,
     paddingLeft: 15,
     borderWidth: 0,

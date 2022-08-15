@@ -91,6 +91,28 @@ const ContributionVideoScreen = ({ navigation }) => {
 
 const width = Dimensions.get('window').width;
 
+const cardDimensions = {
+  cardWidth: 100,
+  cardHeight: 100,
+  cardTitleSize: 10,
+};
+
+function getCardDimensions() {
+  if (width <= 450) return cardDimensions;
+  if (width > 450 && width <= 700) {
+    cardDimensions.cardHeight = 130;
+    cardDimensions.cardWidth = 130;
+    cardDimensions.cardTitleSize = 12;
+    return cardDimensions;
+  }
+  if (width > 700) {
+    cardDimensions.cardHeight = 180;
+    cardDimensions.cardWidth = 180;
+    cardDimensions.cardTitleSize = 14;
+    return cardDimensions;
+  }
+}
+
 const styles = StyleSheet.create({
   preloader: {
     flex: 1,
@@ -98,14 +120,14 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    width: 100,
+    width: getCardDimensions().cardWidth,
     marginVertical: 20,
     marginHorizontal: 15,
   },
 
   cardTitle: {
     textAlign: 'center',
-    fontSize: 10,
+    fontSize: getCardDimensions().cardTitleSize,
     fontWeight: '500',
     marginTop: 25,
     color: '#000',
@@ -114,7 +136,7 @@ const styles = StyleSheet.create({
 
   cardMedia: {
     width: '100%',
-    height: 100,
+    height: getCardDimensions().cardHeight,
     borderRadius: 20,
     shadowColor: '#000',
     backgroundColor: '#fff',

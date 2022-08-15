@@ -35,7 +35,7 @@ const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   buttons: {
-    width: width - 90,
+    width: width <= 450 ? width - 90 : 450,
     marginTop: 28,
     justifyContent: 'flex-end',
     alignItems: 'center',

@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     marginTop: 20,
-    width: width - 150,
+    width: width <= 450 ? width - 150 : 430,
   },
   title: {
     textAlign: 'left',

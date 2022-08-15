@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const width = Dimensions.get('window').width;
+const { width, height } = Dimensions.get('window');
 
 export const socialStyles = StyleSheet.create({
   container: {
@@ -18,7 +18,7 @@ export const socialStyles = StyleSheet.create({
   containerButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: width - 200,
+    width: width > 450 ? 270 : width - 200,
     marginTop: 10,
   },
   iconBtn: {

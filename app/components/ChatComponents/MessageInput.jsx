@@ -18,16 +18,35 @@ const MessageInput = ({ message, setMessage }) => {
 
 const width = Dimensions.get('window').width;
 
+const inputDimensions = {
+  cardWidth: 230,
+  cardTitleSize: 13,
+};
+
+function getInputDimensions() {
+  if (width <= 450) return inputDimensions;
+  if (width > 450 && width <= 700) {
+    inputDimensions.cardWidth = 330;
+    inputDimensions.cardTitleSize = 13;
+    return inputDimensions;
+  }
+  if (width > 700) {
+    inputDimensions.cardWidth = 500;
+    inputDimensions.cardTitleSize = 14;
+    return inputDimensions;
+  }
+}
+
 const styles = StyleSheet.create({
   input: {
-    width: 230,
+    width: getInputDimensions().cardWidth,
     maxHeight: 105,
     paddingHorizontal: 15,
     paddingVertical: Platform.OS === 'ios' ? 15 : 5,
     borderRadius: 10,
     backgroundColor: color.APP_BG,
     color: color.MAIN_COLOR,
-    fontSize: 13,
+    fontSize: getInputDimensions().cardTitleSize,
     borderWidth: 0.5,
     lineHeight: 13,
     borderColor: '#878787',

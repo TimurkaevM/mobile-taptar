@@ -4,7 +4,7 @@ const { width, height } = Dimensions.get('window');
 
 export const registrStyles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flexGrow: 2,
   },
 
   content: {

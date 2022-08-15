@@ -58,7 +58,7 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   infoContainer: {
     marginTop: 20,
-    width: width - 90,
+    width: width <= 450 ? width - 90 : 450,
   },
   title: {
     textAlign: 'center',

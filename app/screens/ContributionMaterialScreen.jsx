@@ -20,6 +20,8 @@ import {
   getReadyMaterial,
 } from '../redux/ducks/contributionMaterial';
 
+const width = Dimensions.get('window').width;
+
 const ContributionMaterialScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
@@ -108,6 +110,8 @@ const ContributionMaterialScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center' }}>
       <FlatList
+        horizontal={false}
+        numColumns={width >= 900 ? 2 : 1}
         data={materials}
         renderItem={renderMaterial}
         keyExtractor={(item) => item.id.toString()}
@@ -116,8 +120,6 @@ const ContributionMaterialScreen = ({ navigation }) => {
   );
 };
 
-const width = Dimensions.get('window').width;
-
 const styles = StyleSheet.create({
   preloader: {
     flex: 1,
@@ -125,8 +127,9 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    width: width - 30,
+    width: width <= 450 ? width - 30 : 380,
     marginVertical: 15,
+    marginHorizontal: width >= 900 ? 15 : 0,
     paddingHorizontal: 15,
     paddingVertical: 10,
     backgroundColor: '#dfeaf9',
