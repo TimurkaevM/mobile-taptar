@@ -4,7 +4,6 @@ import ChangeTagsScreen from '../screens/ChangeTagsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import ImageBrowserScreen from '../screens/ImageBrowserScreen';
 import AudioListScreen from '../screens/AudioListScreen';
-import PdfReaderScreen from '../screens/PdfReaderScreen';
 import MainRoutes from './MainRoutes';
 import MaterialInfoScreen from '../screens/MaterialInfoScreen';
 import FileTagsScreen from '../screens/FileTagsScreen';
@@ -109,17 +108,6 @@ function ContentRoutes() {
         options={{
           gestureEnabled: false,
           headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="PdfReaderScreen"
-        component={PdfReaderScreen}
-        options={{
-          title: 'PDF файл',
-          headerStyle: {
-            backgroundColor: '#4686cc',
-          },
-          headerTintColor: '#fff',
         }}
       />
       <Stack.Screen
