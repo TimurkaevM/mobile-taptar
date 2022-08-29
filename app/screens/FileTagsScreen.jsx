@@ -4,15 +4,12 @@ import InputInfoBox from '../components/FileTagsComponents/InputInfoBox';
 import CommentClient from '../components/FileTagsComponents/CommentClient';
 import TagsInformation from '../components/FileTagsComponents/TagsInformation';
 import TagsCenturies from '../components/FileTagsComponents/TagsCenturies';
-import AddTagsHeader from '../components/FileTagsComponents/AddTagsHeader';
 import StatusBarPlaceHolder from '../misc/StatusBarPlaceHolder';
 import MaterialText from '../components/FileTagsComponents/MaterialText';
 import MediaBoxFile from '../components/FileTagsComponents/MediaBoxFile';
 import TagsCredibility from '../components/FileTagsComponents/TagsCredibility';
 
 const FileTagsScreen = (props) => {
-  const { goBack } = props.navigation;
-
   const { params } = props.route;
 
   const item = params.item;
@@ -20,7 +17,6 @@ const FileTagsScreen = (props) => {
   return (
     <>
       <StatusBarPlaceHolder />
-      <AddTagsHeader goBack={goBack} />
       <View style={styles.centeredView}>
         <ScrollView>
           <InputInfoBox

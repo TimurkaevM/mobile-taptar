@@ -5,7 +5,7 @@ import CredibilityIcons from '../../SvgIcons/CredibilityIcons/CredibilityIcons';
 function CredibilityItem({ item }) {
   return (
     <View style={styles.item}>
-      <CredibilityIcons title={item.title} size={40} />
+      <CredibilityIcons title={item.title} size={30} />
       <Text style={styles.title}>{item.title}</Text>
     </View>
   );
@@ -20,9 +20,9 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   title: {
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: 'GothamMedium',
-    marginTop: 5,
+    marginTop: 10,
   },
 });
 
