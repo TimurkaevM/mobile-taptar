@@ -25,6 +25,7 @@ import MaterialError from '../components/SendMaterialComponents/MaterialError';
 import { getAllTags, getCauses } from '../redux/ducks/tags';
 import { getDraftFiles } from '../redux/actions/material';
 import ModalButtonsUser from '../components/SendMaterialComponents/ModalButtonsUser';
+import InfoUserModal from '../components/SendMaterialComponents/InfoUserModal';
 
 function SendMaterialScreen(props) {
   const { navigate, push } = props.navigation;
@@ -93,6 +94,7 @@ function SendMaterialScreen(props) {
         {audio.length ? <AudioList audio={audio} navigate={navigate} /> : null}
         {audios.length ? <AudiosList navigate={navigate} /> : null}
         <DeleteFileModal />
+        <InfoUserModal />
         <ModalButtonsUser navigate={navigate} />
       </ScrollView>
     </KeyboardAvoidingView>

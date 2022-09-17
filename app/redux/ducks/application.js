@@ -2,6 +2,8 @@ const SEND_OPEN_MODAL_DELETE = 'send/open/modal/delete';
 const SEND_CLOSE_MODAL_DELETE = 'send/close/modal/delete';
 const SEND_OPEN_MODAL_BUTTONS = 'send/open/modal/buttons';
 const SEND_CLOSE_MODAL_BUTTONS = 'send/close/modal/buttons';
+const OPEN_MODAL_INFO_USER = 'open/modal/userInfo';
+const CLOSE_MODAL_INFO_USER = 'close/modal/userInfo';
 const MODAL_EFFECT_OPEN = 'modal/effect/open';
 const MODAL_EFFECT_CLOSE = 'modal/effect/close';
 
@@ -20,6 +22,7 @@ const initialState = {
     item: null,
   },
   sendModalButtons: false,
+  infoUserModal: false,
   modalEffect: {
     open: false,
     item: null,
@@ -64,6 +67,18 @@ export default function application(state = initialState, action) {
       return {
         ...state,
         sendModalButtons: false,
+      };
+
+    case OPEN_MODAL_INFO_USER:
+      return {
+        ...state,
+        infoUserModal: true,
+      };
+
+    case CLOSE_MODAL_INFO_USER:
+      return {
+        ...state,
+        infoUserModal: false,
       };
 
     case MODAL_EFFECT_OPEN:
@@ -208,5 +223,17 @@ export const openSendModalButtons = () => {
 export const closeSendModalButtons = () => {
   return {
     type: SEND_CLOSE_MODAL_BUTTONS,
+  };
+};
+
+export const openInfoUserModal = () => {
+  return {
+    type: OPEN_MODAL_INFO_USER,
+  };
+};
+
+export const closeInfoUserModal = () => {
+  return {
+    type: CLOSE_MODAL_INFO_USER,
   };
 };

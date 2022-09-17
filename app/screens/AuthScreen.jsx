@@ -102,7 +102,7 @@ function AuthScreen(props) {
             secureTextEntry={true}
             placeholder="1234567"
           />
-          <SocialAuth navigate={navigate} />
+          {/* <SocialAuth navigate={navigate} /> */}
           <View
             style={{
               alignItems: 'center',

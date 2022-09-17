@@ -193,20 +193,7 @@ export class AudioProvider extends Component {
       isPlayListRunning,
       activePlayList,
     } = this.state;
-    if (permissionError)
-      return (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text style={{ fontSize: 25, textAlign: 'center', color: 'red' }}>
-            It looks like you haven't accept the permission.
-          </Text>
-        </View>
-      );
+
     return (
       <AudioContext.Provider
         value={{
@@ -227,6 +214,7 @@ export class AudioProvider extends Component {
           updateState: this.updateState,
           loadPreviousAudio: this.loadPreviousAudio,
           onPlaybackStatusUpdate: this.onPlaybackStatusUpdate,
+          permissionError: permissionError,
         }}
       >
         {this.props.children}

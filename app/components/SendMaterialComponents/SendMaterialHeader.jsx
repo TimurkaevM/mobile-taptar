@@ -2,13 +2,12 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import color from '../../misc/color';
 import { useDispatch, useSelector } from 'react-redux';
-import { postMaterial } from '../../redux/actions/material';
 import { postHistorianMaterial } from '../../redux/actions/historianMaterial';
+import { openInfoUserModal } from '../../redux/ducks/application';
 
 const SendMaterialHeader = () => {
   const dispatch = useDispatch();
 
-  const userMaterial = useSelector((state) => state.sendMaterial.materials);
   const sendUserError = useSelector((state) => state.sendMaterial.sendError);
   const historianMaterial = useSelector(
     (state) => state.historianMaterial.materials,
@@ -20,34 +19,8 @@ const SendMaterialHeader = () => {
 
   const { role } = currentUser;
 
-  const photo =
-    userMaterial.photo.one.length || userMaterial.photo.group.length
-      ? userMaterial.photo
-      : [];
-  const document =
-    userMaterial.document.one.length || userMaterial.document.group.length
-      ? userMaterial.document
-      : [];
-  const video =
-    userMaterial.video.one.length || userMaterial.video.group.length
-      ? userMaterial.video
-      : [];
-  const audio =
-    userMaterial.audio.one.length || userMaterial.audio.group.length
-      ? userMaterial.audio
-      : [];
-
   const onPressUser = () => {
-    dispatch(
-      postMaterial(
-        userMaterial.title,
-        userMaterial.text,
-        photo,
-        document,
-        video,
-        audio,
-      ),
-    );
+    dispatch(openInfoUserModal());
   };
 
   const onPressHistorian = () => {

@@ -63,8 +63,6 @@ export default function VideoBrowserScreen(props) {
     [],
   );
 
-  console.log(max);
-
   const widgetSettings = useMemo(
     () => ({
       getImageMetaData: Platform.OS === 'ios', // true might perform slower results but gives meta data and absolute path for ios users

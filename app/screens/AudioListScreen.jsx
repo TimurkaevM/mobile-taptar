@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, Text, Button, Linking } from 'react-native';
 import { AudioContext } from '../context/AudioProvider';
 import { RecyclerListView, LayoutProvider } from 'recyclerlistview';
 import AudioListItem from '../components/SendMaterialComponents/AudioListItem';
@@ -65,7 +65,7 @@ export class AudioList extends Component {
     const checkAudio = this.state.selectedAudio.some(
       (audio) => audio.id === item.id,
     );
-    console.log(item);
+
     return (
       <AudioListItem
         checkAudio={checkAudio}
@@ -81,6 +81,34 @@ export class AudioList extends Component {
   };
 
   render() {
+    if (this.context.permissionError)
+      return (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={{
+              color: 'red',
+              marginBottom: 20,
+              fontSize: 18,
+              paddingHorizontal: 20,
+              textAlign: 'center',
+            }}
+          >
+            Allow access to media and files and restart the app.
+          </Text>
+          <Button
+            title="Open Settings"
+            onPress={() => {
+              Linking.openSettings();
+            }}
+          />
+        </View>
+      );
     return (
       <>
         <StatusBarPlaceHolder />
