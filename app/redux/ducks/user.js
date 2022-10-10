@@ -17,6 +17,10 @@ export const CHANGE_ERROR_LOGIN = 'error/change/login';
 export const CHANGE_ERROR_CREATE = 'error/change/create';
 export const AUTH_SOCIAL = 'user/auth/social';
 
+export const USER_REMOVE_START = 'user/remove/start';
+export const USER_REMOVE_SUCCESS = 'user/remove/success';
+export const USER_REMOVE_ERROR = 'user/remove/error';
+
 const PROFILE__CHANGE__START = 'profile/change/start';
 const PROFILE__CHANGE__SUCCESS = 'profile/change/success';
 
@@ -199,6 +203,35 @@ export default function user(state = initialState, action) {
         },
         isAuth: false,
         token: null,
+      };
+
+    case USER_REMOVE_START:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case USER_REMOVE_SUCCESS:
+      AsyncStorage.removeItem('token');
+      return {
+        ...state,
+        loading: false,
+        currentUser: {
+          id: null,
+          name: '',
+          email: '',
+          role: '',
+          permissions: [],
+          avatar: '',
+        },
+        isAuth: false,
+        token: null,
+      };
+
+    case USER_REMOVE_ERROR:
+      return {
+        ...state,
+        loading: false,
       };
 
     case CHANGE_ERROR_LOGIN:
@@ -511,6 +544,32 @@ export const addAvatarIos = (file) => {
       }
     } catch (e) {
       console.log(e.response.data);
+    }
+  };
+};
+
+export const removeAccount = () => {
+  return async (dispatch) => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+
+      dispatch({ type: USER_REMOVE_START });
+
+      if (value !== null) {
+        const response = await api.get('account/delete', {
+          headers: { Authorization: `Bearer ${value}` },
+        });
+        dispatch({
+          type: USER_REMOVE_SUCCESS,
+          payload: response.data,
+        });
+      }
+    } catch (e) {
+      dispatch({
+        type: USER_REMOVE_ERROR,
+        payload: e.response.data,
+      });
+      console.error(e);
     }
   };
 };

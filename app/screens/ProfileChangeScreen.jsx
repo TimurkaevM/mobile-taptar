@@ -13,6 +13,8 @@ import PickUserAvatar from '../components/ProfileChangeComponents/PickUserAvatar
 import ProfileTextInputs from '../components/ProfileChangeComponents/ProfileTextInputs';
 import BtnOpenModal from '../components/ProfileChangeComponents/BtnOpenModal';
 import BtnSaveChanges from '../components/ProfileChangeComponents/BtnSaveChanges';
+import BtnRemoveAccount from '../components/ProfileChangeComponents/BtnRemoveAccount';
+import RemoveAccountModal from '../components/ProfileChangeComponents/RemoveAccountModal';
 
 function ProfileChangeScreen({ navigation }) {
   const { goBack, navigate } = navigation;
@@ -51,6 +53,8 @@ function ProfileChangeScreen({ navigation }) {
             setNameError={setNameError}
             goBack={goBack}
           />
+          <BtnRemoveAccount />
+          <RemoveAccountModal />
           <PassChangeModal />
           {emailError && <Text style={styles.textError}>{emailError}</Text>}
           {nameError && <Text style={styles.textError}>{nameError}</Text>}

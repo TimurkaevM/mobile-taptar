@@ -16,6 +16,9 @@ const PASS_MODAL_CLOSE = 'pass/modal/close';
 const CHAT_MODAL_OPEN = 'chat/modal/open';
 const CHAT_MODAL_CLOSE = 'chat/modal/close';
 
+const REMOVE_ACCOUNT_MODAL_OPEN = 'remove/account/modal/open';
+const REMOVE_ACCOUNT_MODAL_CLOSE = 'remove/account/modal/close';
+
 const initialState = {
   sendModalDelete: {
     open: false,
@@ -35,6 +38,7 @@ const initialState = {
   },
   passModal: false,
   chatModal: false,
+  removeAccountModal: false,
 };
 
 export default function application(state = initialState, action) {
@@ -145,6 +149,18 @@ export default function application(state = initialState, action) {
         chatModal: false,
       };
 
+    case REMOVE_ACCOUNT_MODAL_OPEN:
+      return {
+        ...state,
+        removeAccountModal: true,
+      };
+
+    case REMOVE_ACCOUNT_MODAL_CLOSE:
+      return {
+        ...state,
+        removeAccountModal: false,
+      };
+
     default:
       return state;
   }
@@ -211,6 +227,18 @@ export const openChatModal = () => {
 export const closeChatModal = () => {
   return {
     type: CHAT_MODAL_CLOSE,
+  };
+};
+
+export const openRemoveAccountModal = () => {
+  return {
+    type: REMOVE_ACCOUNT_MODAL_OPEN,
+  };
+};
+
+export const closeRemoveAccountModal = () => {
+  return {
+    type: REMOVE_ACCOUNT_MODAL_CLOSE,
   };
 };
 
